@@ -1,0 +1,16 @@
+<?php
+$order = $block->getOrder();
+$name = $order->getShippingMethod();
+if($order->getPayment()->getMethod() == 'sintesis'): ?>
+<p>Pago a través de los comercios afiliados (SÍNTESIS)
+</p>
+<?php endif; ?>
+<?php if($order->getPayment()->getMethod() == 'qr'): ?>
+<p>Pago con Código QR (Transferencia simple)
+</p>
+<?php endif; ?>
+<?php if(!($order->getPayment()->getMethod() == 'qr') && !($order->getPayment()->getMethod() == 'sintesis')): ?>
+    <p><?php echo $order->getPayment()->getMethod(); ?>
+    </p>
+<?php endif; ?>
+

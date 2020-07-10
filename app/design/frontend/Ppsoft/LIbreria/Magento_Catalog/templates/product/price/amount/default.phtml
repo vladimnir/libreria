@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<?php /** @var \Ppsoft\Home\Block\Pricing\Render\Amount $block */ ?>
+<?php
+    $productId = $block->getSaleableItem()->getId();
+    $productPrices = $block->getProductPrices($productId);
+
+    /*$number = number_format($block->getPrice()->getValue(), '2', '.', ',');
+    $split = explode (".", $number);
+    $integer = $split[0];
+    $decimal = $split[1];*/
+    $prices = array();
+    if($productPrices != '0.00'){
+        $prices = array('price' => array(), 'special_price' => array());
+        foreach($productPrices as $typePrice => $price){
+            if($price == '0.00' && $typePrice == 'special_price') continue;
+            $split = explode (".", $price);
+            $integer = $split[0];
+            $decimal = $split[1];
+            $prices[$typePrice]['normal']   = $price;
+            $prices[$typePrice]['integer']  = $integer;
+            $prices[$typePrice]['decimal']  = $decimal;
+        }
+    }
+    $integer = $prices['price']['integer'];
+    $decimal = $prices['price']['decimal'];
+    if(!empty($prices['special_price'])){
+        $integer = $prices['special_price']['integer'];
+        $decimal = $prices['special_price']['decimal'];
+    }
+?>
+<span style="visibility: hidden; position: absolute;" class="pixel-price"><?php echo $integer;?></span>
+<?php if(!empty($prices['special_price'])):?>
+    <div class="price-before">
+        <span class="text"><?= __('Antes:');?></span>
+        <span class="price-currency"><?= $prices['price']['integer'] ?>.</span>
+        <span class="decimal"><?php echo $prices['price']['decimal'];?></span>
+    </div>
+<?php endif;?>
+<span class="price-container">
+    <?php if ($block->getDisplayLabel()): ?>
+        <span class="price-label"><?= /* @escapeNotVerified */ $block->getDisplayLabel() ?></span>
+    <?php endif; ?>
+    <span <?php if ($block->getPriceId()): ?> id="<?= /* @escapeNotVerified */ $block->getPriceId() ?>"<?php endif;?>
+        <?= ($block->getPriceDisplayLabel()) ? 'data-label="' . $block->getPriceDisplayLabel() . $block->getPriceDisplayInclExclTaxes() . '"' : '' ?>
+        class="price-wrapper contado"
+    ><?= __('Ahora:') ?>&nbsp;</span>
+    <span class="price-currency int"><?= $integer ?>.</span>
+    <span class="decimal"><?php echo $decimal;?></span>
+    <img class="minicuotas" src="<?php echo $this->getViewFileUrl('images/minicuotashigh.png'); ?>" alt="cuotas icon">
+</span>

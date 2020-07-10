@@ -1,0 +1,147 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Ppsoft\CustomCheckout\Block\Onepage\Success */ ?>
+<?php
+    $shippingSubtitle = 'Recojo en';
+    $shippingMethod = $block->getShippingMethod($block->getOrderId());
+    if($shippingMethod == "Ppsoftshippinghomedelivery_Ppsoftshippinghomedelivery"){
+        $shippingSubtitle = 'Enviar a';
+    }
+
+    $street = $block->getStreet();
+?>
+<div class="custom-sidebar">
+    <div class="title">
+        <span class="title-text"><?= /* @escapeNotVerified */ __('Resumen de la Compra') ?></span>
+    </div>
+    <div class="container-products">
+    <div class="product-cart subtitle" id="products-dropdown">
+        <?php if (($block->getProductsQty($block->getOrderId()) == 1) ): ?>
+        <span class="qty title-text"><?php echo $block->getProductsQty($block->getOrderId()); ?></span><span class="title-text"><?= /* @escapeNotVerified */ __(' Producto en el Carrito') ?></span>
+        <?php endif; ?>
+        <?php if (($block->getProductsQty($block->getOrderId()) > 1) ): ?>
+            <span class="qty title-text"><?php echo $block->getProductsQty($block->getOrderId()); ?></span><span class="title-text"><?= /* @escapeNotVerified */ __(' Productos en el Carrito') ?></span>
+        <?php endif; ?>
+    </div>
+        <?php foreach ($block->getProductsData($block->getOrderId()) as $product): ?>
+            <div class="product-content">
+                <div class="img">
+                    <?php $products = $block->getProductLoaded($product->getProductId());?>
+                    <a class="img-product" href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>" ><img src="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Image')->init($products, 'category_page_list')->setImageFile($products->getImage())->getUrl(); ?>" /> </a>
+                </div>
+                <div class="text">
+                    <span class="name"><?php echo $product->getName(); ?></span>
+                    <span class="sku"><?php echo $product->getSku(); ?></span>
+                    <span style="visibility: hidden; position: absolute;" class="pixel-price"><?php echo $product->getPrice();?></span>
+                    <span class="text"><?= /* @escapeNotVerified */ __('Precio: ') ?></span><span class="price">$<?php echo number_format($product->getPrice(), '2', '.', ','); ?></span>
+                    <div class="container-qty"><span class="text"><?= /* @escapeNotVerified */ __('Cantidad: ') ?></span><span class="qty"><?php echo $product->getQtyToShip(); ?></span></div>
+                    <span style="visibility: hidden;" class="sku"><?php echo $product->getSku(); ?></span>
+                </div>
+
+            </div>
+        <?php endforeach; ?>
+    <div class="subtotal">
+        <span class="text-nobold"><?= /* @escapeNotVerified */ __('Subtotal: ') ?></span>
+        <span class="text-bold">Bs. <?php echo $block->getSubtotal($block->getOrderId()); ?></span>
+    </div>
+    <div class="shipping">
+        <span class="text-nobold"><?= /* @escapeNotVerified */ __('Envio: ') ?></span>
+        <span class="text-bold">Bs. <?php echo $block->getShipping($block->getOrderId()); ?></span>
+    </div>
+    <div class="total">
+        <span class="text-bold left"><?= /* @escapeNotVerified */ __('Total de la Compra: ') ?></span>
+        <span class="text-bold right">Bs. <?php echo $block->getTotal($block->getOrderId()); ?></span>
+    </div>
+    </div>
+    <?php if ($block->getShippingAddress($block->getOrderId())): ?>
+        <div class="subtitle">
+            <span class="title-text"><?= /* @escapeNotVerified */ __('Método de Envío') ?></span>
+        </div>
+        <div class="entregar">
+            <span class="text">
+                <?php
+                $shippingName = $block->getShippingName($block->getOrderId());
+                if(is_array($shippingName)):
+                    echo $shippingName[0];
+                else:
+                    echo $shippingName;
+                endif;
+                ?>
+            </span>
+        </div>
+        <div class="subtitle">
+            <span class="title-text"><?= /* @escapeNotVerified */ __($shippingSubtitle) ?></span>
+        </div>
+        <div class="enviar">
+            <?php
+                $namec = $block->getShippingCustomerName($block->getOrderId());
+                if(strpos($shippingMethod,"pickupatstore_pickupatstore") !== false):
+                    $storeAddressSelected = $block->getShippingName($block->getOrderId());
+                    $completeAddress = $storeAddressSelected[1] . " - " . $storeAddressSelected[2];
+                    $address = $storeAddressSelected[2];
+                ?>
+                <?php
+                    if (isset($street)) {
+                        $address = $street;
+                    }
+                    ?>
+                    <span class="street text-bold"><?php echo $completeAddress; ?></span>
+                    <span class="street text-bold"><?php echo $address; ?></span>
+                    <span class="city text-bold"><?php echo $block->getStoreName($block->getOrderId()); ?></span>
+                <?php else:?>
+                    <span class="name text-bold"><?php  echo str_replace("Store Pickup","",$namec); ?></span>
+                    <span class="street text-bold"><?php print_r($block->getShippingCustomerStreet($block->getOrderId())); ?></span>
+                <?php endif;?>
+            <span class="country text-bold"><?= /* @escapeNotVerified */ __('Bolivia') ?></span>
+        </div>
+    <?php endif; ?>
+    <?php if ($block->getCardNumbers($block->getOrderId())): ?>
+    <div class="pago-container">
+    <div class="subtitle">
+        <span class="title-text"><?= /* @escapeNotVerified */ __('Datos de Pago') ?></span>
+    </div>
+    <div class="pago">
+        <?php $cardname = '';
+        $code = $block->getCardName($block->getOrderId());
+        ?>
+        <span class="text">
+            <?php
+            if ($code) {
+                switch ($code) {
+                    case "AE":
+                        echo "American Express";
+                        break;
+                    case "VI":
+                        echo "Visa";
+                        break;
+                    case "MC":
+                        echo "MasterCard";
+                        break;
+                    case "DI":
+                        echo "Discover";
+                        break;
+                    case "SM":
+                        echo "Switch/Maestro";
+                        break;
+                    case "MI":
+                        echo "Maestro International";
+                        break;
+                    default:
+                        echo $code;
+                }
+
+            }
+            ?>
+            </span>
+        <span class="text"><?php echo $block->getCardNumbers($block->getOrderId()); ?></span>
+    </div>
+    </div>
+    <?php endif; ?>
+</div>

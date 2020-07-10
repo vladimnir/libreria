@@ -1,0 +1,85 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Ppsoft\Level2\Block\Level2 $block */
+
+$catchild = $block->getCategoryChilds();
+$catparent = $block->getCategoryParent();
+$current = $block->getCurrentCategory();
+$description = $block->getCurrentCategory()->getDescription();
+$parentChilds = $block->getCategoryParentChilds();
+$arrayCat = array();
+foreach ($catchild as $cat)
+{
+    $arrayCat = $cat->getName();
+}
+?>
+<div class="level2-cat-left">
+    <div class="parent">
+        <span class="title">
+        <?php /* @escapeNotVerified */ echo __($catparent->getName());?>
+        </span>
+    </div>
+    <div class="categories">
+        <div class="current-container">
+        <div class="current">
+            <span><?php /* @escapeNotVerified */ echo __($current->getName());?></span>
+        </div>
+        <div class="childs">
+            <div class="current-childs">
+                <?php foreach ($catchild as $child): ?>
+                    <a href="<?= /* @escapeNotVerified */ $child->getUrl() ?>" class="child-url">
+                        <?php /* @escapeNotVerified */ echo __($child->getName() /*. " (" .$child->getProductCollection()->count() .")"*/);?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        </div>
+        <div class="not-current-children">
+            <?php foreach ($parentChilds as $pchild): ?>
+                <?php if ($pchild->getName() !== $current->getName()): ?>
+                  <div class="children">
+                      <span><?php /* @escapeNotVerified */ echo __($pchild->getName());?></span>
+                      <?php foreach ($pchild->getChildrenCategories() as $grandchild): ?>
+                          <a href="<?= /* @escapeNotVerified */ $grandchild->getUrl() ?>" class="child-url"><?php /* @escapeNotVerified */ echo __($grandchild->getName()  /*. " (" .$grandchild->getProductCollection()->count() .")"*/);?></a>
+                      <?php endforeach; ?>
+                  </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<div class="level2-cat-right">
+    <div class="title-main">
+        <span><?php /* @escapeNotVerified */ echo __($current->getName()); ?></span>
+    </div>
+    <ul class="categorias">
+        <?php foreach ($catchild as $cchild): ?>
+            <?php $catloaded = $block->getLoadedCategory($cchild->getId()); ?>
+        <li>
+            <a href="<?= /* @escapeNotVerified */ $cchild->getUrl() ?>" class="child-url"> 
+                <?php if ($catloaded->getImageUrl()) : ?>
+                    <img class="img-cat" src="<?php  echo $catloaded->getImageUrl(); ?>" />
+                <?php endif; ?>
+                <span><?php /* @escapeNotVerified */ echo __($cchild->getName());?></span>
+            </a>
+            
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php if ($_description = $block->getCurrentCategory()->getDescription()): ?>
+    <div class="description">
+        <span class="title">
+            <?= __('Descripción') ?>
+        </span>
+        <span class="content">
+           <?= /* @escapeNotVerified */ $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($block->getCurrentCategory(), $_description, 'description') ?>
+        </span>
+    </div>
+<?php endif; ?>

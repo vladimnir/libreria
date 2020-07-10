@@ -1,0 +1,85 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+$uri = $block->getRequest()->getRequestUri();
+?>
+<ul class="custom-links">
+    <?php if($uri == "/customer/account/edit/"): ?>
+   <li class="active">
+    <a class="a-datos" href="<?php echo $this->getUrl('customer/account/edit') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/miss-datos-activos.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Datos') ?></span><img class="red-arrow" src='<?php echo $this->getViewFileUrl('images/red-arrow-right.png'); ?>' alt="heart"></a>
+   </li>
+    <?php endif; ?>
+    <?php if($uri !== "/customer/account/edit/"): ?>
+        <li>
+            <a class="a-datos" href="<?php echo $this->getUrl('customer/account/edit') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mis-datos.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Datos') ?></span><img class="arrow-gray" src='<?php echo $this->getViewFileUrl('images/arrow-gray.png'); ?>' alt="heart"></a>
+        </li>
+    <?php endif; ?>
+    <?php if($uri == "/customer/address/index/"): ?>
+    <li class="active">
+        <a class="a-direcciones" href="<?php echo $this->getUrl('customer/address/index/') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mis-direcciones-active.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Direcciones') ?></span><img class="red-arrow" src='<?php echo $this->getViewFileUrl('images/red-arrow-right.png'); ?>' alt="heart"></a>
+    </li>
+    <?php endif; ?>
+    <?php if($uri !== "/customer/address/index/"): ?>
+        <li>
+            <a class="a-direcciones" href="<?php echo $this->getUrl('customer/address/index/') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mis-direcciones.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Direcciones') ?></span><img class="arrow-gray" src='<?php echo $this->getViewFileUrl('images/arrow-gray.png'); ?>' alt="heart"></a>
+        </li>
+    <?php endif; ?>
+    <?php if($uri == "/sales/order/history/"): ?>
+    <li class="active">
+        <a class="a-pedidos" href="<?php echo $this->getUrl('sales/order/history/') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mis-pedidos-active.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Pedidos') ?></span><img class="red-arrow" src='<?php echo $this->getViewFileUrl('images/red-arrow-right.png'); ?>' alt="heart"></a>
+    </li>
+    <?php endif; ?>
+    <?php if($uri !== "/sales/order/history/"): ?>
+        <li>
+            <a class="a-pedidos" href="<?php echo $this->getUrl('sales/order/history/') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mis-pedidos.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Pedidos') ?></span><img class="arrow-gray" src='<?php echo $this->getViewFileUrl('images/arrow-gray.png'); ?>' alt="heart"></a>
+        </li>
+    <?php endif; ?>
+    <?php if(($uri == "/wishlist/") || ($block->getRequest()->getRequestUri() == "/wishlist/index/index/")): ?>
+    <li class="active">
+        <a class="a-deseos" href="<?php echo $this->getUrl('wishlist') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mi-lista-de-desos-active.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mi Lista de Deseos') ?></span><img class="red-arrow" src='<?php echo $this->getViewFileUrl('images/red-arrow-right.png'); ?>' alt="heart"></a>
+    </li>
+    <?php endif; ?>
+    <?php if(($uri !== "/wishlist/") && ($block->getRequest()->getRequestUri() !== "/wishlist/index/index/")): ?>
+        <li>
+            <a class="a-deseos" href="<?php echo $this->getUrl('wishlist') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mi-lista-de-deseos.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mi Lista de Deseos') ?></span><img class="arrow-gray" src='<?php echo $this->getViewFileUrl('images/arrow-gray.png'); ?>' alt="heart"></a>
+        </li>
+    <?php endif; ?>
+    <?php if($uri == "/dismacclub/"): ?>
+    <li class="active">
+        <a class="a-balance" href="<?php echo $this->getUrl('dismacclub') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/balance-dismaclub-active.png'); ?>' alt="heart"><span class="datos"><?php echo __('Balance Dismac Club') ?></span><img class="red-arrow" src='<?php echo $this->getViewFileUrl('images/red-arrow-right.png'); ?>' alt="heart"></a>
+    </li>
+    <?php endif; ?>
+    <?php if($uri !== "/dismacclub/"): ?>
+        <li>
+            <a class="a-balance" href="<?php echo $this->getUrl('dismacclub') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/balance-dismaclub.png'); ?>' alt="heart"><span class="datos"><?php echo __('Balance Dismac Club') ?></span><img class="arrow-gray" src='<?php echo $this->getViewFileUrl('images/arrow-gray.png'); ?>' alt="heart"></a>
+        </li>
+    <?php endif; ?>
+    <?php if($uri == "/minicuotas/" || $uri == "/minicuotas/minicuotas/"): ?>
+    <li class="active">
+        <a class="a-minicuotas" href="<?php echo $this->getUrl('minicuotas') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mini-cuotas-active.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Minicuotas') ?></span><img class="red-arrow" src='<?php echo $this->getViewFileUrl('images/red-arrow-right.png'); ?>' alt="heart"></a>
+    </li>
+    <?php endif; ?>
+    <?php if($uri !== "/minicuotas/" && $uri !== "/minicuotas/minicuotas/"): ?>
+        <li>
+            <a class="a-minicuotas" href="<?php echo $this->getUrl('minicuotas') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/mis-minicuotas.png'); ?>' alt="heart"><span class="datos"><?php echo __('Mis Minicuotas') ?></span><img class="arrow-gray" src='<?php echo $this->getViewFileUrl('images/arrow-gray.png'); ?>' alt="heart"></a>
+        </li>
+    <?php endif; ?>
+</ul>
+<script type="text/javascript">
+//<![CDATA[
+    require([
+            'jquery'
+        ], function ($) {
+            $('.a-minicuotas').click(function() {
+                $('body').trigger('processStart');
+            });
+            $('.a-balance').click(function() {
+                $('body').trigger('processStart');
+            });
+        });
+//]]>
+</script>

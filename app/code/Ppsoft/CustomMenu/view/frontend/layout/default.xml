@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <container name="custom-menu" htmlClass="custom-menu desktop" htmlTag="div">
+            <block class="Ppsoft\CustomMenu\Block\Level2" name="custom.menu" template="Ppsoft_CustomMenu::categories.phtml"/>
+        </container>
+    </body>
+    <move element="custom-menu" destination="page.top" before="-"/>
+</page>

@@ -1,0 +1,93 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Address\Book $block */
+?>
+
+<div class="block block-addresses-default">
+    <div class="block-content">
+
+        <?php if ($_defPAddsses = $block->getDefaultShipping()): ?>
+            <div class="box box-address-shipping">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Dirección principal')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <address>
+                        <?= $block->getAddressHtml($block->getAddressById($_defPAddsses)) ?>
+                    </address>
+                </div>
+                <div class="box-actions">
+                    <span>
+                        <?= $block->escapeHtml(__('Direccion Principal')) ?>
+                    </span>
+                    <a class="action edit" href="<?= $block->escapeUrl($block->getAddressEditUrl($_defPAddsses)) ?>">
+                        <span><?= $block->escapeHtml(__('Editar')) ?></span>
+                    </a>
+                    <li class="item">
+                    <a class="action delete" href="#" role="delete-address" data-address="<?= $block->escapeHtmlAttr($_defPAddsses) ?>"> <img src="<?php echo $this->getViewFileUrl('images/delete-icon.png'); ?>" alt="delete icon"></a>
+                    </li>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="box box-shipping-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span></strong>
+                <div class="box-content">
+                    <p><?= $block->escapeHtml(__('You have no default shipping address in your address book.')) ?></p>
+                </div>
+            </div>
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="block block-addresses-list display">
+    <?php if ($_pAddsses = $block->getAdditionalAddresses()): ?>
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Direccion(es) Adicional(es)')) ?></strong></div>
+    <div class="block-content">
+            <ol class="items addresses">
+                <?php foreach ($_pAddsses as $_address): ?>
+                    <li class="item">
+                        <address>
+                            <?= $block->getAddressHtml($block->getAddressById($_address->getId())) ?>
+                        </address>
+                        <div class="item actions">
+                            <?php if ($_defPAddsses == null || true) : ?>
+                                <a class="action edit"
+                                   href="<?= $block->escapeUrl($block->getUrl('posaddress/address/setdefault', ['id' => $_address->getId()])) ?>"><span><?= $block->escapeHtml(__('Elegir como principal')) ?></span></a>
+                            <?php endif; ?>
+                            <a class="action edit" href="<?= $block->escapeUrl($block->getUrl('customer/address/edit', ['id' => $_address->getId()])) ?>"><span><?= $block->escapeHtml(__('Editar')) ?></span></a>
+                            <a class="action delete" href="#" role="delete-address" data-address="<?= $block->escapeHtmlAttr($_address->getId()) ?>"><img src="<?php echo $this->getViewFileUrl('images/delete-icon.png'); ?>" alt="delete icon"></a>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+    </div>
+    <?php endif ?>
+</div>
+<div class="volver mobile">
+    <a class="volver-link" href="<?php echo $block->getUrl('customer/account/index'); ?>">
+        <?php echo __('Volver') ?>
+    </a>
+</div>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        ".page-main": {
+            "address": {
+                "deleteAddress": "li.item a[role='delete-address']",
+                "deleteUrlPrefix": "<?= $block->escapeJs($block->escapeUrl($block->getDeleteUrl())) ?>id/",
+                "addAddress": "button[role='add-address']",
+                "addAddressLocation": "<?= $block->escapeJs($block->escapeUrl($block->getAddAddressUrl())) ?>"
+            }
+        }
+    }
+</script>

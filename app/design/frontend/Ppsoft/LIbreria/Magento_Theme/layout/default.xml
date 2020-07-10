@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="after.body.start">
+            <block name="google.tag.body" as="google.tag.body" template="Magento_Theme::googletagbody.phtml" before="-" />
+            <block name="calendar.config.tag.body" as="calendar.config.tag.body" template="Magento_Theme::calendar-config.phtml" before="-" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <referenceBlock name="product_list_toolbar">
+                <action method="setDefaultListPerPage">
+                    <argument name="limit" xsi:type="string">4</argument>
+                </action>
+            </referenceBlock>
+        </referenceContainer>
+        <referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_file" xsi:type="string">images/logo-disma.png</argument>
+                <argument name="logo_img_width" xsi:type="string">auto</argument>
+                <argument name="logo_img_height" xsi:type="string">auto</argument>
+            </arguments>
+        </referenceBlock>
+        <container name="help" htmlClass="help" htmlTag="div">
+            <block class="Magento\Customer\Block\Account\Customer" name="customer" template="Magento_Customer::account/customer.phtml"/>
+            <block class="Magento\Customer\Block\Account\AuthorizationLink" name="authorization" template="Magento_Customer::account/link/authorization.phtml"/>
+            <block class="Magento\Framework\View\Element\Html\Link" name="help_link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">Ayuda</argument>
+                    <argument name="path" xsi:type="string">ayuda.html</argument>
+                    <argument name="class" xsi:type="string">help-link</argument>
+                </arguments>
+            </block>
+        </container>
+      <!--  <container name="customsearch" htmlClass="searchicon" htmlTag="div">
+            <block name="customiconsearch" template="Ppsoft_Home::iconsearch.phtml"/>
+        </container>-->
+        <container name="container-mobile" htmlClass="scontainer-mobile" htmlTag="div">
+            <block name="mobile-container" template="Magento_Theme::mobile-container.phtml" />
+        </container>
+        <container name="container-popadd" htmlClass="containerpopup" htmlTag="div">
+            <block name="mobile-container" template="Magento_Theme::popupaddtocart.phtml" />
+        </container>
+        <container name="search-mobile" htmlClass="search-mobile" htmlTag="div">
+        <block name="myfooter.search" as="myfooter.search" template="Magento_Search::form.mini.mobile.phtml" />
+        </container>
+        <container name="pagar-cuotas-mobile" htmlClass="pagar-cuota" htmlTag="div" after="-">
+            <block class="Ppsoft\Home\Block\Link" name="cuotas-mobile" template="Magento_Theme::pagar-cuotas.phtml"/>
+        </container>
+        <referenceContainer name="header.container">
+            <block class="Magento\Cms\Block\Block" name="upper-cms" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">entrega-gratuita</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="header.panel">
+            <block class="Magento\Cms\Block\Block" name="atencion-cms" after="store_language">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">atencion-cliente</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Cms\Block\Block" name="cuotas" after="atencion-cms">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">pagar-cuotas</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="footer">
+            <block class="Magento\Cms\Block\Block" name="footer_columns" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer-columns</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Cms\Block\Block" name="footer-mobile-links" after="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer-mobile-links</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="before.body.end">
+            <container name="below-footer" htmlClass="below" htmlTag="div">
+            <container name="below-container" htmlClass="below-container" htmlTag="div">
+                <block class="Magento\Cms\Block\Block" name="atencion-cms-footer" after="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">atencion-cliente</argument>
+                    </arguments>
+                </block>
+            </container>
+            </container>
+        </referenceContainer>
+        <referenceBlock name="store.menu">
+            <block name="back-menu" template="Magento_Theme::back-menu.phtml" before="-"/>
+            <block name="menu-cart" template="Magento_Theme::menu-cart.phtml"/>
+        </referenceBlock>
+        <move element="copyright" destination="below-container" after="terms_link"/>
+        <move element="below-footer" destination="footer" after="-"/>
+        <move element="help" destination="header-wrapper" after="minicart"/>
+        <move element="customsearch" destination="header-wrapper" after="header.links"/>
+        <move element="header.links" destination="header-wrapper" after="help"/>
+        <move element="search-mobile" destination="header-wrapper" after="-"/>
+        <move element="pagar-cuotas-mobile" destination="header-wrapper" after="logo"/>
+        <move element="mobile-container" destination="header-wrapper" before="search-mobile"/>
+        <referenceBlock name="register-link" remove="true" />
+        <referenceBlock name="report.bugs" remove="true" />
+        <referenceBlock name="footer_links" remove="true" />
+        <referenceBlock name="brand-list-link" remove="true" />
+    </body>
+</page>

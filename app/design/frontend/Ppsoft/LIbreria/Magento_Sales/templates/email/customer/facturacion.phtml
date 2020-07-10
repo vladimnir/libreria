@@ -1,0 +1,7 @@
+
+<?php
+    $helper = $this->helper('Ppsoft\Email\Helper\CustomerData');
+    $order = $block->getOrder();
+    $data = $helper->getCustomerFacturacion($order->getId());
+?>
+<p><?php echo $data['name'] ?><br>NIT: <?php echo $data['nit'];?></p>

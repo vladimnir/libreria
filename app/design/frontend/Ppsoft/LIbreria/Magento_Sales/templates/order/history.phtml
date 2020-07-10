@@ -1,0 +1,189 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_orders = $block->getOrders(); ?>
+<?= $block->getChildHtml('info') ?>
+<?php if ($_orders && count($_orders)): ?>
+    <div class="table-wrapper orders-history">
+        <div class="data table table-order-items history" id="my-orders-table">
+            <div class="order-container">
+                <?php foreach ($_orders as $_order): ?>
+                    <div class="order-content">
+                       <div class="text-container">
+                        <span data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id"><?= /* @escapeNotVerified */ __('Pedido Nro. ') ?><?= /* @escapeNotVerified */ $_order->getRealOrderId() ?></span>
+                        <span data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col date"><?= /* @escapeNotVerified */ __('Realizado: ') ?><?= /* @escapeNotVerified */ $block->formatDate($_order->getCreatedAt()) ?></span>
+                        <?php $extra = $block->getChildBlock('extra.container'); ?>
+                        <?php if ($extra): ?>
+                            <?php $extra->setOrder($_order); ?>
+                            <?= /* @noEscape */ $extra->getChildHtml() ?>
+                        <?php endif; ?>
+                        <?php $number = number_format($_order->getGrandTotal(), '2', '.', ',');
+                        $split = explode (".", $number);
+                        $integer = $split[0];
+                        $decimal = $split[1];
+                        ?>
+                        <span class="myorder-total"><span class="total"><?= /* @escapeNotVerified */ __('Total: ') ?></span><span class="int"><?php echo $block->getCurrentCurrencySymbol() .'.&nbsp;'. $integer?>.</span><span class="decimal"><?php echo $decimal;?></span></span>
+                    </div>
+                    <div data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions desktop">
+                        <a href="<?= /* @escapeNotVerified */ $block->getViewUrl($_order) ?>" class="action view">
+                            <span><?= /* @escapeNotVerified */ __('Realizar Seguimiento del Pedido') ?></span>
+                        </a>
+                        <?php $cid = strval($block->getCustomerId());
+                        $ord = strval($_order->getId()); ?>
+                        <?php if ($block->checkFile($ord)): ?>
+                            <div class="info-container">
+                                <a href="<?= /* @escapeNotVerified */
+                                $block->getUrl('posorder/pdf/printer/'). 'id/' .$ord ?>"
+                                   class="invoice-info">
+                                        <?= /* @escapeNotVerified */
+                                            __('Descargar Factura') ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <?php $paymentMethod = $_order->getPayment()->getMethod(); ?>
+                        <?php if (($_order->getPaymentDataStatus() != 1) && ($paymentMethod == 'cashondelivery' || $paymentMethod == 'banktransfer' || $paymentMethod == 'checkmo')): ?>
+                            <div class="cart-button desktop">
+                                <a href="javascript:void(0)" class="payment-info" order-id="<?= $_order->getIncrementId() ?>">
+                                    <?= /* @escapeNotVerified */ __('ingresar datos de pago') ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php foreach ($_order->getAllVisibleItems() as $_item): ?>
+                    <?php if ($_item->getProduct()): ?>
+                        <div class="product-container">
+                           <div class="img-container">
+                                <a class="img-product" href="<?= /* @escapeNotVerified */ $_item->getProduct()->getProductUrl() ?>" >
+                                    <?php
+                                        $image = $this->helper('Magento\Catalog\Helper\Image')->init($_item->getProduct(), 'cart_page_product_minicuota')->setImageFile($_item->getProduct()->getImage())->getUrl();
+                                        if ($_item->getProduct()->getSku() == 'minicuota') {
+                                            $image = $this->getViewFileUrl('images/pago-de-minicuotas.png');
+                                        }
+                                    ?>
+                                    <img src="<?= /* @escapeNotVerified */ $image; ?>" /> 
+                                </a>
+                            </div>
+                            <div class="info-container">
+                                <span class="title">
+                                    <?= /* @escapeNotVerified */ __($_item->getProduct()->getName()) ?>
+                                </span>
+                                <span class="description">
+                                    <?= /* @escapeNotVerified */ __($_item->getProduct()->getSku()) ?>
+                                </span>
+                            </div>
+                            <div class="action-content mobile">
+                                <div data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                                    <a href="<?= /* @escapeNotVerified */ $block->getViewUrl($_order) ?>" class="action view">
+                                        <span><?= /* @escapeNotVerified */ __('Realizar Seguimiento del Pedido') ?></span>
+                                    </a>
+                                    <?php $cid = strval($block->getCustomerId());
+                                    $ord = strval($_order->getId()); ?>
+                                    <?php if ($block->checkFile($ord)): ?>
+                                        <div class="info-container">
+                                            <a href="<?= /* @escapeNotVerified */
+                                            $block->getUrl('posorder/pdf/printer/'). 'id/' .$ord ?>"
+                                               class="invoice-info">
+                                                    <?= /* @escapeNotVerified */
+                                                        __('Descargar Factura') ?>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <?php $paymentMethod = $_order->getPayment()->getMethod(); ?>
+                                    <?php if (($_order->getPaymentDataStatus() != 1) && ($paymentMethod == 'cashondelivery' || $paymentMethod == 'banktransfer' || $paymentMethod == 'checkmo')): ?>
+                                        <div class="cart-button">
+                                            <a href="javascript:void(0)" class="payment-info" order-id="<?= $_order->getIncrementId() ?>">
+                                                <?= /* @escapeNotVerified */ __('ingresar datos de pago') ?>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                     <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="message info empty"><span><?= /* @escapeNotVerified */ __('You have placed no orders.') ?></span></div>
+<?php endif ?>
+<div id="payment-modal" style="display:none;">
+    <div class="minicuotapin-wrap">
+        <form id="payment-modal-popup" method="post" data-mage-init='{"validation":{}}' data-hasrequired="* Campos requeridos" novalidate="novalidate">
+            <label><?= __('Número o ID de Transacción'); ?></label>
+            <input type="text" id="transaction_id" name="transaction_id" class="input-text required-entry" required>
+
+            <label><?= __('Monto'); ?></label>
+            <input type="text" id="payment_monto" name="payment_monto" class="input-text required-entry" required>
+
+            <label><?= __('Banco o Institución Financiera'); ?></label>
+            <input type="text" id="bank" name="bank" class="input-text required-entry" required>
+
+            <label><?= __('Carnet de Identidad'); ?></label>
+            <input type="text" id="identity_card" name="identity_card" class="input-text required-entry" required>
+
+            <div class="buttons-container">
+                <button class="minicatasubmit"><span><?= __('ENVIAR DATOS DE PAGO >'); ?></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+        //<![CDATA[
+        var order_id;
+        require([
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+            ], function ($, modal) {
+
+
+                paymentConfig = {
+                    type: 'popup',
+                    responsive: false,
+                    innerScroll: true,
+                    modalClass: 'getpayment-popup',
+                    title: $.mage.__('Ingresa los datos de tu transferencia o depósito Bancario'),
+                    buttons: []
+                };
+                modal(paymentConfig, $('#payment-modal'));
+
+                $(".payment-info").click(function () {
+                    order_id =jQuery(this).attr('order-id');
+                    $("#payment-modal").modal(paymentConfig).modal('openModal');
+                });
+
+                $("#payment-modal-popup").submit(function(e) {
+                    e.preventDefault();
+                    if ($(this).validation() && $(this).validation('isValid')) {
+                        $.ajax({
+                            url: '<?php echo $this->getUrl('paymentdata/order/paymentdata'); ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: $(this).serialize()+"&order_id=" + order_id,
+                            showLoader: true,
+                            success: function (response) {
+                                if (response.error == true) {
+                                    alert($.mage.__(response.messages));
+                                } else {
+                                    window.location.href = response.redirect_url;
+                                }
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
+                });
+            });
+        //]]>
+    </script>

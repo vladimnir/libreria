@@ -1,0 +1,374 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Ppsoft\Home\Block\RecentProduct $block */
+$start = date('Y-m-d' . ' 00:00:00', $block->getTimestamp());
+$end = date('Y-m-d' . ' 23:59:59', $block->getTimestamp());
+$collection = $block->getProductCollection()
+                        ->addFieldToFilter(
+                                            'added_at',
+                                            ['from' => $start, 'to' => $end]
+                                          )
+                        /*->addFieldToFilter(
+                                            'store_id',
+                                            ['eq' => $block->getCurrentStore()->getId()]
+                                          )*/
+                        ->setOrder('added_at', 'desc')
+                        ->setPageSize(7);
+
+$productDuplicate = array();
+$imageBlock =  $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
+
+$categoryCustom = $block->getCurrentCategory();
+if ($block->getCustomCategory()) {
+    $categoryCustom = $block->getCustomCategory();
+}
+?>
+<div class="reciente count-<?= count($collection) ?>">
+    <span class="title">
+    <?php /* @escapeNotVerified */ echo __('Visto recientemente');?>
+    </span>
+</div>
+<?php if ($block->getIsAjax()): ?>
+    <?php $inchildcategories = $block->getCategoryChilds(); ?>
+    <!--<div class="loading-mask" data-role="loader">
+        <div class="loader">
+             <img alt="<?//= __('Visto recientemente') ?>" src="<?//= $this->getViewFileUrl('images/loader-2.gif'); ?>"/>
+            <p><?//= __('Visto recientemente') ?></p>
+        </div>
+    </div>-->
+<?php else: ?>
+    <?php $inchildcategories = $block->getCustomCategoryChilds() ?>
+<?php endif; ?>
+<div class="recent-slider vistos-category-slider<?= ' cat-'.$categoryCustom->getId() ?> level-<?= $categoryCustom->getLevel() ?>">
+<?php foreach ($collection as $item): ?>
+    <?php
+        $productid =$item->getProductId();
+        //if (!in_array($productid, $productDuplicate)):
+            array_push($productDuplicate,$productid);
+            $products = $block->getLoadProduct($productid);
+            $levelcat = $categoryCustom->getLevel();
+            $currentCategory = $categoryCustom->getId();
+            $description = $categoryCustom->getDescription();
+            $categoryIds = $products->getCategoryIds();
+
+            //$inCategory = true;
+            //if ($block->getIsAjax()) {
+                $inCategory = false;
+
+                foreach ($categoryIds as $category) {
+                    if ($category == $currentCategory)
+                    {
+                        $inCategory = true;
+                    }
+                    if($levelcat == "5") {
+                        foreach ($inchildcategories as $childcategory) {
+                            if ($childcategory->getId() == $category)
+                            {
+                                $inCategory = true;
+                            }
+                        }
+                    }
+
+                }
+            //}
+    ?>
+        <?php if ($inCategory == true): ?>
+            <?php if ($products->getTypeId() != "virtual" && $products->getStatus() == 1): ?>
+                <div class="recent-container">
+                    <a class="img-product" href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>" ><img src="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Image')->init($products, 'category_page_list')->setImageFile($products->getImage())->getUrl(); ?>" /> </a>
+                    <strong class="product-item-name">
+                            <a title="<?= $block->escapeHtml($products->getName()) ?>"
+                               href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>"
+                               class="product-item-link" id="item-name">
+                                <?= $block->escapeHtml($products->getName()) ?>
+                            </a>
+                    </strong>
+                    <div class="sku-container sku">
+                        <span class="sku value">
+                                <?= $block->escapeHtml($products->getSku()) ?>
+                            </span>
+                    </div>
+
+                    <div class="cuotos-price">
+                        <?php
+                        $number = number_format($products->getPrice(), '2', '.', ',');
+                        $split = explode (".", $number);
+                        $integer = $split[0];
+                        $decimal = $split[1];
+
+                        if ($products->getSpecialPrice()) {
+                            $numberSpecial = number_format($products->getSpecialPrice(), '2', '.', ',');
+                            $splitSpecial = explode (".", $numberSpecial);
+                            $integerSpecial = $splitSpecial[0];
+                            $decimalSpecial = $splitSpecial[1];
+                        }
+                        ?>
+
+                        <div class="price-before">
+                            <?php if($products->getSpecialPrice()):?>
+                                <span class="price-currency"><p class="antes">Antes:</p>&nbsp;<?= __('%1. %2.<span class="decimal">%3</span>',$block->getCurrentCurrencySymbol(), $integer, $decimal) ?></span>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="price-now">
+                            <span class="alcontado">
+                                <?= __('Ahora:&nbsp;') ?>
+                            </span>
+                            <span class="int"><?php echo __('Bs.'); ?><?php echo ($products->getSpecialPrice() ? $integerSpecial : $integer) ?>.</span>
+                            </span>
+                            <span class="decimal">
+                                <?php echo ($products->getSpecialPrice() ? $decimalSpecial : $decimal) ?>
+                            </span>
+                        </div>
+                        <?php
+                        $cuota_uno =   $products->getData('minicuota_cuota_uno');
+                        $monto_uno =   $products->getData('minicuota_monto_uno');
+                        $cuota_dos =   $products->getData('minicuota_cuota_dos');
+                        $monto_dos =   $products->getData('minicuota_monto_dos');
+                        $cuota_tres =   $products->getData('minicuota_cuota_tres');
+                        $monto_tres =   $products->getData('minicuota_monto_tres');
+                        $cuota_inicial =   $products->getData('cuota_inicial');
+                        ?>
+                        <?php if ($cuota_inicial): ?>
+                        <img class="minicuotas" src="<?php echo $this->getViewFileUrl('images/minicuotashigh.png'); ?>" alt="cuotas icon">
+                    </div>
+                    <div class="cuote-wrap">
+                        <?php endif; ?>
+                        <?php  /* if ($cuota_uno && $monto_uno): ?>
+                            <div class="cuote-price">
+                                <?php
+                                $number = number_format($monto_uno, '2', '.', ',');
+                                $split = explode(".", $number);
+                                $integer = $split[0];
+                                $decimal = $split[1]; ?>
+                                <span style="visibility: hidden; position: absolute;" class="pixel-price"><?php echo $integer;?></span>
+                                <span class="price-currency int"><span class="bs"><?php echo __('Bs'); ?></span><?= $integer ?>.</span>
+                                <span class="price-currency int"><?= $integer ?>.</span>
+                                <span class="decimal"><?php echo $decimal; ?></span>
+                                <span class="cuote-month"><?= $cuota_uno ?> <span class="cuote-mulitply"><?php echo __('x '); ?></span></span>
+                                <span class="cuote-permonth"><?php echo __('por mes'); ?></span>
+                            </div>
+                        <?php endif; */  ?>
+                        <?php /* if ($cuota_dos && $monto_dos): ?>
+                            <div class="cuote-price">
+                                <?php
+                                $number = number_format($monto_dos, '2', '.', ',');
+                                $split = explode(".", $number);
+                                $integer = $split[0];
+                                $decimal = $split[1]; ?>
+                                <span class="cuote-month"><?= $cuota_dos ?> <span class="cuote-mulitply"><?php echo __('x '); ?></span></span>
+                                <span class="price-currency int"><?= $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer ?>.</span>
+                                <span class="decimal"><?php echo $decimal; ?></span>
+                                <span class="cuote-permonth"><?php echo __('por mes'); ?></span>
+                            </div>
+                        <?php endif; */ ?>
+                        <?php if ($cuota_tres && $monto_tres): ?>
+                            <div class="cuote-price">
+                                <?php
+                                $number = number_format($monto_tres, '2', '.', ',');
+                                $split = explode(".", $number);
+                                $integer = $split[0];
+                                $decimal = $split[1]; ?>
+                                <span style="visibility: hidden; position: absolute;" class="pixel-price"><?php echo $integer;?></span>
+                                <span class="price-currency int"><span class="bs"><?php echo __('Bs.'); ?></span>&nbsp;<?= $integer ?>.</span>
+                                <sup class="decimal"><?php echo $decimal; ?></sup>
+                                <span class="cuote-month"><span class="cuote-mulitply">&nbsp;<?php echo __('x'); ?>&nbsp;</span><?= $cuota_tres ?><span class="months">&nbsp;<?php echo __('meses'); ?></span></span>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($cuota_inicial): ?>
+                            <div class="cuote-price inicial">
+                                <?php
+                                $number = number_format($cuota_inicial, '2', '.', ',');
+                                $split = explode(".", $number);
+                                $integer = $split[0];
+                                $decimal = $split[1]; ?>
+                                <span class="cuota-inicial"><?php echo __('Inicial:'); ?></span>
+                                <span class="price-currency"><?= __('Bs.')?><?= $integer ?>.</span>
+                                <sup class="decimal"><?php echo $decimal; ?></sup>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+
+
+                <!--show icon shipping-->
+                <?php
+                    $codigos = false;
+                    if($products->getCustomAttribute('disponibilidad')) {
+                        $disponibilidad = $products->getCustomAttribute('disponibilidad')->getValue();
+                        $codigos = $block->availableAlmacenes($disponibilidad);
+                    }
+                ?>
+                <?php
+                    $cuarentena = '';
+                    $isInStock = true;
+
+                    switch ($codigos) {
+                        case 1:
+                            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/deliver-green-category-icon.svg');
+                            $homeDelivery = __('<span style="color:#00B41A;">Disponible</span> para envío a domicilio');
+
+                            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-green-category-icon.svg');
+                            $pickUpStore = __('<span style="color:#00B41A;">Disponible</span> para recojo en tienda');
+
+                            $classHome = 'disponible';
+                            $classPick = 'disponible';
+                            break;
+                        case 2:
+                            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/deliver-green-category-icon.svg');
+                            $homeDelivery = __('<span style="color:#00B41A;">Disponible</span> para envío a domicilio');
+
+                            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-grey-category-icon.svg');
+                            $pickUpStore = __('<span style="color:#ec1f26;">No disponible</span> para recojo en tienda');
+
+                            $classHome = 'disponible';
+                            $classPick = 'no-disponible';
+                            break;
+                        case 3:
+                            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/delivery-grey-category-icon.svg');
+                            $homeDelivery = __('<span style="color:#ec1f26;">No disponible</span> para envío a domicilio');
+
+                            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-green-category-icon.svg');
+                            $pickUpStore = __('<span style="color:#00B41A;">Disponible</span> para recojo en tienda');
+
+                            $classHome = 'no-disponible';
+                            $classPick = 'disponible';
+                            $cuarentena = __('NO DISPONIBLE POR PERIODO DE CUARENTENA');
+                            break;
+                        case 0:
+                            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/delivery-grey-category-icon.svg');
+                            $homeDelivery = __('<span style="color:#ec1f26;">No disponible</span> para envío a domicilio');
+
+                            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-grey-category-icon.svg');
+                            $pickUpStore = __('<span style="color:#ec1f26;">No disponible</span> para recojo en tienda');
+
+                            $classHome = 'no-disponible';
+                            $classPick = 'no-disponible';
+                            $cuarentena = __('NO DISPONIBLE POR PERIODO DE CUARENTENA');
+                            $isInStock = true;
+                            break;
+                    }
+                ?>
+                    <div class="entrega-gratuita">
+                        <span class="content-img">
+                            <img src="<?= $iconHomeDelivery ?>" alt="truck icon"/>
+                        </span>
+                        <span class="text first <?= $classHome ?>"><?= $homeDelivery; ?></span>
+                    </div>
+                    <div class="entrega-gratuita">
+                        <span class="content-img">
+                            <img src="<?= $iconPickUpStore ?>" alt="truck icon"/>
+                        </span>
+                        <span class="text first <?= $classPick ?>"><?= $pickUpStore; ?></span>
+                    </div>
+                        <div class="entrega-gratuita cuarentena">
+                            <strong><?= $cuarentena ?></strong>
+                        </div>
+                <!--end show icon shipping-->
+                <?php if ($isInStock): ?>
+                    <div class="cart">
+                        <?php $postParams = $block->getAddToCartPostParams($products); ?>
+                        <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+                            <?php echo $block->getBlockHtml('formkey')?>
+                            <button type="submit"
+                                    title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                    class="action tocart primary">
+                                <span><?php /* @escapeNotVerified */ echo __('Agregar Al Carrito >') ?></span>
+                            </button>
+                        </form>
+                    </div>
+                <?php endif; ?>
+            </div>
+    <?php endif; ?>
+    <?php endif; ?>
+    <?php //endif; ?>
+<?php endforeach; ?>
+</div>
+<?php if ($_description = $categoryCustom->getDescription()) : ?>
+    <?php if (!$block->getMarca()): ?>
+    <div class="description cat">
+        <span class="title">
+            <?= __('Descripción') ?>
+        </span>
+        <span class="content">
+           <?= /* @escapeNotVerified */ $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($categoryCustom, $_description, 'description') ?>
+        </span>
+    </div>
+    <?php endif; ?>
+<?php endif; ?>
+<?php if ($block->getMarca()): ?>
+    <?php $description = $block->getMarcaDescription(); ?>
+    <?php if ($description): ?>
+        <div class="description cat marca">
+            <span class="title">
+                <?= __('Descripción') ?>
+            </span>
+            <span class="content">
+               <?= /* @escapeNotVerified */ $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($categoryCustom, $description, 'description') ?>
+            </span>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+<script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                   "bindSubmit": true
+                 }
+            }
+        }
+ </script>
+<script type="text/javascript">
+    //<![CDATA[
+    require([
+        'jquery',
+        'domReady!',
+        'slick'
+    ], function($){
+        $(document).ready(function(){
+            $('.vistos-category-slider').slick({
+                infinite: true,
+                speed: 300,
+                slidesToShow: 4,
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+            <?php if($block->getIsAjax()): ?>
+                $.ajax({
+                    url: '<?= /* @escapeNotVerified */ $this->getUrl('recomendados/recomendados/index') ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {coleccion: '<?= count($collection) ?>', cat_id: <?= $categoryCustom->getId() ?>},
+                    showLoader: true,
+                    success: function (response) {
+                        if (!response.error) {
+                            $('.recomendados-container.vistos').html(response.output);
+                        }
+                    }
+                });
+            <?php endif; ?>
+        });
+    });
+    //]]>
+</script>

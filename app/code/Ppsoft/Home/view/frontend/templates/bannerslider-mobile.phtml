@@ -1,0 +1,51 @@
+<?php
+/**
+ * Copyright © 2018 Ppsoft. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+$autoPlaySpeed  = 3000;
+$autoPlay       = 0;
+$dots           = 1;
+$infinite       = 1;
+$speed          = 300;
+$arrows         = 0;
+
+if ($block->getData('auto_play_speed')) {
+    $autoPlaySpeed  = $block->getData('auto_play_speed');
+}
+if ($block->getData('auto_play')) {
+    $autoPlay       = $block->getData('auto_play');
+}
+if ($block->getData('dots')) {
+    $dots         = $block->getData('dots');
+}
+if ($block->getData('infinite')) {
+    $infinite       = $block->getData('infinite');
+}
+if ($block->getData('speed')) {
+    $speed       = $block->getData('speed');
+}
+if ($block->getData('arrows')) {
+    $arrows       = $block->getData('arrows');
+}
+?>
+<script>
+    require([
+        'jquery',
+        'domReady!',
+        'slick'
+    ], function($){
+        $(document).ready(function(){
+            $('.banners-home-mobile').slick({
+                dots: <?php if ($dots) { ?> true <?php } else { ?> false <?php }?>,
+                infinite: <?php if ($infinite) { ?> true <?php } else { ?> false <?php }?>,
+                speed: <?= $speed ?>,
+                arrows: <?php if ($arrows) { ?> true <?php } else { ?> false <?php }?>,
+                slidesToShow: 1,
+                autoplay: <?php if ($autoPlay) { ?> true <?php } else { ?> false <?php }?>,
+                autoplaySpeed: <?= $autoPlaySpeed; ?>,
+                adaptiveHeight: true
+            });
+        });
+    });
+</script>

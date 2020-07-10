@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+$stock = "out of stock";
+if($block->getProduct()->getExtensionAttributes()->getStockItem()->getQty() >= 1)
+{
+    $stock = "in stock";
+}
+$split = explode (".", $block->escapeHtmlAttr($block->stripTags($block->getProduct()->getShortDescription())));
+$short = $split[0];
+?>
+<meta property="og:type" content="product" />
+<meta property="og:title" content="<?= $block->escapeHtmlAttr($block->stripTags(strtolower($block->getProduct()->getName()))) ?>" />
+<meta property="og:image" content="<?= $block->escapeUrl($block->getImage($block->getProduct(), 'product_base_image')->getImageUrl()) ?>" />
+<meta property="og:description" content="<?= $short ?>" />
+<meta property="product:brand" content="Sin atributo Marca">
+<meta property="product:condition" content="new">
+<meta property="og:url" content="<?= $block->escapeUrl($block->getProduct()->getProductUrl()) ?>" />
+<meta property="product:retailer_item_id" content="<?= $block->getProduct()->getId() ?>">
+<meta property="product:availability" content="<?= $stock ?>">
+<?php if ($priceAmount = $block->getProduct()->getFinalPrice()):?>
+    <meta property="product:price:amount" content="<?= /* @escapeNotVerified */ $priceAmount ?>"/>
+    <?= $block->getChildHtml('meta.currency') ?>
+<?php endif;?>

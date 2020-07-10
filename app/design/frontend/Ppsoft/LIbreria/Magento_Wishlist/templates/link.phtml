@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var \Ppsoft\Home\Block\Link $block */
+?>
+<?php if ($block->getCOrders()):
+?>
+<li class="link wishlist" data-bind="scope: 'wishlist'">
+    <a href="<?php echo $this->getUrl('sales/order/history') ?>" class="orders"><?php /* @escapeNotVerified */ echo __('Mi lista de compras') ?>
+
+        <span class="order counter qty"><?php echo $block->getCOrders()->count(); ?><?php /* @escapeNotVerified */ echo __(' Ordenes') ?></span>
+
+    </a>
+</li>
+<?php endif; ?>
+<?php if (!$block->getCOrders()):
+    ?>
+    <li class="link wishlist" data-bind="scope: 'wishlist'">
+        <a href="<?php echo $this->getUrl('sales/order/history') ?>" class="orders"><?php /* @escapeNotVerified */ echo __('Mi lista de compras') ?>
+
+            <span class="order counter qty"><?php echo $block->getCOrders(); ?><?php /* @escapeNotVerified */ echo __(' Ordenes') ?></span>
+
+        </a>
+    </li>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "wishlist": {
+                        "component": "Magento_Wishlist/js/view/wishlist"
+                    }
+                }
+            }
+        }
+    }
+
+</script>

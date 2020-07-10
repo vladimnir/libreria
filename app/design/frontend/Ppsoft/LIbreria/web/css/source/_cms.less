@@ -1,0 +1,1420 @@
+& when (@media-common = true) {
+  /* CMS Start Here change*/
+  .catalog-category-view, .cms-page {
+    * {
+      box-sizing: border-box;
+    }
+    .cms-images {
+      margin-bottom: 25px;
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+    .retiro-cms {
+      padding: 12px 0 0 80px;
+      margin-bottom: 100px;
+      background: url('@{baseDir}images/cms/retiro-tienda.png') 0 2px no-repeat;
+      h2 {
+        font-size: 31px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #000;
+        margin-top: 0;
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #000;
+      }
+      .retiro-content {
+        p {
+          font-size: 15px;
+          line-height: 1.6;
+          color: #000;
+        }
+      }
+    }
+    .cms-content {
+      h2 {
+        margin: 0 0 30px;
+        font-size: 31px;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #000;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        margin: 0 0 20px;
+      }
+      h4 {
+        font-size: 15px;
+        font-weight: bold;
+        color: #000;
+        margin: 0 0 18px;
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #000;
+        margin: 0 0 20px;
+      }
+      ul,
+      li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul.pdf-links {
+        padding: 10px 0 0 83px;
+        margin: 0 0 20px;
+        li {
+          font-size: 16px;
+          background: url('@{baseDir}images/pdf.png') 0 2px no-repeat;
+          padding: 0 0 0 20px;
+          margin: 0 0 8px;
+          line-height: 1.5;
+          a {
+            color: #0a26cb;
+            text-decoration: underline;
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+      .costos-de-entrega {
+        padding: 12px 0 0 80px;
+        background: url('@{baseDir}images/cms/envios-domicilio.png') 0 2px no-repeat;
+      }
+      .terms-conditions,
+      .aviso-de-privacidad {
+        h4 {
+          font-size: 12px;
+          margin: 0 0 20px;
+        }
+        p {
+          font-size: 12px;
+          line-height: 1.9;
+          a {
+            color: #0a26cb;
+          }
+          &.roman-list {
+            span {
+              font-weight: 700;
+              width: 34px;
+              display: inline-block;
+            }
+          }
+        }
+      }
+      .responsive-tab {
+        .resp-tab {
+          width: 306px;
+          float: left;
+          li {
+            margin: 0 0 8px;
+            a {
+              display: block;
+              color: #000;
+              text-decoration: none;
+              line-height: 1.7;
+              padding: 12px 35px 12px 10px;
+              font-size: 16px;
+              font-weight: 600;
+              background-repeat: no-repeat;
+              background-position: 11px 8px;
+              &.camprar-1 {
+                background-image: url('@{baseDir}images/cms/busca.png');
+              }
+              &.active,
+              &:hover {
+                background-color: #dcdcdc;
+                text-decoration: none;
+                position: relative;
+                &:after {
+                  font-family: 'luma-icons';
+                  content: '\e608';
+                  font-size: 18px;
+                  font-weight: 400;
+                  line-height: 30px;
+                  color: #000;
+                  position: absolute;
+                  right: 10px;
+                  top: 50%;
+                  margin-top: -15px;
+                }
+              }
+            }
+          }
+        }
+        .resp-tab-content {
+          width: calc(~'100% - 306px');
+          float: right;
+          padding-left: 20px;
+          .tab-item {
+            display: none;
+            &.active {
+              display: block;
+            }
+          }
+        }
+      }
+
+      .installation-tab {
+        .resp-tab {
+          li {
+            a {
+              padding: 30px 37px 30px 90px;
+              background-position-y: 50%;
+              &.tab1 {
+                background-image: url('@{baseDir}images/cms/campanas.png');
+              }
+              &.tab2 {
+                background-image: url('@{baseDir}images/cms/cocinas.png');
+              }
+              &.tab3 {
+                background-image: url('@{baseDir}images/cms/lavadoras.png');
+              }
+              &.tab4 {
+                background-image: url('@{baseDir}images/cms/calefones.png');
+              }
+              &.tab5 {
+                background-image: url('@{baseDir}images/cms/refrigeradores.png');
+              }
+              &.tab6 {
+                background-image: url('@{baseDir}images/cms/aire.png');
+              }
+              &.tab7 {
+                background-image: url('@{baseDir}images/cms/tvyvideo.png');
+              }
+            }
+          }
+        }
+        .resp-tab-content {
+          background: #dcdcdc;
+          padding: 30px 20px 30px 50px;
+          min-height: 712px;
+          .item-content {
+            padding: 0 0 0 30px;
+            .intall-info {
+              li {
+                &:extend(.abs-add-clearfix all);
+                margin-bottom: 20px;
+                label {
+                  font-size: 16px;
+                  font-weight: 700;
+                  padding-right: 20px;
+                  margin-bottom: 20px;
+                  display: block;
+                }
+                p {
+                  font-size: 16px;
+                  line-height: 1.5;
+                  &.info-price {
+                    font-size: 24px;
+                    font-weight: 600;
+                  }
+                }
+                &.info-col2 {
+                  label {
+                    float: left;
+                    width: 28%;
+                    margin-bottom: 0;
+                  }
+                  p {
+                    float: left;
+                    width: 72%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .preguntas-tab {
+        .resp-tab {
+          width: 35%;
+          ul {
+            li {
+              margin: 0;
+              a {
+                background-position-y: 50%;
+                padding: 25px 35px 25px 62px;
+              }
+              .pf1 {
+                background-image: url('@{baseDir}images/cms/registropf.png');
+              }
+              .pf2 {
+                background-image: url('@{baseDir}images/cms/recuperarpf.png');
+              }
+              .pf3 {
+                background-image: url('@{baseDir}images/cms/comocomprarpf.png');
+              }
+              .pf4 {
+                background-image: url('@{baseDir}images/cms/enviospf.png');
+              }
+              .pf5 {
+                background-image: url('@{baseDir}images/cms/opcionespf.png');
+              }
+              .pf6 {
+                background-image: url('@{baseDir}images/cms/sintarjetapf.png');
+              }
+              .pf7 {
+                background-image: url('@{baseDir}images/cms/finalizarpf.png');
+              }
+              .pf8 {
+                background-image: url('@{baseDir}images/cms/facturapf.png');
+              }
+              .pf9 {
+                background-image: url('@{baseDir}images/cms/minicuotaspf.png');
+              }
+              .pf10 {
+                background-image: url('@{baseDir}images/cms/onlinepf.png');
+              }
+            }
+          }
+        }
+        .resp-tab-content {
+          min-height: 968px;
+          padding: 0;
+          padding-top: 20px;
+          width: 65%;
+          .item-content {
+            .intall-info {
+              li {
+                p {
+                  display: inline-block;
+                  margin: 0 0 10px;
+                }
+                .bold {
+                  font-weight: bold;
+                  color: #000;
+                  font-size: 16px;
+                }
+                .blue {
+                  font-size: 16px;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+      .comprar-tab {
+        .resp-tab {
+          width: 400px;
+          li {
+            margin: 0 0 25px;
+            a {
+              padding: 30px 37px 30px 85px;
+              background-position-y: 50%;
+              &.tab1 {
+                background-image: url('@{baseDir}images/cms/buscarojo.png');
+              }
+              &.tab2 {
+                background-image: url('@{baseDir}images/cms/agregarojo.png');
+              }
+              &.tab3 {
+                background-image: url('@{baseDir}images/cms/revisarojo.png');
+              }
+              &.tab4 {
+                background-image: url('@{baseDir}images/cms/iniciarojo.png');
+              }
+              &.tab5 {
+                background-image: url('@{baseDir}images/cms/eligemrojo.png');
+              }
+              &.tab6 {
+                background-image: url('@{baseDir}images/cms/eligeprojo.png');
+              }
+              &.tab7 {
+                background-image: url('@{baseDir}images/cms/revisatrojo.png');
+              }
+              &.tab8 {
+                background-image: url('@{baseDir}images/cms/listorojo.png');
+              }
+            }
+          }
+        }
+        .resp-tab-content {
+          width: calc(~'100% - 400px');
+          #side_tab1.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/buscablanco.png');
+          }
+          #side_tab2.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/agregablanco.png');
+          }
+          #side_tab3.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/revisablanco.png');
+          }
+          #side_tab4.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/iniciablanco.png');
+          }
+          #side_tab5.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/eligemblanco.png');
+          }
+          #side_tab6.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/eligepblanco.png');
+          }
+          #side_tab7.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/revisatblanco.png');
+          }
+          #side_tab8.tab-item .item-content {
+            background-image: url('@{baseDir}images/cms/listoblanco.png');
+          }
+          .tab-item {
+            margin: 0px;
+            .item-content {
+              background-repeat: no-repeat;
+              background-position: 0 0;
+              padding: 10px 0 0 54px;
+            }
+            h3 {
+              margin: 0 0 18px;
+              font-size: 18px;
+              font-weight: 700;
+              color: #000;
+            }
+            p {
+              font-size: 16px;
+              line-height: 1.5;
+              margin: 0 0 15px;
+            }
+            a {
+              text-decoration: underline;
+              color: #0a26cb;
+            }
+            ul,
+            ol {
+              padding: 0 0 0 17px;
+              margin: 0 0 18px;
+              li {
+                color: #000;
+                font-size: 16px;
+                margin: 0 0 3px;
+              }
+            }
+            ul {
+              li {
+                list-style: disc;
+              }
+            }
+            ol {
+              padding: 0 0 0 0;
+              counter-reset: item;
+              li {
+                counter-increment: item;
+                &:before {
+                  display: inline-block;
+                  width: 18px;
+                  padding-right: 0.5em;
+                  font-weight: bold;
+                  text-align: right;
+                  content: counter(item) ".";
+                }
+              }
+            }
+          }
+        }
+      }
+      &.cambios-y-devoluciones {
+        &:extend(.abs-add-clearfix all);
+        h2 {
+          font-size: 30px;
+          margin: 0 0 20px;
+          line-height: 1.5;
+        }
+        .cambios-content {
+          padding: 5px 0 0 80px;
+          margin-bottom: 50px;
+          background: url('@{baseDir}images/cms/cambio-dismac.png') 0 0 no-repeat;
+          p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 30px;
+            span.text-underline {
+              text-decoration: underline;
+            }
+            &.cambios-list {
+              line-height: 1.9;
+            }
+            &.cambios-note {
+              font-size: 14px;
+              margin-bottom: 50px;
+            }
+          }
+          h3 {
+            font-size: 24px;
+            margin: 0 0 20px;
+          }
+          .cambios-moreinfo {
+            margin-bottom: 30px;
+            color: #000;
+            font-weight: 600;
+            line-height: 30px;
+          }
+        }
+        .cambios-moreinfo-content {
+          display: none;
+          color: #000;
+        }
+      }
+      &.compras-seguras {
+        h2 {
+          margin: 0 0 30px;
+        }
+        .cambios-content {
+          padding: 5px 0 0 80px;
+          margin-bottom: 50px;
+          h3 {
+            font-size: 24px;
+            margin: 0 0 20px;
+          }
+          p {
+            margin: 0 0 30px;
+            line-height: 30px;
+            font-size: 16px;
+          }
+          &.icon-1 {
+            background: url('@{baseDir}images/cms/1.png') 0 0 no-repeat;
+          }
+          &.icon-2 {
+            background: url('@{baseDir}images/cms/2.png') 0 0 no-repeat;
+          }
+          .cambios-content-logo {
+            margin: 0 0 30px;
+          }
+        }
+      }
+      &.metodos-de-pago {
+        padding-top: 20px;
+        .metodos-content {
+          padding: 5px 0 0 45px;
+          margin-bottom: 50px;
+          h3 {
+            font-size: 24px;
+            margin: 0 0 10px;
+          }
+          p {
+            margin: 0 0 30px;
+            line-height: 30px;
+            font-size: 16px;
+            a {
+              text-decoration: underline;
+              color: #0a26cb;
+            }
+            &.metodos-bottom-text {
+              padding-top: 40px;
+            }
+          }
+          &.metodos-content-sintesis {
+            background: url('@{baseDir}images/cms/sintesisnewred.png') 0 0 no-repeat;
+            background-size: 36px auto;
+          }
+          &.metodos-content-qr {
+            background: url('@{baseDir}images/cms/qrnewred.png') 0 0 no-repeat;
+            background-size: 36px auto;
+          }
+          &.metodos-content-1 {
+            background: url('@{baseDir}images/cms/metodos-de-pago-1.png') 0 0 no-repeat;
+            background-size: 36px auto;
+          }
+          &.metodos-content-2 {
+            background: url('@{baseDir}images/cms/metodos-de-pago-2.png') 0 0 no-repeat;
+            background-size: 36px auto;
+          }
+          &.metodos-content-3 {
+            background: url('@{baseDir}images/cms/metodos-de-pago-3.png') 0 0 no-repeat;
+            background-size: 36px auto;
+          }
+          &.metodos-content-4 {
+            background: url('@{baseDir}images/cms/metodos-de-pago-4.png') 0 0 no-repeat;
+            background-size: 36px auto;
+          }
+        }
+      }
+      .garantia-acc {
+        h3 {
+
+          cursor: pointer;
+          &:after {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-family: 'luma-icons';
+            font-size: 20px;
+            content: '\e622';
+            margin-left: 7px;
+            font-weight: 400;
+          }
+
+        }
+        .garantia-acc-content {
+          display: none;
+        }
+      }
+      &.precios-bajos {
+        .precios-bajos-banner {
+          &:extend(.abs-add-clearfix all);
+          padding: 0 0 30px;
+          img:first-child {
+            float: left;
+            width: 51%;
+          }
+          img:last-child {
+            float: right;
+            width: 48%;
+          }
+        }
+        h2 {
+          font-size: 24px;
+          text-transform: none;
+          margin-bottom: 10px;
+        }
+        p {
+          font-size: 18px;
+          line-height: 1.3;
+          margin-bottom: 30px;
+        }
+        .precios-bajos-acc {
+          padding: 20px 0 100px;
+          .precios-bajos-acc-content {
+            display: none;
+          }
+          h3 {
+            font-size: 24px;
+            margin: 50px 0 15px;
+            cursor: pointer;
+            &:first-child {
+              margin-top: 0;
+            }
+            span {
+              cursor: pointer;
+              &:after {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-family: 'luma-icons';
+                font-size: 20px;
+                content: '\e622';
+                margin-left: 7px;
+                font-weight: 400;
+              }
+            }
+            &.show {
+              span {
+                &:after {
+                  content: '\e621';
+                }
+              }
+            }
+          }
+          p {
+            font-size: 16px;
+            line-height: 1.8;
+          }
+        }
+      }
+    }
+    .contactos-content {
+      h2{
+        font-size: 31px;
+        font-weight: bold;
+        margin: 25px 0 25px;
+      }
+      .contactos-cliente-tab {
+        ul {
+          .telefonos {
+            background-image: url('@{baseDir}images/cms/telefono.png');
+            padding-left: 55px;
+            background-repeat: no-repeat;
+            background-size: 40px;
+            padding-top: 5px;
+          }
+          .whatsapp {
+            background-image: url('@{baseDir}images/cms/whatsapp.png');
+            padding-left: 55px;
+            background-repeat: no-repeat;
+            background-size:40px;
+            padding-top: 5px;
+          }
+          .correos {
+            background-image: url('@{baseDir}images/cms/correo.png');
+            padding-left: 55px;
+            background-repeat: no-repeat;
+            background-size: 40px;
+            padding-top: 5px;
+          }
+          li {
+            padding-bottom: 20px;
+            label {
+              font-weight: bold;
+              font-size: 18px;
+            }
+            p {
+              font-size: 16px;
+              display: inline-block;
+              margin-top: 20px;
+            }
+          }
+        }
+      }
+    }
+    .servicios-content {
+      h2 {
+        font-size: 25px;
+        text-transform: none;
+        margin: 25px 0 25px;
+      }
+      .servicios-tab {
+        ul {
+          .garantia {
+            background-image: url('@{baseDir}images/cms/garantia-dismac.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+          .minicuotas {
+            background-image: url('@{baseDir}images/cms/minicuotas-dismac.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+          .dismaclub {
+            background-image: url('@{baseDir}images/cms/dismac-club.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+          .cambios {
+            background-image: url('@{baseDir}images/cms/cambio-dismac.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+          .precios-bajos {
+            background-image: url('@{baseDir}images/cms/precio-bajo.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+          .entrega-domicilio {
+            background-image: url('@{baseDir}images/cms/envios-domicilio.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+          .servicio-tecnico {
+            background-image: url('@{baseDir}images/cms/servicio-tecnico.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+          .instalacion {
+            background-image: url('@{baseDir}images/cms/instalacion-dismac.png');
+            padding-left: 90px;
+            background-repeat: no-repeat;
+          }
+
+
+          li {
+            padding-bottom: 20px;
+            label {
+              font-weight: bold;
+              font-size: 18px;
+            }
+            p {
+              font-size: 16px;
+              display: inline-block;
+            }
+            .blue {
+              font-size: 16px;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+    .cms-action {
+      padding: 30px 0 0;
+      margin: 0 0 20px;
+      &.action-center {
+        text-align: center;
+      }
+      a.action {
+        font-size: 24px;
+        font-weight: 900;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 60px;
+        letter-spacing: normal;
+        color: #fff;
+        background-color: #5acd98;
+        text-transform: uppercase;
+        height: 60px;
+        padding: 0 40px;
+        text-align: center;
+        display: inline-block;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .servicios-tecnicos {
+    &:extend(.abs-add-clearfix all);
+    .servicios-select {
+      float: left;
+      width: 390px;
+      margin: 0 0 20px;
+      p {
+        font-size: 15px;
+        line-height: 1.5;
+        &.service-txt1 {
+          margin: 0 0 5px;
+        }
+        &.service-txt2 {
+          line-height: 1.8;
+        }
+        &.service-txt3 {
+          font-size: 16px;
+          a {
+            color: #0a26cb;
+            text-decoration: underline;
+          }
+        }
+      }
+      label {
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 1.5;
+        margin: 0 0 10px;
+        display: block;
+      }
+      select#service-select {
+        margin: 0 0 10px;
+      }
+    }
+    .servicios-info {
+      float: right;
+      width: calc(~'100% - 410px');
+      padding: 50px 0 0;
+      .service-item {
+        color: #000;
+        background-color: #f5f5f5;
+        padding: 20px;
+        h3 {
+          font-size: 18px;
+          font-weight: 700;
+          margin: 0 0 15px;
+        }
+        h4 {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 2;
+          margin: 0;
+        }
+        p {
+          font-size: 12px;
+          line-height: 2;
+          margin: 0 0 15px;
+        }
+      }
+    }
+  }
+
+  .servicios-tecnicos,
+  .installation-content {
+    .service-bot-link {
+      clear: both;
+      text-align: right;
+      a {
+        color: #000;
+        font-size: 12px;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .installation-content {
+    a {
+      color: #0a26cb;
+    }
+  }
+  .cms-help, .category-ayuda, .category-contacto {
+    .page-wrapper {
+      .page-main {
+        .mobile {
+          display: none;
+        }
+        .contact-form {
+          .contact {
+            .actions-toolbar {
+              .primary {
+                display: block;
+                padding-bottom: 25px;
+                .submit {
+                  background-color: #5acd98;
+                  border: 2px solid #5acd98;
+                  height: 43px;
+                  margin-right: 0;
+                  border-radius: 0;
+                  width: 226px;
+                  display: table;
+                  text-align: center;
+                  vertical-align: middle;
+                  line-height: 0;
+                  padding: 0;
+                  span {
+                    font-size: 16.5px;
+                    color: #ffffff;
+                    text-transform: uppercase;
+                    height: 43px;
+                    text-align: center;
+                    font-weight: bold;
+                  }
+                }
+              }
+              .campos {
+                font-size: 13px;
+                font-weight: 600;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: -0.1px;
+                text-align: left;
+                color: #000000;
+                display: block;
+                clear: both;
+              }
+            }
+            .fieldset {
+              .name, .email {
+                padding-right: 2%;
+              }
+              div.comment {
+                width: 73%;
+                .control {
+                  .input-text {
+                    min-height: 218px;
+                  }
+                }
+              }
+              .field {
+                width: 23%;
+                display: inline-block;
+                vertical-align: bottom;
+                .control {
+                  .motivo {
+                    font-size: 14px;
+                    font-weight: 600;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.57;
+                    letter-spacing: normal;
+                    text-align: left;
+                    color: rgba(0, 0, 0, 0.6);
+                    background-image: url("../images/down-arrow.png");
+                    background-size: inherit;
+                    background-position-x: 95%;
+                    background-position-y: 50%;
+                    float: left;
+                  }
+                  .input-text {
+                    height: 37px;
+                    &:focus {
+                      box-shadow: none;
+                    }
+                  }
+                }
+                &.motivo {
+                  .control {
+                    div > div > div {
+                      &:extend(.abs-add-clearfix all);
+                    }
+                  }
+                }
+                .label {
+                  &::after {
+                    color: #000000;
+                  }
+                  span {
+                    font-size: 13px;
+                    font-weight: 600;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-align: left;
+                    color: #000000;
+                    text-transform: uppercase;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .content-text {
+          padding-bottom: 20px;
+          span {
+            font-size: 16px;
+          }
+        }
+        .content-text-bold {
+          padding-bottom: 20px;
+          span {
+            font-size: 16px;
+            font-weight: bold;
+          }
+        }
+        .title-text {
+          font-size: 18px;
+          font-weight: bold;
+          padding-bottom: 15px;
+        }
+        .cms-title {
+          padding-top: 20px;
+          padding-bottom: 20px;
+          span {
+            font-size: 31px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.37;
+            letter-spacing: normal;
+            text-align: left;
+            color: #000000;
+            vertical-align: middle;
+            padding-right: 10px;
+            text-transform: uppercase;
+          }
+          .ayuda-img {
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+  .category-servicios,
+  .category-sucursales,
+  .category-mini-cuotas,
+  .category-aviso-de-privacidad,
+  .category-contacto,
+  .category-bolsa-de-trabajo,
+  .category-trabaja-con-nosotros,
+  .category-costos-de-entrega,
+  .category-costos-de-instalacion,
+  .categorypath-requisitos-de-instalacion,
+  .category-metodo-de-pago,
+  .category-compras-seguras,
+  .category-garantia-de-productos,
+  .category-como-comprar-en-dismac,
+  .category-terminos-y-condiciones,
+  .category-garantia-de-precios-bajos,
+  .category-garantia-de-producto,
+  .category-cambios-y-devoluciones,
+  .category-preguntas-frecuentes {
+    .page-wrapper {
+      .recomendados-container {
+        display: none;
+      }
+      .page-main {
+        .columns {
+          display: none;
+        }
+      }
+    }
+  }
+  .category-servicio-tecnico,
+  .category-categorias,
+  .category-contacto,
+  .category-ayuda,
+  .category-metodo-de-pago,
+  .category-compras-seguras,
+  .category-garantia-de-productos,
+  .category-como-comprar-en-dismac,
+  .category-terminos-y-condiciones,
+  .category-garantia-de-precios-bajos,
+  .category-garantia-de-producto,
+  .category-cambios-y-devoluciones,
+  .category-preguntas-frecuentes {
+    .page-wrapper {
+      .category-view {
+        div {
+          .category-description {
+            display: none;
+          }
+        }
+      }
+      .recomendados-container {
+        display: none;
+      }
+      .page-main {
+        .columns {
+          display: none;
+        }
+      }
+    }
+  }
+  /* CMS End Here */
+}
+
+@media (max-width: 1200px){
+  /* CMS Start Here */
+  .catalog-category-view, .cms-page .cms-content {
+    .comprar-tab {
+      .comprar-tab-list {
+        width: 280px;
+      }
+      .comprar-content {
+        width: calc(~'100% - 300px');
+      }
+    }
+  }
+  .servicios-tecnicos {
+    .servicios-select {
+      width: 280px;
+    }
+    .servicios-info {
+      width: calc(~'100% - 300px');
+    }
+  }
+  /* CMS End Here */
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m){
+  /* CMS Start Here */
+  body .catalog-category-view .cms-content, body .cms-page .cms-content {
+    .comprar-tab {
+      .comprar-tab-list,
+      .comprar-content {
+        width: 100%;
+      }
+      .comprar-tab-list {
+        margin: 0 0 20px;
+        li {
+          margin: 0 0 5px;
+        }
+      }
+    }
+    .responsive-tab {
+      .resp-tab {
+        display: none;
+      }
+      .resp-tab-content {
+        width: 100%;
+        padding: 0;
+        min-height: inherit;
+        background-color: transparent;
+        .tab-item {
+          display: block;
+          margin: 0;
+          .item-content {
+            opacity: 0;
+            visibility: hidden;
+            height: 0;
+            overflow: hidden;
+          }
+          &:before {
+            content: attr(data-title);
+            display: block;
+            cursor: pointer;
+            background-color: #EEE;
+            background-position: 10px 9px;
+            background-size: 28px auto;
+            background-repeat: no-repeat;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 13px 10px 13px 50px;
+            margin-bottom: 5px;
+          }
+          &.active {
+            &:before {
+              background-color: #dcdcdc;
+            }
+            .item-content {
+              opacity: 1;
+              visibility: visible;
+              height: auto;
+              padding: 20px 15px;
+              margin-bottom: 5px;
+              background-color: #dcdcdc;
+            }
+          }
+        }
+      }
+    }
+    .installation-tab {
+      &:extend(.abs-add-clearfix all);
+      .resp-tab-content {
+        min-height: inherit;
+        #side_tab1 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/campanas.png');
+          }
+        }
+        #side_tab2 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/cocinas.png');
+          }
+        }
+        #side_tab3 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/lavadoras.png');
+          }
+        }
+        #side_tab4 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/calefones.png');
+          }
+        }
+        #side_tab5 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/refrigeradores.png');
+          }
+        }
+        #side_tab6 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/aire.png');
+          }
+        }
+        #side_tab7 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/tvyvideo.png');
+          }
+        }
+        .item-content {
+          .intall-info {
+            li {
+              &.info-col2 {
+                label {
+                  float: none;
+                  width: 100%;
+                  display: block;
+                  margin-bottom: 20px;
+                }
+
+                p {
+                  float: none;
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .preguntas-content {
+      h2 {
+        font-size: 22px;
+        margin: 0 0 20px;
+      }
+    }
+    .preguntas-tab {
+      .resp-tab-content {
+        #side_tab1 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/registropf.png');
+          }
+        }
+        #side_tab2 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/recuperarpf.png');
+          }
+        }
+        #side_tab3 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/comocomprarpf.png');
+          }
+        }
+        #side_tab4 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/enviospf.png');
+          }
+        }
+        #side_tab5 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/opcionespf.png');
+          }
+        }
+        #side_tab6 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/sintarjetapf.png');
+          }
+        }
+        #side_tab7 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/finalizarpf.png');
+          }
+        }
+        #side_tab8 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/facturapf.png');
+          }
+        }
+        #side_tab9 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/minicuotaspf.png');
+          }
+        }
+        #side_tab10 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/onlinepf.png');
+          }
+        }
+        .item-content {
+          background-color: transparent !important;
+          background-image: none !important;
+        }
+        .tab-item {
+          h3 {
+            display: none;
+          }
+        }
+      }
+    }
+    .comprar-tab {
+      .resp-tab-content {
+        #side_tab1 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/buscarojo.png');
+          }
+        }
+        #side_tab2 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/agregarojo.png');
+          }
+        }
+        #side_tab3 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/revisarojo.png');
+          }
+        }
+        #side_tab4 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/iniciarojo.png');
+          }
+        }
+        #side_tab5 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/eligemrojo.png');
+          }
+        }
+        #side_tab6 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/eligeprojo.png');
+          }
+        }
+        #side_tab7 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/revisatrojo.png');
+          }
+        }
+        #side_tab8 {
+          &.tab-item:before {
+            background-image: url('@{baseDir}images/cms/listorojo.png');
+          }
+        }
+        .item-content {
+          background-color: transparent !important;
+          background-image: none !important;
+        }
+        .tab-item {
+          h3 {
+            display: none;
+          }
+        }
+      }
+    }
+    &.servicios-tecnicos {
+      .servicios-select,
+      .servicios-info {
+        width: 100%;
+        padding: 0;
+      }
+    }
+    &.cambios-y-devoluciones {
+      .cambios-image,
+      .cambios-content {
+        float: none;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      h2 {
+        background-size: 50px auto;
+        padding: 3px 0 5px 56px;
+      }
+    }
+    &.precios-bajos {
+      .precios-bajos-banner {
+        img {
+          width: 100%;
+          margin-bottom: 15px;
+          float: none;
+        }
+      }
+    }
+  }
+  .category-ayuda, .category-contacto {
+    .page-wrapper {
+      .category-view {
+        .page-main {
+          .back {
+            padding-bottom: 10px;
+          }
+          .text-ayudar {
+            padding-bottom: 0;
+          }
+          .desktop {
+            display: none;
+          }
+          .back {
+            .arrow-back {
+              vertical-align: middle;
+              padding-right: 10px;
+            }
+            .cms-title {
+              display: inline-block;
+            }
+          }
+          .contact-form {
+            .contact {
+              .fieldset {
+                .field {
+                  width: 100%;
+                  padding: 0;
+                  .control {
+                    .input-text {
+                      &:focus {
+                        box-shadow: none;
+                      }
+                    }
+                    .motivo {
+                      font-size: 14px;
+                      font-weight: 600;
+                      font-style: normal;
+                      font-stretch: normal;
+                      line-height: 1.57;
+                      letter-spacing: normal;
+                      text-align: left;
+                      color: rgba(0, 0, 0, 0.6);
+                      background-image: url("../images/gray_right_arrow.png");
+                    }
+                  }
+                }
+              }
+              .actions-toolbar {
+                text-align: center;
+                clear: both;
+                display: inline-block;
+                width: 100%;
+                .campos {
+                  text-align: center;
+                }
+                .primary {
+                  text-align: center;
+                  display: inline-block;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  /* CMS End Here */
+}

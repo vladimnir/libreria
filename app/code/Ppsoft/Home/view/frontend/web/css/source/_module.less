@@ -1,0 +1,54 @@
+.vistos-slider,
+.vistos-category-slider,
+.vistos-slider-mobile,
+.vendidos-slider {
+    .entrega-gratuita {
+        padding-left: 30px;
+        text-align: left;
+        img {
+            min-width: 24px;
+        }
+        &.cuarentena {
+            min-height: 40px;
+            color: #ec1f26;
+            font-size: 1.4rem;
+        }
+        .content-img {
+            display: inline-block;
+            margin-right: 3px;
+        }
+        .disponible {
+            //color: #00B41A;
+            font-size: 12px;
+        }
+        .no-disponible {
+            //color: #ec1f26;
+            font-size: 12px;
+        }
+    }
+}
+
+//
+//Mobile
+//
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m){
+    .cms-index-index,
+    .catalog-product-view {
+        .vistos-slider,
+        .vistos-category-slider,
+        .vistos-slider-mobile,
+        .vendidos-slider {
+            .entrega-gratuita {
+                padding-left: 0;
+            }
+        }
+    }
+    
+    .catalog-category-view {
+        .vistos-category-slider {
+            .cuote-wrap {
+                padding-left: 30px;
+            }
+        }
+    }
+}

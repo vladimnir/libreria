@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Account\AuthorizationLink $block */
+
+$dataPostParam = '';
+if ($block->isLoggedIn()) {
+    $dataPostParam = sprintf(" data-post='%s'", $block->getPostParams());
+}
+
+if ($block->isLoggedIn()): ?>
+<li class="signed authorization-link" data-label="<?= $block->escapeHtmlAttr(__('or')) ?>">
+    <a <?= /* @noEscape */ $block->getLinkAttributes() ?><?= /* @noEscape */ $dataPostParam ?>>
+        <?= $block->escapeHtml($block->getLabel()) ?>
+    </a>
+</li>
+
+<script type="text/javascript">
+    require([
+        'jquery'
+    ], function($){
+        $(document).ready(function() {
+            $('.header.content > .help > .signed.authorization-link a').click(function() {
+                if ($('.action.showcart').hasClass('active')) {
+                    $('.action.showcart').trigger("click");
+                }
+                
+                if ($('.search-mobile').hasClass('visible')) {
+                    $('.search-mobile').trigger("click");
+                }                
+                
+                $('.customer-welcome .customer-menu .header.links').toggle();
+                return false;
+            }) ; 
+            
+            $('.action.showcart, #iconsearch').click(function() {
+                if ($('.customer-welcome .customer-menu .header.links').css('display') != 'none') {
+                    $('.customer-welcome .customer-menu .header.links').toggle();
+                }
+            });
+        });
+    });
+</script>
+
+<?php endif;
+if (!$block->isLoggedIn()): ?>
+<li id="link-auth" class="out authorization-link desktop" data-label="<?= $block->escapeHtmlAttr(__('or')) ?>">
+    <a href="#" onClick="return false;">
+        <?= $block->escapeHtml(__('Iniciar Sesión')) ?>
+    </a>
+
+        <div class="customer-menu" id="menulogin">
+            <ul>
+                <li>
+                    <a class="link" href="<?php echo $this->getUrl('customer/account/login') ?>"><span class="linx-text"><?php echo __('Iniciar Sesión') ?></span></a>
+                </li>
+                <li>
+                    <a class="link" href="<?php echo $this->getUrl('customer/account/create') ?>"><span class="linx-text"><?php echo __('Crear Cuenta') ?></span></a>
+                </li>
+            </ul>
+        </div>
+
+</li>
+    <li class="out authorization-link mobile" data-label="<?= $block->escapeHtmlAttr(__('or')) ?>">
+        <a <?= /* @noEscape */ $block->getLinkAttributes() ?><?= /* @noEscape */ $dataPostParam ?>>
+        </a>
+    </li>
+<?php endif; ?>
+

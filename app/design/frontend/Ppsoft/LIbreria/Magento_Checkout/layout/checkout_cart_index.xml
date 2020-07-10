@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Inicio</item>
+                    <item name="label" xsi:type="string">Inicio</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Shopping Cart</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Mi Carrito</item>
+                    <item name="label" xsi:type="string">Mi Carrito</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="page.main.title" display="true">
+            <action method="setPageTitle">
+                <argument name="title" translate="true" xsi:type="string">Mi Carrito</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+        <block name="cart.text.custom" template="Magento_Checkout::cart-text.phtml" before="-"/>
+        <block name="cart.text.mobile" template="Magento_Checkout::cart-text-mobile.phtml" after="cart.text.custom"/>
+        <block name="back-mobile-cart" template="Magento_Checkout::back-mobile-cart.phtml" before="cart.text.mobile"/>
+        </referenceContainer>
+    </body>
+</page>

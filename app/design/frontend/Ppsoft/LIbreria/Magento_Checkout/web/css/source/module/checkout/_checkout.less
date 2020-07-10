@@ -1,0 +1,366 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables
+//  _____________________________________________
+
+@checkout-wrapper__margin: @indent__base;
+@checkout-wrapper__columns: 16;
+
+@checkout-step-title__border: @border-width__base solid @color-gray80;
+@checkout-step-title__font-size: 26px;
+@checkout-step-title__font-weight: @font-weight__light;
+@checkout-step-title__padding: @indent__s;
+
+@checkout-step-title-mobile__font-size: 18px;
+
+@checkout-step-content-mobile__background: @color-gray-light01;
+@checkout-step-content-mobile__margin-s: 15px;
+@checkout-step-content-mobile__margin: @indent__base -(@checkout-step-content-mobile__margin-s) @checkout-step-content-mobile__margin-s;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    .checkout-index-index {
+        .page-title-wrapper {
+            &:extend(.abs-visually-hidden all);
+        }
+    }
+
+    .checkout-container {
+        &:extend(.abs-add-clearfix all);
+        .lib-css(margin, 0 0 @checkout-wrapper__margin);
+    }
+
+    .opc-wrapper {
+        .lib-css(margin, 0 0 @checkout-wrapper__margin);
+
+        .opc {
+            &:extend(.abs-reset-list all);
+        }
+
+        .step-title {
+            &:extend(.abs-checkout-title all);
+            .lib-css(border-bottom, @checkout-step-title__border);
+            margin-bottom: 15px;
+        }
+
+        .step-content {
+            margin: 0 0 @indent__xl;
+        }
+    }
+
+    .checkout-index-index {
+        .nav-sections,
+        .nav-toggle {
+            display: none;
+        }
+
+        .logo {
+            margin-left: 0;
+        }
+    }
+
+    .checkout-onepage-success {
+        &:extend(.abs-add-clearfix all);
+
+        .print {
+            display: none;
+        }
+    }
+    .getminicuotas-popup.modal-popup,
+    .getminipin-popup.modal-popup {
+        .modal-inner-wrap {
+            -webkit-box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #aaa;
+        }
+    }
+    .getminicuotas-popup.modal-popup {
+        .modal-inner-wrap {
+            width: 752px;
+        }
+    }
+    .getminipin-popup.modal-popup {
+        .modal-inner-wrap {
+            width: 524px;
+        }
+        .modal-content {
+            padding: 0 56px 15px;
+        }
+    }
+
+    .getminicuotas-popup.modal-popup {
+        .modal-title {
+            border: 0 none;
+            margin: 0 0 15px;
+            text-align: center;
+            padding: 15px 5px;
+            font-weight: 700;
+            font-size: 31px;
+            font-family: 'Open sans';
+            color: #000;
+        }
+        &.modal-slide .action-close {
+            display: none;
+        }
+        .minicuota-wrap {
+            font-size: 16px;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 0 40px;
+        }
+        .minicuota-pagar {
+            text-align: center;
+            margin: 0 0 40px;
+            font-size: 30px;
+            color: #000;
+        }
+        .minicuota-radio {
+            margin: 0 0 30px;
+        }
+        .minicuota-radio {
+            input {
+                &[type="radio"]:checked,
+                &[type="radio"]:not(:checked) {
+                    position: absolute;
+                    left: -9999px;
+                }
+                &[type="radio"]:checked + label,
+                &[type="radio"]:not(:checked) + label
+                {
+                    position: relative;
+                    padding-left: 36px;
+                    cursor: pointer;
+                    line-height: 38px;
+                    display: inline-block;
+                    color: #000;
+                }
+                &[type="radio"]:checked + label:before,
+                &[type="radio"]:not(:checked) + label:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 9px;
+                    width: 21px;
+                    height: 21px;
+                    border: 1px solid #000;
+                    border-radius: 100%;
+                    background: #fff;
+                }
+                &[type="radio"]:checked + label:after,
+                &[type="radio"]:not(:checked) + label:after {
+                    content: '';
+                    width: 15px;
+                    height: 15px;
+                    background: #5acd98;
+                    position: absolute;
+                    top: 13px;
+                    left: 4px;
+                    border-radius: 100%;
+                    -webkit-transition: all 0.2s ease;
+                    transition: all 0.2s ease;
+                }
+                &[type="radio"]:not(:checked) + label:after {
+                    opacity: 0;
+                    -webkit-transform: scale(0);
+                    transform: scale(0);
+                }
+                &[type="radio"]:checked + label:after {
+                    opacity: 1;
+                    -webkit-transform: scale(1);
+                    transform: scale(1);
+                }
+            }
+            label {
+                font-size: 23px;
+                .minicuota-month,
+                .int {
+                    font-size: 35px;
+                    font-weight: 700;
+                }
+            }
+        }
+        .cuota-inicial,
+        .diasVencimiento {
+            text-align: center;
+            margin: 0 0 30px;
+            padding-top: 10px;
+            font-size: 21px;
+            color: #000;
+            .int {
+                font-weight: 700;
+            }
+        }
+        .diasVencimiento {
+            margin-bottom: 50px;
+        }
+        .buttons-container {
+            text-align: center;
+            .go-checkout {
+                height: 65px;
+                display: inline-block;
+                line-height: 65px;
+                padding: 0 30px;
+                text-align: center;
+                font-size: 25px;
+                font-weight: 900;
+                font-style: normal;
+                font-stretch: normal;
+                letter-spacing: normal;
+                color: #ffffff;
+                text-transform: uppercase;
+                background-color: #5acd98;
+                font-family: 'Open sans';
+                text-decoration: none;
+                border-radius: 0;
+            }
+        }
+    }
+    .modals-overlay {
+        background-color: transparent;
+    }
+    .getminipin-popup.modal-popup {
+        background-color: transparent;
+        .minicuotapin-wrap {
+            padding: 0 0 20px;
+            label {
+                display: block;
+                margin: 0 0 10px;
+                font-weight: 700;
+                font-size: 18px;
+                color: #000;
+            }
+            input#minicuotas_pin {
+                height: 48px;
+                margin: 0 0 15px;
+            }
+            p.minicuataforget {
+                text-align: right;
+                margin: 0 0 15px;
+                a {
+                    color: #000;
+                    text-decoration: underline;
+                    font-weight: 700;
+                }
+            }
+            .buttons-container {
+                text-align: right;
+                .minicatasubmit {
+                    display: inline-block;
+                    width: 200px;
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: 700;
+                    font-style: normal;
+                    font-stretch: normal;
+                    letter-spacing: normal;
+                    color: #ffffff;
+                    text-transform: uppercase;
+                    background-color: #5acd98;
+                    font-family: 'Open sans';
+                    text-decoration: none;
+                    border-radius: 0;
+                    padding: 14px 17px;
+                    border: 0 none;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .getminicuotas-popup.modal-popup .modal-inner-wrap,
+    .getminipin-popup.modal-popup .modal-inner-wrap {
+        width: 90%;
+    }
+    .getminicuotas-popup.modal-popup {
+        .modal-content {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .modal-title {
+            padding: 0 5px;
+            font-size: 25px;
+        }
+        .minicuota-pagar {
+            font-size: 20px;
+            margin: 0 0 20px;
+        }
+        .minicuota-radio {
+            margin: 0 0 15px;
+            label {
+                font-size: 18px;
+                .minicuota-month,
+                .int {
+                    font-size: 24px;
+                }
+            }
+        }
+        input {
+            &[type="radio"]:checked + label,
+            &[type="radio"]:not(:checked) + label {
+
+            }
+        }
+        .cuota-inicial,
+        .diasVencimiento {
+            font-size: 18px;
+            margin: 0 0 15px;
+        }
+        .buttons-container {
+            .go-checkout {
+                height: 54px;
+                line-height: 54px;
+                font-size: 20px;
+            }
+        }
+    }
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    .opc-wrapper {
+        .step-title {
+            .lib-css(font-size, @checkout-step-title-mobile__font-size);
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .step-content {
+            .lib-css(margin, 0 0 @checkout-step-content-mobile__margin-s);
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .opc-wrapper {
+        &:extend(.abs-add-box-sizing-desktop-m all);
+        .lib-layout-column(2, 1, @checkout-wrapper__columns);
+        padding-right: @indent__l;
+    }
+
+    .checkout-onepage-success {
+        .print {
+            display: block;
+            float: right;
+            margin: 23px 0 0;
+        }
+    }
+}

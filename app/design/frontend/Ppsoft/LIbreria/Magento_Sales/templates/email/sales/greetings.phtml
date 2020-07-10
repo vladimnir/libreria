@@ -1,0 +1,18 @@
+<?php
+    $order = $block->getOrder();
+    $paymentMethod = $order->getPayment()->getMethod();
+?>
+<p class="message-greeting"><?= /* @escapeNotVerified */  __('Gracias por comprar en ') ?><a href="<?php echo $block->getBaseUrl()?>">Dismac.com.bo</a></p>
+<?php
+    if($paymentMethod != "payme"): ?>
+        <p class="message-greeting"><?= /* @escapeNotVerified */  __('Muy pronto podrás disfrutar de tu compra.') ?></p>
+    <?php endif;
+    if($paymentMethod == "payme"): ?>
+        <p class="message-greeting"><?= /* @escapeNotVerified */  __('Muy pronto podrás disfrutar de tu compra') ?></p>
+        <p class="message-greeting"><strong><?= /* @escapeNotVerified */  __('Revisa aquí el resumen del pedido') ?></strong></p>
+    <?php endif;
+?>
+
+
+
+

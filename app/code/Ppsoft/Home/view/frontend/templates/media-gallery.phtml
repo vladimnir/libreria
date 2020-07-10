@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+?>
+<?php
+$galleryImages = $block->getProduct()->getMediaGalleryImages();
+?>
+<div class="mymedia">
+    <div class='media-nav'>
+        <?php foreach ($galleryImages as $galleryImage): ?>
+            <div class="thumb-container">
+                <img src="<?php echo $galleryImage->getUrl(); ?>" >
+            </div>
+        <?php endforeach; ?>
+    </div>
+<div class="media-gallery">
+    <?php foreach ($galleryImages as $galleryImage): ?>
+        <div class="media-container" id="media-container">
+        <img src="<?php echo $galleryImage->getUrl(); ?>" >
+        </div>
+    <?php endforeach; ?>
+</div>
+</div>
+<script>
+    require([
+        'jquery',
+        'domReady!',
+        'slick'
+    ], function($){
+        $(document).ready(function(){
+            $('.media-gallery').slick({
+                infinite: true,
+                speed: 300,
+                arrows: false,
+                slidesToShow: 1
+            });
+            $('.media-nav > div').click(function() {
+                $('.media-gallery').slick('slickGoTo',$(this).index());
+            });
+
+        });
+    });
+</script>

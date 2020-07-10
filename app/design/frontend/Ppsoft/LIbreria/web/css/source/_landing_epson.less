@@ -1,0 +1,1096 @@
+@font-family-jaldi: 'Jaldi';
+@color-red-landing-epson:#ec1425;
+@color-gray-landing-epson:#f6f5f5;
+@color-text-landing-epson:#b3b0b0;
+@color-gray-title-print:#6f6d6d;
+@screen__landing_epson_1300: 1300px;
+
+& when (@media-common = true) {
+
+  @font-face {
+    font-family: @font-family-jaldi;
+    src: url("@{baseDir}fonts/Jaldi/Jaldi-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: @font-family-jaldi;
+    src: url("@{baseDir}fonts/Jaldi/Jaldi-Bold.ttf");
+    font-weight: 700;
+    font-style: normal;
+  }
+}
+
+.ot-clear{
+  clear: both;
+  height: 1px;
+  display: block;
+}
+
+.ot-btn-see-print{
+  .lib-button(
+    @_button-font-family: @font-family-jaldi,
+    @_button-font-size: 39px,
+    @_button-font-weight: @font-weight__bold,
+    @_button-cursor: @button__cursor,
+    @_button-margin: 0,
+    @_button-padding: 25px 40px,
+    @_button-color: @color-white,
+    @_button-border: 1px solid @color-red-landing-epson,
+    @_button-background: @color-red-landing-epson,
+    @_button-color-hover: @color-white,
+    @_button-background-hover: @color-red-landing-epson,
+    @_button-border-hover: 1px solid @color-red-landing-epson,
+    @_button-color-active: @color-white,
+    @_button-background-active: @color-red-landing-epson,
+    @_button-border-active: 1px solid @color-red-landing-epson
+  );
+  .lib-css(border-radius,10px);
+  .lib-css(text-align, center);
+  .lib-css(text-decoration, none);
+  &:hover{
+    .lib-css(text-decoration, none);
+  }
+}
+
+.ot-btn-see-more{
+  .lib-button(
+    @_button-font-family: @font-family-jaldi,
+    @_button-font-weight: @font-weight__bold,
+    @_button-font-size: 32px,
+    @_button-line-height: 32px,
+    @_button-cursor: @button__cursor,
+    @_button-margin: 0,
+    @_button-padding: 3px 43px,
+    @_button-color: @color-red-landing-epson,
+    @_button-background: @color-white,
+    @_button-color-active: @color-red-landing-epson,
+    @_button-background-active: @color-white,
+    @_button-border: 2px solid @color-red-landing-epson,
+    @_button-color-hover: @color-white,
+    @_button-background-hover: @color-red-landing-epson,
+    @_button-border-hover: 2px solid @color-red-landing-epson,
+    @_button-border-active: 2px solid @color-red-landing-epson
+  );
+  .lib-css(border-radius,10px);
+  .lib-css(text-align, center);
+  .lib-css(text-decoration, none);
+  .lib-css(transition-duration,0.5s);
+  &:hover{
+    .lib-css(text-decoration, none);
+    .lib-css(transition-duration,0.5s);
+  }
+}
+
+.ot-circle-white{
+  .lib-css(background-color,@color-white);
+  .lib-css(border-radius,100px);
+  .lib-css(width,148px);
+  .lib-css(height,148px);
+  .lib-css(display,inline-block);
+}
+
+.ot-circle-red{
+  .lib-css(background-color,@color-red-landing-epson);
+  .lib-css(color,@color-red-landing-epson);
+  .lib-css(text-decoration,none);
+  .lib-css(transition-duration,0.5s);
+}
+
+.ot-name-print{
+  .lib-css(font-family,@font-family-jaldi);
+  .lib-css(font-size,55px);
+  .lib-css(font-weight,700);
+  .lib-css(margin,0 0 15px 0);
+  .lib-css(padding,0);
+  .lib-css(color,@color-gray-title-print);
+  .lib-css(line-height,44px);
+}
+
+.ot-normal-text{
+  .lib-css(font-family,@font-family-jaldi);
+  .lib-css(font-weight,400);
+  .lib-css(font-size,26px);
+  .lib-css(line-height,27px);
+  .lib-css(color,#b3b0b0);
+  .lib-css(text-align,justify);
+}
+
+//background option prints and :hover
+.ot-bg-options(@image){
+  .lib-css(background-image,url("@{baseDir}images/landing-epson/button-options/@{image}"));
+  &:hover{
+    .lib-css(background-image,url("@{baseDir}images/landing-epson/button-options-hover/@{image}"));
+  }
+}
+//background current option print
+.ot-bg-options-current-option(@image){
+  .lib-css(background-image,url("@{baseDir}images/landing-epson/button-options-hover/@{image}"));
+}
+
+.cms-impresoras-multifuncion-epson-ecotank{
+  .breadcrumbs{
+    .lib-css(display,none);
+  }
+  .page-main{
+    .page-title-wrapper{
+      .lib-css(display,none);
+    }
+  }
+}
+
+& when (@media-common = true) {
+  /*Landing Page Epson*/
+  .ot-landing-page-epson {
+
+    div,
+    p,
+    a,
+    span,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    ul,
+    li{
+      box-sizing: border-box;
+    }
+
+    .ot-container-main{
+      .lib-css(width,100%);
+      .lib-css(max-width,1240px);
+      .lib-css(margin,0 auto);
+
+      .ot-print{
+        .lib-css(position, relative);
+
+        .ot-print-name-mobile{
+          .lib-css(display, none);
+          .ot-name-print();
+          .lib-css(padding, 20px 0 30px 0);
+          .lib-css(margin, 0);
+          .lib-css(font-size, 45px);
+        }
+
+        .ot-print-image{
+          .lib-css(position, relative);
+          .lib-css(background-position, no-repeat);
+          .lib-css(background-size, cover);
+          .lib-css(display, block);
+
+          img{
+            display: none;
+          }
+        }
+
+        .ot-text-block{
+          .lib-css(position, absolute);
+
+          .ot-title-name-print{
+            .ot-name-print();
+          }
+          a{
+            .ot-btn-see-print();
+          }
+        }
+
+        &.ot-print-l3110{
+          .ot-print-image{
+            .lib-css(width,100%);
+            .lib-css(min-height,613px);
+          }
+          .ot-text-block{
+            .lib-css(bottom,203px);
+            .lib-css(right,57px);
+          }
+        }
+
+        &.ot-print-l3150{
+          .ot-print-image{
+            .lib-css(width,100%);
+            .lib-css(min-height,581px);
+          }
+          .ot-text-block{
+            .lib-css(left,172px);
+            .lib-css(bottom,172px);
+            .lib-css(text-align,right);
+          }
+        }
+
+        &.ot-print-l5190{
+          .ot-print-image{
+            .lib-css(width,100%);
+            .lib-css(min-height,642px);
+          }
+          .ot-text-block{
+            .lib-css(bottom,233px);
+            .lib-css(right,57px);
+          }
+        }
+
+        &.ot-print-with-right-text{
+          .ot-text-block{
+          }
+
+        }
+        &.ot-print-with-left-text{
+          .ot-text-block{
+          }
+
+        }
+      }
+
+      .ot-content-text-and-video{
+        .lib-css(position,relative);
+        .lib-css(max-width,1070px);
+        .lib-css(width,100%);
+        .lib-css(margin,0 auto);
+
+        .ot-block-text{
+          .lib-css(float,left);
+          .lib-css(width,50%);
+
+          .ot-block-text-desc{
+            .ot-normal-text();
+
+            &.ot-mobile{
+              .lib-css(display, none);
+            }
+          }
+          .ot-content-btn-see-more{
+            .lib-css(text-align, right);
+            .lib-css(padding-top, 10px);
+            .lib-css(display, none);
+            .ot-block-text-see-more{
+              .ot-btn-see-more();
+            }
+          }
+        }
+
+        .ot-video{
+          .lib-css(float,left);
+          .lib-css(width,50%);
+          .lib-css(padding-left,30px);
+          .ot-video-content{
+
+          }
+        }
+
+      }
+
+      .ot-container-options-with-desc{
+        .lib-css(background,@color-gray-landing-epson);
+        .lib-css(padding,51px 20px 25px 20px);
+        .lib-css(text-align,center);
+        .lib-css(margin-top,58px);
+        .lib-css(margin-bottom,12px);
+        .lib-css(min-height,392px);
+
+        ul{
+          .lib-css(position,relative);
+          .lib-css(width,auto);
+          .lib-css(margin,0);
+          .lib-css(padding,0);
+          .lib-css(list-style,none);
+
+          li{
+            .lib-css(position,relative);
+            .lib-css(margin,0 10px 0 10px);
+            .lib-css(padding,0);
+            .lib-css(display,inline-block);
+            .lib-css(width,148px);
+
+            .ot-option-btn{
+              .ot-circle-white();
+              .lib-css(background-repeat, no-repeat);
+              .lib-css(background-position,center center);
+              .lib-css(text-indext,-5000px);
+              .lib-css(color,@color-white);
+              .lib-css(text-decoration,none);
+              .lib-css(transition-duration,0.5s);
+              .ot-option-btn-title-mobile{
+                .lib-css(display, none);
+                .lib-css(color,@color-text-landing-epson);
+                .lib-css(font-size, 19px);
+                .lib-css(text-align, left);
+                .lib-css(padding-left, 50px);
+                .lib-css(padding-top, 11px);
+                .lib-css(font-weight, 400);
+              }
+
+              &:hover
+              {
+                .ot-circle-red();
+                .ot-option-btn-title-mobile{
+                  .lib-css(color,@color-white);
+                }
+              }
+            }
+            &.ot-current-option{
+              .ot-option-btn{
+                .ot-circle-red();
+                .ot-option-btn-title-mobile{
+                  .lib-css(color,@color-white);
+                }
+              }
+            }
+
+            .ot-option-title-description{
+              .lib-css(font-family,@font-family-jaldi);
+              .lib-css(color,@color-text-landing-epson);
+              .lib-css(display,none);
+              .lib-css(position,absolute);
+              .lib-css(left,-105px);
+              .lib-css(top,188px);
+              .lib-css(width,360px);
+              .lib-css(text-align,center);
+              .lib-css(font-size,20px);
+              .lib-css(line-height,22px);
+
+              &::before{
+                .lib-css(content, "");
+                .lib-css(position, absolute);
+                .lib-css(top, -23px);
+                .lib-css(left, 0);
+                .lib-css(right, 0);
+                .lib-css(margin-left, auto);
+                .lib-css(margin-right, auto);
+                .lib-css(width, 6px);
+                .lib-css(height, 6px);
+                .lib-css(background, @color-red-landing-epson);
+                .lib-css(border-radius, 6px);
+              }
+
+              .ot-option-title{
+                .lib-css(font-weight,@font-weight__bold);
+                .lib-css(padding-top,10px);
+              }
+
+              .ot-option-desc{
+                .lib-css(font-weight,@font-weight__regular);
+                .lib-css(padding-top,5px);
+              }
+
+            }
+            &.ot-current-option{
+              .ot-option-title-description{
+                display: block;
+              }
+
+            }
+          }
+
+        }
+
+        &.optionsl3110{
+          ul{
+            li{
+              &.option1{
+                .ot-option-btn{
+                  .ot-bg-options("fotocopias.png");
+                }
+              }
+              &.option1.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("fotocopias.png");
+                }
+              }
+              &.option2{
+                .ot-option-btn{
+                  .ot-bg-options("tinta.png");
+                }
+              }
+              &.option2.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("tinta.png");
+                }
+              }
+              &.option3{
+                .ot-option-btn{
+                  .ot-bg-options("comodidad.png");
+                }
+              }
+              &.option3.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("comodidad.png");
+                }
+              }
+              &.option4{
+                .ot-option-btn{
+                  .ot-bg-options("valor.png");
+                }
+              }
+              &.option4.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("valor.png");
+                }
+              }
+              &.option5{
+                .ot-option-btn{
+                  .ot-bg-options("2anios.png");
+                }
+              }
+              &.option5.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("2anios.png");
+                }
+              }
+            }
+          }
+        }
+
+        &.optionsl3150{
+          ul{
+            li{
+              &.option1{
+                .ot-option-btn{
+                  .ot-bg-options("tinta.png");
+                }
+              }
+              &.option1.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("tinta.png");
+                }
+              }
+              &.option2{
+                .ot-option-btn{
+                  .ot-bg-options("comodidad.png");
+                }
+              }
+              &.option2.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("comodidad.png");
+                }
+              }
+              &.option3{
+                .ot-option-btn{
+                  .ot-bg-options("valor.png");
+                }
+              }
+              &.option3.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("valor.png");
+                }
+              }
+              &.option4{
+                .ot-option-btn{
+                  .ot-bg-options("2anios.png");
+                }
+              }
+              &.option4.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("2anios.png");
+                }
+              }
+            }
+          }
+        }
+
+        &.optionsl5190{
+          ul{
+            li{
+              &.option1{
+                .ot-option-btn{
+                  .ot-bg-options("fotocopias.png");
+                }
+              }
+              &.option1.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("fotocopias.png");
+                }
+              }
+              &.option2{
+                .ot-option-btn{
+                  .ot-bg-options("tinta.png");
+                }
+              }
+              &.option2.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("tinta.png");
+                }
+              }
+              &.option3{
+                .ot-option-btn{
+                  .ot-bg-options("comodidad.png");
+                }
+              }
+              &.option3.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("comodidad.png");
+                }
+              }
+              &.option4{
+                .ot-option-btn{
+                  .ot-bg-options("valor.png");
+                }
+              }
+              &.option4.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("valor.png");
+                }
+              }
+              &.option5{
+                .ot-option-btn{
+                  .ot-bg-options("2anios.png");
+                }
+              }
+              &.option5.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("2anios.png");
+                }
+              }
+              &.option6{
+                .ot-option-btn{
+                  .ot-bg-options("wifi.png");
+                }
+              }
+              &.option6.ot-current-option{
+                .ot-option-btn{
+                  .ot-bg-options-current-option("wifi.png");
+                }
+              }
+            }
+          }
+        }
+
+
+      }
+    }
+
+    .ot-content-video {
+      &.ot-content-video-1 {
+      }
+
+      &.ot-content-video-2 {
+      }
+
+      &.ot-content-video-3 {
+      }
+
+      .ot-video {
+        iframe {
+        }
+      }
+    }
+
+    .ot-content-btn {
+      .ot-btn-landing {
+        &.ot-btn-landing-1 {
+        }
+
+        &.ot-btn-landing-2 {
+        }
+
+        &.ot-btn-landing-3 {
+        }
+      }
+    }
+  }
+
+  /*End Landing Page Epson*/
+}
+
+.common-mobile-and-tablet(@type){
+  .ot-landing-page-epson {
+    .ot-container-main{
+      .ot-print{
+        .ot-print-image{
+          .lib-css(background-image,none);
+          .lib-css(height,auto);
+          img{
+            .lib-css(display, block);
+          }
+        }
+        &.ot-print-l3110,
+        &.ot-print-l3150,
+        &.ot-print-l5190{
+          .ot-print-image {
+            .lib-css(min-height, auto);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1299px) {
+  .common-mobile-and-tablet("empty");
+  .ot-landing-page-epson {
+    .ot-container-main{
+      .ot-print{
+
+        .ot-print-image{
+          img{
+          }
+        }
+        &.ot-print-l3110{
+          .ot-text-block{
+            .lib-css(bottom, 33%);
+          }
+        }
+        &.ot-print-l3150{
+          .ot-text-block{
+            .lib-css(bottom, 30%);
+            .lib-css(left, 9%);
+          }
+        }
+        &.ot-print-l5190{
+          .ot-text-block{
+            .lib-css(bottom, 36%);
+          }
+        }
+
+        &.ot-print-l3150,
+        &.ot-print-l5190{
+          .ot-print-image {
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1260px){
+  .ot-landing-page-epson {
+    .ot-container-main {
+      .ot-container-options-with-desc{
+        &.optionsl5190{
+          .lib-css(min-height,326px);
+          ul{
+            li{
+              .lib-css(width, 110px);
+              .ot-option-btn{
+                .lib-css(width, 110px);
+                .lib-css(height, 110px);
+                .lib-css(background-size,50%);
+              }
+              .ot-option-title-description{
+                .lib-css(left,-124px);
+                .lib-css(top,146px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1100px){
+  .ot-landing-page-epson {
+    .ot-container-main {
+      .ot-container-options-with-desc{
+        &.optionsl3110{
+          .lib-css(min-height,328px);
+          ul{
+            li{
+              .lib-css(width, 110px);
+              //.lib-css(margin, 0 3px 0 3px);
+              .ot-option-btn{
+                .lib-css(width, 110px);
+                .lib-css(height, 110px);
+              }
+              .ot-option-title-description{
+                .lib-css(left,-123px);
+                .lib-css(top,150px);
+                .ot-option-title{
+                  //.lib-css(padding-top,0);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1070px){
+  .ot-landing-page-epson {
+    .ot-container-main {
+      .ot-container-options-with-desc{
+        &.optionsl5190{
+          ul{
+            li{
+              .lib-css(width, 90px);
+              .lib-css(margin, 0 5px 0 5px);
+              .ot-option-btn{
+                .lib-css(width, 90px);
+                .lib-css(height, 90px);
+              }
+              .ot-option-title-description{
+                .lib-css(left,-135px);
+                .lib-css(top,127px)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 930px){
+  .ot-landing-page-epson {
+    .ot-container-main {
+      .ot-container-options-with-desc{
+        &.optionsl3110{
+          .lib-css(min-height,279px);
+          ul{
+            li{
+              .lib-css(width, 80px);
+              .lib-css(margin, 0 5px 0 5px);
+              .ot-option-btn{
+                .lib-css(width, 80px);
+                .lib-css(height, 80px);
+                .lib-css(background-size, 50%);
+              }
+              .ot-option-title-description{
+                .lib-css(left,-141px);
+                .lib-css(top,114px);
+                .ot-option-title{
+                  .lib-css(padding-top,0);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 920px){
+  .ot-landing-page-epson {
+    .ot-container-main {
+      .ot-container-options-with-desc{
+        &.optionsl5190{
+          .lib-css(min-height,273px);
+          ul{
+            li{
+              .lib-css(width, 65px);
+              .lib-css(margin, 0 3px 0 3px);
+              .ot-option-btn{
+                .lib-css(width, 65px);
+                .lib-css(height, 65px);
+              }
+              .ot-option-title-description{
+                .lib-css(left,-147px);
+                .lib-css(top,102px);
+                .ot-option-title{
+                  .lib-css(padding-top,0);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 900px){
+  .ot-landing-page-epson {
+    .ot-container-main {
+      .ot-container-options-with-desc{
+        &.optionsl3150{
+          .lib-css(min-height,298px);
+          ul{
+            li{
+              .lib-css(width, 110px);
+              .lib-css(margin, 0 5px 0 5px);
+              .ot-option-btn{
+                .lib-css(width, 110px);
+                .lib-css(height, 110px);
+                .lib-css(background-size, 50%);
+              }
+              .ot-option-title-description{
+                .lib-css(left,-126px);
+                .lib-css(top,147px);
+                .ot-option-title{
+                  .lib-css(padding-top,0);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1170px) {
+  .ot-landing-page-epson{
+    .ot-container-main {
+      .ot-print {
+        &.ot-print-l3110,
+        &.ot-print-l3150,
+        &.ot-print-l5190{
+          .ot-text-block {
+            a{
+              .lib-css(font-size,29px);
+            }
+            .ot-title-name-print{
+              .lib-css(font-size,44px);
+
+            }
+          }
+        }
+        &.ot-print-l3150{
+          .ot-text-block {
+            .lib-css(bottom, 29%);
+          }
+        }
+        &.ot-print-l5190{
+          .ot-text-block {
+            .lib-css(bottom, 34%);
+          }
+        }
+      }
+      .ot-content-text-and-video {
+        .ot-block-text{
+          .lib-css(float,none);
+          .lib-css(width,100%);
+        }
+        .ot-video{
+          .lib-css(float,none);
+          .lib-css(width,100%);
+          .lib-css(padding-left,0);
+          .lib-css(padding-top,40px);
+          .ot-video-content{
+            .lib-css(position, relative);
+            .lib-css(padding-bottom, 56.25%); /* 16:9 */
+            .lib-css(height, 0);
+
+            iframe{
+              .lib-css(position, absolute);
+              .lib-css(top, 0);
+              .lib-css(left, 0);
+              .lib-css(width, 100%);
+              .lib-css(height, 100%);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 980px) {
+  .ot-landing-page-epson{
+    .ot-container-main {
+      .ot-print {
+        &.ot-print-l3110,
+        &.ot-print-l3150,
+        &.ot-print-l5190{
+          .ot-text-block {
+            .lib-css(bottom,31%);
+            a{
+              .lib-css(font-size,27px);
+              .lib-css(padding,25px 21px);
+            }
+            .ot-title-name-print{
+              .lib-css(font-size,36px);
+              .lib-css(line-height,33px);
+            }
+          }
+        }
+        &.ot-print-l3150{
+          .ot-text-block {
+            .lib-css(bottom, 28%);
+          }
+        }
+        &.ot-print-l5190{
+          .ot-text-block {
+            .lib-css(bottom, 34%);
+          }
+        }
+
+      }
+    }
+  }
+}
+
+@media all and (max-width: 850px) {
+  .ot-landing-page-epson{
+    .ot-container-main {
+      .ot-print {
+        &.ot-print-l3110,
+        &.ot-print-l3150,
+        &.ot-print-l5190{
+          .ot-text-block {
+            .lib-css(right,30px);
+            a{
+              .lib-css(font-size,25px);
+              .lib-css(padding,19px 21px);
+            }
+            .ot-title-name-print{
+              .lib-css(font-size,32px);
+              .lib-css(line-height,28px);
+            }
+          }
+        }
+        &.ot-print-l3150{
+          .ot-text-block {
+            .lib-css(right,auto);
+          }
+        }
+
+      }
+    }
+  }
+}
+
+
+
+@media all and (max-width: 767px) {
+  .common-mobile-and-tablet("empty");
+  .ot-landing-page-epson {
+    .ot-container-main{
+      .ot-print{
+        .ot-print-name-mobile{
+          .lib-css(display, block);
+        }
+        .ot-print-image{img{}}
+        &.ot-print-l3110,
+        &.ot-print-l3150,
+        &.ot-print-l5190{
+          .ot-text-block{
+            .lib-css(display, none);
+          }
+
+        }
+
+      }
+      .ot-content-text-and-video{
+        //.ot-block-text{
+          .ot-block-text {
+            .ot-block-text-desc{
+              .lib-css(font-size,20px);
+              .lib-css(line-height,19px);
+
+              &.ot-mobile{
+                .lib-css(display, block);
+              }
+              &.ot-desktop{
+                .lib-css(display, none);
+              }
+            }
+            .ot-content-btn-see-more{
+              .lib-css(display, block);
+              .ot-block-text-see-more{
+                .lib-css(font-size,23px);
+                .lib-css(line-height,23px);
+                .lib-css(padding,3px 21px);
+              }
+            }
+          }
+        //}
+      }
+      .ot-container-options-with-desc{
+        ul{
+          li{
+            .ot-option-btn{
+              .ot-option-btn-title-mobile{
+                display: block;
+              }
+            }
+          }
+        }
+        &.optionsl3110,
+        &.optionsl3150,
+        &.optionsl5190{
+          ul{
+            li{
+              .lib-css(width, 100%);
+              .lib-css(margin, 0 0 5px 0);
+              .lib-css(display, block);
+
+              .ot-option-btn{
+                .lib-css(width, 100%);
+                .lib-css(height, 50px);
+                .lib-css(border-radius, 0);
+                .lib-css(background-size, 33px);
+                .lib-css(background-position, 5px center);
+              }
+              .ot-option-title-description{
+                .lib-css(width, 100%);
+                .lib-css(position, relative);
+                .lib-css(left, auto);
+                .lib-css(top, auto);
+                .lib-css(position, relative);
+                .lib-css(padding, 20px);
+
+                &::before{
+                  display: none;
+                }
+                .ot-option-title{
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 490px){
+  .ot-landing-page-epson{
+    .ot-container-main{
+      .ot-print{
+        .ot-print-name-mobile{
+          .lib-css(font-size,37px);
+          .lib-css(padding,20px 0 15px 0);
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 410px) {
+  .ot-landing-page-epson {
+    .ot-container-main{
+      .ot-print{
+        .ot-print-name-mobile{
+          .lib-css(font-size,28px);
+
+        }
+      }
+      .ot-container-options-with-desc{
+        ul{
+          li{
+            .ot-option-btn{
+              .ot-option-btn-title-mobile{
+                .lib-css(font-size,16px);
+                .lib-css(padding-top,14px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 320px) {
+  .ot-landing-page-epson {
+    .ot-container-main{
+      .ot-container-options-with-desc{
+        ul{
+          li{
+            .ot-option-btn{
+              .ot-option-btn-title-mobile{
+                .lib-css(font-size,14px);
+                .lib-css(padding-top,15px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,131 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Ppsoft\Home\Block\Product\View */
+?>
+<?php $_product = $block->getProduct();
+   $cuota_uno =   $_product->getData('minicuota_cuota_uno');
+   $monto_uno =   $_product->getData('minicuota_monto_uno');
+   $cuota_dos =   $_product->getData('minicuota_cuota_dos');
+   $monto_dos =   $_product->getData('minicuota_monto_dos');
+   $cuota_tres =   $_product->getData('minicuota_cuota_tres');
+   $monto_tres =   $_product->getData('minicuota_monto_tres');
+   $cuota_inicial =   $_product->getData('cuota_inicial');
+?>
+<?php if ($cuota_inicial): ?>
+<div class=" desktop cuote-wrap">
+<?php endif; ?>
+<?php /* if ($cuota_dos && $monto_dos): ?>
+    <div class="cuote-price">
+        <?php
+        $number = number_format($monto_dos, '2', '.', ',');
+        $split = explode(".", $number);
+        $integer = $split[0];
+        $decimal = $split[1]; ?>
+        <span class="cuote-month"><?= $cuota_dos ?> <span class="cuote-mulitply"><?php echo __('x '); ?></span></span>
+        <span class="price-currency int"><?= $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer ?>.</span>
+        <span class="decimal"><?php echo $decimal; ?></span>
+        <span class="cuote-permonth"><?php echo __('por mes'); ?></span>
+    </div>
+<?php endif; */ ?>
+<?php if ($cuota_tres && $monto_tres): ?>
+    <div class="cuote-price">
+        <?php
+        $number = number_format($monto_tres, '2', '.', ',');
+        $split = explode(".", $number);
+        $integer = $split[0];
+        $decimal = $split[1]; ?>
+        <span class="price-currency bs"><?php echo __('Bs.'); ?>&nbsp;</span><span class="price-currency int"><?= $integer ?>.</span>
+        <span class="decimal"><?php echo $decimal; ?></span>
+        <span class="cuote-month"><?php echo __('x'); ?>&nbsp;<span class="cuote-month"><?= $cuota_tres ?>&nbsp;<?php echo __('meses'); ?></span></span>
+    </div>
+<?php endif; ?>
+<?php if ($cuota_uno && $monto_uno): ?>
+    <div class="cuote-price seis-meses">
+        <?php
+        $number = number_format($monto_uno, '2', '.', ',');
+        $split = explode(".", $number);
+        $integer = $split[0];
+        $decimal = $split[1]; ?>
+        <span class="price-currency bs"><?php echo __('Bs.'); ?>&nbsp;</span><span class="price-currency int"><?= $integer ?>.</span>
+        <span class="decimal"><?php echo $decimal; ?></span>
+        <span class="cuote-month"><?php echo __('x'); ?>&nbsp;<span class="cuote-month"><?= $cuota_uno ?>&nbsp;<?php echo __('meses'); ?></span></span>
+    </div>
+<?php endif; ?>
+<?php if ($cuota_inicial): ?>
+    <div class="cuote-price inicial">
+        <?php
+        $number = number_format($cuota_inicial, '2', '.', ',');
+        $split = explode(".", $number);
+        $integer = $split[0];
+        $decimal = $split[1]; ?>
+        <span class="cuota-inicial"><?php echo __('Inicial:'); ?></span>
+        <span class="price-currency bs"><?php echo __('Bs.'); ?>&nbsp;</span><span class="price-currency int"><?= $integer ?>.</span>
+        <span class="decimal"><?php echo $decimal; ?></span>
+    </div>
+<?php endif; ?>
+<?php if ($cuota_inicial): ?>
+    </div>
+<?php endif; ?>
+
+
+<?php if ($cuota_inicial): ?>
+<div class=" mobile cuote-wrap">
+    <?php endif; ?>
+    <?php /* if ($cuota_dos && $monto_dos): ?>
+    <div class="cuote-price">
+        <?php
+        $number = number_format($monto_dos, '2', '.', ',');
+        $split = explode(".", $number);
+        $integer = $split[0];
+        $decimal = $split[1]; ?>
+        <span class="cuote-month"><?= $cuota_dos ?> <span class="cuote-mulitply"><?php echo __('x '); ?></span></span>
+        <span class="price-currency int"><?= $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer ?>.</span>
+        <span class="decimal"><?php echo $decimal; ?></span>
+        <span class="cuote-permonth"><?php echo __('por mes'); ?></span>
+    </div>
+<?php endif; */ ?>
+    <?php if ($cuota_inicial): ?>
+        <div class="cuote-price inicial">
+            <?php
+            $number = number_format($cuota_inicial, '2', '.', ',');
+            $split = explode(".", $number);
+            $integer = $split[0];
+            $decimal = $split[1]; ?>
+            <span class="cuota-inicial"><?php echo __('Inicial:'); ?></span>
+            <span class="price-currency bs"><?php echo __('Bs.'); ?>&nbsp;</span><span class="price-currency int"><?= $integer ?>.</span>
+            <span class="decimal"><?php echo $decimal; ?></span>
+        </div>
+    <?php endif; ?>
+    <?php if ($cuota_uno && $monto_uno): ?>
+        <div class="cuote-price seis-meses">
+            <?php
+            $number = number_format($monto_uno, '2', '.', ',');
+            $split = explode(".", $number);
+            $integer = $split[0];
+            $decimal = $split[1]; ?>
+            <span class="price-currency bs"><?php echo __('Bs.'); ?>&nbsp;</span><span class="price-currency int"><?= $integer ?>.</span>
+            <span class="decimal"><?php echo $decimal; ?></span>
+            <span class="cuote-month"><?php echo __('x'); ?>&nbsp;<span class="cuote-month"><?= $cuota_uno ?>&nbsp;<?php echo __('meses'); ?></span></span>
+        </div>
+    <?php endif; ?>
+    <?php if ($cuota_tres && $monto_tres): ?>
+        <div class="cuote-price">
+            <?php
+            $number = number_format($monto_tres, '2', '.', ',');
+            $split = explode(".", $number);
+            $integer = $split[0];
+            $decimal = $split[1]; ?>
+            <span class="price-currency bs"><?php echo __('Bs.'); ?>&nbsp;</span><span class="price-currency int"><?= $integer ?>.</span>
+            <span class="decimal"><?php echo $decimal; ?></span>
+            <span class="cuote-month"><?php echo __('x'); ?>&nbsp;<span class="cuote-month"><?= $cuota_tres ?>&nbsp;<?php echo __('meses'); ?></span></span>
+        </div>
+    <?php endif; ?>
+    <?php if ($cuota_inicial): ?>
+</div>
+<?php endif; ?>

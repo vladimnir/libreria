@@ -1,0 +1,595 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//  The contents of this file will get split into two output files: email.less and email-inline.less.
+//
+//  email.less
+//  Styles contained in the .email-non-inline() and .media-width() mixins will be output in the email.less file
+//  and will be included in a <style> tag in emails. Non-inline styles should be used for styles that can't be applied
+//  as inline CSS, such as media queries.
+//
+//  email-inline.less
+//  Styles not included in the mixins mentioned above will be included in the email-inline.less file.
+//  Since email client support for CSS in <style> tags is limited, the majority of styles should be added as "inline"
+//  styles. CSS will be applied to transactional email HTML via the Emogrifier library, which only has support for
+//  certain CSS selectors (source: https://github.com/jjriv/emogrifier#supported-css-selectors):
+//
+//  Supported selectors (examples in parenthesis):
+//      * ID (#logo)
+//      * class (.logo)
+//      * type (h1)
+//      * descendant (.logo > a)
+//      * child (.logo a)
+//      * adjacent (.logo + .second-example)
+//      * attribute presence (a[title])
+//      * attribute value (a[title="example"])
+//      * attribute only ([title="example"])
+//
+//  Unsupported selectors (examples in parenthesis):
+//      * first-child (div:first-child)
+//      * last-child (div:last-child)
+//      * nth-child (div:nth-child(3n+1))
+//      * universal (*)
+//      * pseudo (a:hover, a:active, a:focus, span:before, span:after, etc)
+
+//
+//  Variables
+//  _____________________________________________
+
+@font-size-unit-convert: false; // Prevents font-related measurements from being converted to the incompatible rem unit
+
+//
+//  Resets
+//  ---------------------------------------------
+
+//  Generic resets
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: 0;
+    height: auto;
+    line-height: 100%;
+    outline: none;
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+
+    td {
+        vertical-align: top;
+    }
+}
+
+//  Client-specific resets (from the Salted email template: https://github.com/rodriguezcommaj/salted)
+
+.email-non-inline() {
+    //  Prevent WebKit and Windows mobile from changing default text sizes
+    body,
+    table,
+    td,
+    a {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    //  Allow smoother rendering of resized images in Internet Explorer (such as high-resolution logo)
+    img {
+        -ms-interpolation-mode: bicubic;
+    }
+
+    //  Remove spacing between tables in Outlook 2007 and up
+    table,
+    td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+    }
+}
+
+//
+//  Typography
+//  ---------------------------------------------
+
+//  See email-fonts.less for @font-face declarations
+
+.lib-typography-all();
+
+body {
+    font-family: @font-family__base;
+    font-weight: normal;
+    text-align: left;
+}
+
+th,
+td {
+    font-family: @font-family__base;
+}
+
+a {
+    color: #000000;
+    text-decoration: @link__text-decoration;
+}
+
+p {
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.45;
+    margin-bottom: 20px;
+    color: #000000;
+    a {
+        color: #000000 !important;
+        text-decoration: none !important;
+    }
+}
+
+p.greeting {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+p.bold {
+    font-weight: 600;
+}
+
+p.center-bold {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+h3 {
+    font-weight: 700;
+    color: #000000;
+}
+.email-order-acc {
+    width: 100%;
+    td {
+        width: 50%;
+    }
+}
+
+
+.email-non-inline() {
+    a:visited {
+        color: #000000 !important;
+        text-decoration: @link__visited__text-decoration !important;
+    }
+
+    a:hover {
+        color: #000000 !important;
+        text-decoration: @link__hover__text-decoration !important;
+    }
+
+    a:active {
+        color: #000000 !important;
+        text-decoration: @link__active__text-decoration !important;
+    }
+
+    //  Remove link color on iOS
+    .no-link a {
+        color: @text__color !important;
+        cursor: default !important;
+        text-decoration: none !important;
+    }
+}
+.email-summary {
+    h1 {
+        color: #000 !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    p {
+        font-size: 14px;
+    }
+}
+
+//
+//  Layout
+//  ---------------------------------------------
+
+html,
+body {
+    background-color: @email__background-color;
+    min-width: 100% !important;
+    -webkit-text-size-adjust: 100%;
+}
+
+.wrapper {
+    margin: 0 auto;
+}
+
+.wrapper-inner {
+    padding-bottom: @email-content__padding__l;
+    width: 100%;
+}
+
+.main {
+    margin: 0 auto;
+    text-align: left; // Necessary to prevent all text from centering in Outlook 2003
+    max-width: 1000px;
+    width: 100%;
+    background-color: @color-white;
+}
+
+.header {
+    padding: @email-body__padding @email-body__padding 0;
+    background-color: #ffffff;
+    .header-email {
+        width: 100%;
+    }
+    .eheader-logo {
+        padding-top: 15px;
+    }
+    .eheader-link {
+        text-align: right;
+        color: #b1b1b1;
+        font-size: 14px;
+        a {
+            color: #b1b1b1 !important;
+            font-weight: 700;
+        }
+    }
+}
+
+.main-content {
+    background-color: @email-content__background-color;
+    padding: @email-body__padding;
+}
+
+.footer {
+    padding: 0 @email-body__padding @email-body__padding; // Reduce space between body of email and closing text
+    background-color: #ffffff;
+    .footer-main-mobile {
+        text-align: center;
+        > tbody > tr > td {
+            padding: 0 !important;
+            width: 100% !important;
+        }
+        .footer-contect {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            td {
+                padding: 2px 0 !important;
+                width: 100% !important;
+                p {
+                    img {
+                        vertical-align: middle !important;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+        .footer-last-link {
+            text-align: center !important;
+            padding: 2px 0 0 !important;
+        }
+        .footer-social {
+            width: 180px !important;
+            td {
+                width: 30% !important;
+                padding: 0 5px !important;
+                display: table-cell !important;
+            }
+        }
+    }
+    .footer-social-img {
+        text-align: center;
+        a {
+            margin: 0 10px;
+        }
+    }
+}
+
+// New Account
+.account-email-header {
+    padding: 25px;
+    p.ac-email-head {
+        color: #626262;
+        font-weight: 800;
+        font-size: 24px;
+        margin: 0;
+        a {
+            color: #626262 !important;
+            text-decoration: none !important;
+        }
+    }
+    p.ac-email-head2 {
+        color: #626262;
+        font-weight: 400;
+        font-size: 18px;
+        margin: 0 0 10px;
+    }
+}
+.account-email-black {
+    background-color: #000;
+    text-align: center;
+    padding: 3px;
+    p {
+        text-align: center;
+        color: #fff;
+        font-size: 14px;
+        margin: 0;
+        font-weight: 400;
+    }
+}
+.ac-feture-title {
+    font-weight: 600;
+    font-size: 17px;
+}
+p.ac-feture-list {
+    margin: 0 0 5px;
+    font-weight: 400;
+}
+.features-table {
+    width: 100%;
+    margin-bottom: 50px;
+    td {
+        text-align: center;
+    }
+    .features-left {
+        text-align: left;
+        width: 13%;
+    }
+    .features-right {
+        text-align: right;
+        width: 13%;
+    }
+}
+.ac-bottom-txt {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 80px;
+}
+// Order
+.email-order {
+    width: 100%;
+}
+
+//  Layout (Mobile)
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    html,
+    body {
+        //  Change background/foreground to same color
+        background-color: @email-content__background-color;
+        width: 100% !important;
+    }
+
+    .main {
+        max-width: 100% !important;
+        min-width: 240px;
+        width: auto !important;
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .account-email-header {
+        p.ac-email-head {
+            font-size: 16px !important;
+        }
+        p.ac-email-head2 {
+            font-size: 14px !important;
+        }
+    }
+    .account-email-black {
+        padding: 5px 25px !important;
+        p {
+            font-size: 12px !important;
+        }
+    }
+    .ac-feture-title {
+        font-size: 14px !important;
+    }
+    p.greeting {
+        font-size: 16px !important;
+    }
+    p {
+        font-size: 12px !important;
+    }
+    .payment-method{
+        font-size: 12px !important;
+    }
+    .button {
+        .inner-wrapper {
+            td {
+                a {
+                    font-size: 12px !important;
+                    width: 95% !important;
+                    padding: 10px !important;
+                }
+            }
+        }
+    }
+    .ac-bottom-txt {
+        font-size: 12px !important;
+    }
+    .features-table {
+        .features-left,
+        .features-right {
+            img {
+                max-width: inherit !important;
+            }
+        }
+    }
+    .deviceWidth {
+        width:100%!important;
+        padding:0;
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
+    .footer-main {
+        display: none !important;
+    }
+    .footer {
+        .footer-main-mobile {
+            text-align: center;
+            > tbody > tr > td {
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            .footer-contect {
+                border-top: 1px solid #000;
+                border-bottom: 1px solid #000;
+                td {
+                    padding: 2px 0 !important;
+                    width: 100% !important;
+                    p {
+                        img {
+                            vertical-align: middle !important;
+                            margin-right: 5px;
+                        }
+                    }
+                }
+            }
+            .footer-last-link {
+                text-align: center !important;
+                padding: 2px 0 0 !important;
+            }
+            .footer-social {
+                td {
+                    width: 30% !important;
+                    padding: 0 5px !important;
+                    display: table-cell !important;
+                }
+            }
+        }
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    footer {
+        td {
+            display: table-cell !important;
+        }
+        .footer-main-mobile {
+            .footer-social {
+                td {
+                    img {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+//
+//  Buttons
+//  ---------------------------------------------
+
+.button {
+    & > tr > td {
+        padding-bottom: @indent__s;
+    }
+
+    .inner-wrapper {
+        margin-top: 40px;
+        margin-bottom: 50px;
+        td {
+            background-color: #5acd98;
+            padding: 0;
+
+            a {
+                border: 0 none;
+                background-color: #5acd98;
+                color: @button-primary__color;
+                display: inline-block;
+                font-size: 17px;
+                font-weight: 800;
+                text-decoration: none;
+                line-height: 20px;
+                padding: 15px 20px;
+                &:hover {
+                    background-color: #5acd98;
+                    border: 0 none;
+                }
+            }
+        }
+    }
+}
+
+.email-non-inline() {
+    .button {
+        .inner-wrapper {
+            td:hover {
+                background-color: @button-primary__hover__background !important;
+            }
+
+            a:active,
+            td:active {
+                background-color: @button-primary__active__background !important;
+            }
+        }
+
+        a:active,
+        a:hover,
+        a:visited {
+            //  Undo general link hover state
+            border: 1px solid @button-primary__hover__background;
+            color: @button-primary__hover__color !important;
+            text-decoration: none !important;
+        }
+    }
+
+    .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+        .button {
+            .inner-wrapper {
+                width: 100% !important;
+
+                td {
+                    a {
+                        font-size: @button__font-size + 2;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Messages
+//  ---------------------------------------------
+
+.message-info,
+.message-gift {
+    width: @table__width;
+
+    td {
+        background-color: @message-email__background;
+        border: 1px solid @message-email__border-color;
+        color: @message-email__color;
+        margin: 0;
+        padding: @email-content__padding__base;
+
+        a {
+            color: @message-email-link__color;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-top: 0;
+        }
+    }
+}
+
+.message-details {
+    margin-bottom: @indent__s;
+
+    b {
+        font-weight: bold;
+    }
+
+    td {
+        padding-bottom: @indent__xs;
+
+        b {
+            margin-right: @indent__s;
+        }
+    }
+}

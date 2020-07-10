@@ -1,0 +1,232 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magento\Catalog\Block\Product\Compare\ListCompare */
+?>
+<?php $total    =   $block->getItems()->getSize();
+$imageBlock     =   $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
+$helperCompare  =   $this->helper('Ppsoft\Compare\Helper\Product\Compare');
+?>
+<?php if ($total): ?>
+    <div class="title-container">
+    <div class="compare-title">
+        <span><?= /* @escapeNotVerified */ __('Compare Products') ?></span>
+    </div>
+    <div class="back-compare">
+        <a class="volver" href="javascript:history.go(-1)"><?= /* @escapeNotVerified */ __('Volver >') ?></a>
+    </div>
+    </div>
+        <div class="table-wrapper comparison">
+            <table class="data table table-comparison" id="product-comparison"
+                data-mage-init='{"compareList":{
+                    "windowPrintSelector":".action.print",
+                    "productsInRow":"5",
+                    "selectors":{
+                        "productAddToCartSelector":"button.action.tocart"}
+                }}'>
+                <caption class="table-caption"><?= /* @escapeNotVerified */ __('Compare Products') ?></caption>
+                <thead>
+                <tr>
+                    <?php $index = 0 ?>
+                    <?php foreach ($block->getItems() as $item): ?>
+                        <?php if ($index++ == 0): ?>
+                            <th scope="row" class="cell label remove"><span><?= /* @escapeNotVerified */ __('Remove Product') ?></span></th>
+                        <?php endif; ?>
+                        <td class="cell remove product hidden-print">
+                            <?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+                            <a href="#" data-post='<?= /* @escapeNotVerified */ $compareHelper->getPostDataRemove($item) ?>'
+                               class="action delete" title="<?= /* @escapeNotVerified */ __('Remove Product') ?>">
+                                <?= /* @escapeNotVerified */ __('Eliminar') ?>
+                            </a>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <?php $index = 0; ?>
+                    <?php $helper = $this->helper(\Magento\Catalog\Helper\Output::class); ?>
+                    <?php /** @var $item \Magento\Catalog\Model\Product */ ?>
+                    <?php foreach ($block->getItems() as $item): ?>
+                        <?php if ($index++ == 0): ?>
+                            <th scope="row" class="cell label product empty"><span><?= /* @escapeNotVerified */ __('Product') ?></span></th>
+                        <?php endif; ?>
+                        <td data-th="<?= $block->escapeHtml(__('Product')) ?>" class="cell product info">
+                            <a class="product-item-photo" href="<?= /* @escapeNotVerified */ $block->getProductUrl($item) ?>" title="<?= /* @escapeNotVerified */ $block->stripTags($item->getName(), null, true) ?>">
+                                <img class="img" src="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Image')->init($item, 'category_page_list')->setImageFile($item->getImage())->getUrl(); ?>" />
+                            </a>
+                            <div class="product-item-actions hidden-print">
+                                <div class="actions-primary">
+                                    <?php if ($item->isSaleable()): ?>
+                                        <form data-role="tocart-form" action="<?= /* @escapeNotVerified */ $this->helper(\Magento\Catalog\Helper\Product\Compare::class)->getAddToCartUrl($item) ?>" method="post">
+                                            <?= $block->getBlockHtml('formkey') ?>
+                                            <button type="submit" class="action tocart primary">
+                                                <span><?= /* @escapeNotVerified */ __('Agregar Al Carrito >') ?></span>
+                                            </button>
+                                        </form>
+                                    <?php else: ?>
+                                        <?php if ($item->getIsSalable()): ?>
+                                            <div class="stock available"><span><?= /* @escapeNotVerified */ __('In stock') ?></span></div>
+                                        <?php else: ?>
+                                            <div class="stock unavailable"><span><?= /* @escapeNotVerified */ __('Out of stock') ?></span></div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <th scope="row" class="cell label">
+                     <span class="attribute label nombre">
+                         <?= /* @escapeNotVerified */ __('Nombre Producto') ?>
+                     </span>
+                    </th>
+                <?php foreach ($block->getItems() as $item): ?>
+                    <td class="cell product attribute">
+                        <div class="attribute value nombre">
+                            <?= /* @escapeNotVerified */ $helper->productAttribute($item, $item->getName(), 'name') ?>
+                        </div>
+                    </td>
+                <?php endforeach; ?>
+                </tr>
+                <tr>
+                    <th scope="row" class="cell label">
+                     <span class="attribute label marca">
+                         <?= /* @escapeNotVerified */ __('Marca') ?>
+                     </span>
+                    </th>
+                    <?php foreach ($block->getItems() as $item): ?>
+                        <td class="cell product attribute">
+                            <div class="attribute value brand">
+                                <?= /* @escapeNotVerified */ __($item->getResource()->getAttribute('marca')->getFrontend()->getValue($item)); ?>
+                            </div>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                <tr>
+                    <th scope="row" class="cell label">
+                     <span class="attribute label precio">
+                         <?= /* @escapeNotVerified */ __('Precio') ?>
+                     </span>
+                        <img class="minicuotas" src="<?php echo $this->getViewFileUrl('images/minicuotashigh.png'); ?>" alt="cuotas icon">
+                    </th>
+                    <?php foreach ($block->getItems() as $item): ?>
+                        <?php if ($item->getSpecialPrice())
+                        { $number = number_format($item->getSpecialPrice(), '2', '.', ',');
+                        $split = explode (".", $number);
+                        $integer = $split[0];
+                        $decimal = $split[1];
+                        }
+                        else {
+                            $number = number_format($item->getPrice(), '2', '.', ',');
+                            $split = explode (".", $number);
+                            $integer = $split[0];
+                            $decimal = $split[1];
+                        }
+                        ?>
+                        <?php
+                        $cuota_uno =   $item->getData('minicuota_cuota_uno');
+                        $monto_uno =   $item->getData('minicuota_monto_uno');
+                        $cuota_dos =   $item->getData('minicuota_cuota_dos');
+                        $monto_dos =   $item->getData('minicuota_monto_dos');
+                        $cuota_tres =   $item->getData('minicuota_cuota_tres');
+                        $monto_tres =   $item->getData('minicuota_monto_tres');
+                        $cuota_inicial =   $item->getData('cuota_inicial');
+                        ?>
+                        <td class="cell product attribute">
+                            <div class="attribute value precio">
+                                <span class="alcontado">Contado &nbsp;</span><span class="int"><?php echo $block->getCurrentCurrencySymbol() .'.&nbsp;' . $integer?>.</span><span class="decimal"><?php echo $decimal;?></span>
+                            </div>
+                            <?php if ($cuota_tres && $monto_tres): ?>
+                                <div class="cuote-price">
+                                    <?php
+                                    $number = number_format($monto_tres, '2', '.', ',');
+                                    $split = explode(".", $number);
+                                    $integer = $split[0];
+                                    $decimal = $split[1]; ?>
+                                    <span style="visibility: hidden; position: absolute;" class="pixel-price"><?php echo $integer;?></span>
+                                    <span class="price-currency int"><span class="bs"><?php echo __('Bs.'); ?></span>&nbsp;<?= $integer ?>.</span>
+                                    <sup class="decimal"><?php echo $decimal; ?></sup>&nbsp;
+                                    <span class="cuote-month"><span class="cuote-mulitply">&nbsp;<?php echo __('x'); ?>&nbsp;</span><?= $cuota_tres ?><span class="months">&nbsp;<?php echo __('meses'); ?></span></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($cuota_inicial): ?>
+                                <div class="cuote-price inicial">
+                                    <?php
+                                    $number = number_format($cuota_inicial, '2', '.', ',');
+                                    $split = explode(".", $number);
+                                    $integer = $split[0];
+                                    $decimal = $split[1]; ?>
+                                    <span class="cuota-inicial"><?php echo __('Inicial:'); ?></span>
+                                    <span class="price-currency"><?= __('Bs.')?><?= $integer ?>.</span>
+                                    <sup class="decimal"><?php echo $decimal; ?></sup>
+                                </div>
+                            <?php endif; ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                <tr>
+                    <th scope="row" class="cell label">
+                     <span class="attribute label reseñas">
+                         <?= /* @escapeNotVerified */ __('Reseñas') ?>
+                     </span>
+                    </th>
+                    <?php foreach ($block->getItems() as $item): ?>
+                        <td class="cell product attribute">
+                            <div class="attribute value">
+                                <?= $helperCompare->getRatingSummary($item);?>
+                            </div>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                <tr>
+                    <th scope="row" class="cell label">
+                     <span class="attribute label reseñas">
+                         <?= /* @escapeNotVerified */ __('Características principales') ?>
+                     </span>
+                    </th>
+                    <?php foreach ($block->getItems() as $item): ?>
+                        <td class="cell product attribute">
+                            <div class="attribute value caracteristicas">
+                                <?= /* @escapeNotVerified */ $helper->productAttribute($item, $item->getFichaTecnica(), 'ficha_tecnica') ?>
+                            </div>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                <tr>
+                    <th scope="row" class="cell label">
+                     <span class="attribute label reseñas">
+                         <?= /* @escapeNotVerified */ __('Descripción') ?>
+                     </span>
+                    </th>
+                    <?php foreach ($block->getItems() as $item): ?>
+                        <td class="cell product attribute">
+                            <div class="attribute value especificaciones">
+                                <?= /* @escapeNotVerified */ $helper->productAttribute($item, $item->getDescription(), 'description') ?>
+                            </div>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <?php if (!$block->isRedirectToCartEnabled()) : ?>
+            <script type="text/x-magento-init">
+            {
+                "[data-role=tocart-form]": {
+                    "catalogAddToCart": {}
+                }
+            }
+            </script>
+        <?php endif; ?>
+<?php else: ?>
+    <div class="message info empty"><div><?= /* @escapeNotVerified */ __('You have no items to compare.') ?></div></div>
+<?php endif; ?>

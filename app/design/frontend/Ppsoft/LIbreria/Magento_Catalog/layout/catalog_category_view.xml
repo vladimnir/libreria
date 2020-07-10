@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="category.image" remove="true"/>
+        
+        <referenceContainer name="content">
+            <block name="back-mobile" template="Magento_Catalog::back-mobile.phtml" before="-"/>
+            <block name="filter-mobile" template="Magento_Catalog::filter-mobile.phtml" after="back-mobile"/>
+        </referenceContainer>
+        <referenceContainer name="main.content">
+            <container name="after-columns" label="After Column" htmlTag="div" htmlClass="after-column" after="columns">
+                <block class="Magento\Cms\Block\Block" name="recently-viewed" before="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">recently-viewed</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+        <move element="page.main.title" destination="content" before="-"/>
+        <referenceBlock name="product_list_impression" remove="true" />
+        <referenceBlock name="category.description" remove="true" />
+        <referenceBlock name="sidebar.additional" remove="false"/>
+        <referenceBlock name="multiple-wishlist_sidebar" remove="true"/>
+        <referenceBlock name="sale.reorder.sidebar" remove="true"/>
+    </body>
+</page>

@@ -1,0 +1,26 @@
+<?php
+$order = $block->getOrder();
+$name = $order->getShippingMethod();
+if($order->getPayment()->getMethod() == 'sintesis'): ?>
+    </td>
+</tr>
+    <p>Puedes pagar en cualquiera de los comercios afiliados, indicando tu número de pedido
+        <strong><?php echo $block->escapeHtml($order->getIncrementId()) ?></strong>&nbsp;
+        Consulta la lista<a style="color: blue !important; font-weight: bold; text-decoration: underline;" href="<?php echo $this->getUrl('metodo-de-pago.html') ?>">&nbsp;aquí.</a>
+        <br><p style="color: black">Una vez realizado tu pago recibirás un correo con tu factura adjunta.</p><br>
+    <p style="display: inline; color: black">Recuerda que solo tienes</p><b style="display: inline;">&nbsp;12 hrs</b>&nbsp;<p style="color: black; display: inline;">para realizar tu pago.</p>
+    </p>
+<?php endif; ?>
+<?php if($order->getPayment()->getMethod() == 'qr'): ?>
+    </td>
+    </tr>
+    <p><strong>Pago con Código QR (Transferencia simple):</strong><br>Desde la aplicación de tu banco<strong>&nbsp;escanea el Código QR que se muestra en la pantalla:</strong><br>
+        <img class="success-img qr"
+             src="<?php echo $block->getMediaUrl('codigosqr/').$order->getIncrementId().'.png'; ?>">
+        <a style="color: blue !important; display: block; width: 100%; float: none; clear: both;" href="<?php echo $block->getMediaUrl('codigosqr/').$order->getIncrementId().'.png'; ?>" target="_blank" download="">Guardar Código QR</a>
+    <p style="color: black">Una vez realizado tu pago recibirás un correo con tu factura adjunta.</p><br>
+    <p style="display: inline; color: black">Recuerda que solo tienes</p><b style="display: inline;">&nbsp;12 hrs</b>&nbsp;<p style="color: black; display: inline;">para realizar tu pago.</p>
+    </p>
+
+<?php endif; ?>
+

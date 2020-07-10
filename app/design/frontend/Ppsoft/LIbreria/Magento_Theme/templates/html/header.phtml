@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Ppsoft\Ciudades\Block\Html\Header $block
+ */
+$welcomeMessage = $block->getWelcome();
+$puntos = $block->getPoints();
+?>
+<?php switch ($block->getShowPart()):
+    case 'welcome':
+        ?>
+        <?php if(!is_null($puntos)):?>
+        <li class="greet welcome" data-bind="scope: 'customer'" style="display: none;">
+            <!-- ko if: customer().fullname  -->
+            <span class="text desktop" data-bind="text: '<?= $block->escapeHtml(__('Hola')) ?>'">
+            </span>
+            <span class="text mobile" data-bind="text: '<?= $block->escapeHtml(__('Hola,')) ?>'"> </span>
+            <span class="name desktop" data-bind="text: new String('<?= $block->escapeHtml(__('%1,', '%1')) ?>').replace('%1', customer().firstname)">
+            </span>
+            <span class="name mobile" data-bind="text: new String('<?= $block->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().firstname)">
+            </span>
+            <span class="text desktop" data-bind="text: '<?= $block->escapeHtml(__('tienes'))?>'">
+            </span>
+            <br>
+            <span class="text desktop" id="dismac-points"></span>
+            <br>
+            <!-- /ko -->
+            <!-- ko ifnot: customer().fullname  -->
+            <span class="text mobile" data-bind='html:"<?= $block->escapeHtml('Inicie Sessión') ?>"'></span>
+            <?= $block->getBlockHtml('header.additional') ?>
+            <!-- /ko -->
+        </li>
+        <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "customer": {
+                            "component": "Magento_Customer/js/view/customer"
+                        }
+                    }
+                }
+            }
+        }
+        </script>
+        <?php endif;?>
+    <?php break; ?>
+
+    <?php case 'other': ?>
+        <?= $block->getChildHtml() ?>
+        <?php break; ?>
+
+    <?php endswitch; ?>

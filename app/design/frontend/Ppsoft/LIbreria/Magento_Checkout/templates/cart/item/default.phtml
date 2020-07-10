@@ -1,0 +1,389 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Ppsoft\Home\Block\Cart\Item\Renderer */
+
+$_item = $block->getItem();
+$product = $_item->getProduct();
+$id = $product->getId();
+$products = $block->getLoadProduct($id);
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+$helper = $this->helper('Magento\Msrp\Helper\Data');
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+$selectQty = $product->getExtensionAttributes()->getStockItem()->getQty();
+if($block->getQtyConfig()) {
+    $qty = $block->getQtyConfig();
+    $selectQty = reset($qty);
+}
+$helperImagen = $this->helper('Magento\Catalog\Helper\Image');
+?>
+<?php
+if ($products->getSpecialPrice()):
+    $number = number_format($_item->getPrice(), '2', '.', ',');
+    $split = explode (".", $number);
+    $integer = $split[0];
+    $decimal = $split[1];
+else:
+    $number = number_format($_item->getPrice(), '2', '.', ',');
+    $split = explode (".", $number);
+    $integer = $split[0];
+    $decimal = $split[1];
+endif;
+?>
+<?php  $installation = $products->getResource()->getAttribute('codigo_instalacion')->getFrontend()->getValue($products); ?>
+<?php
+$isService = true;
+if ($products->getResource()->getAttribute('clasificacion')->getFrontend()->getValue($products)) {
+    $isService = json_decode($products->getResource()->getAttribute('clasificacion')->getFrontend()->getValue($products))->clasificacion->codigo;
+}
+?>
+<?php
+$_helperDismacPos = $this->helper('Ppsoft\DismacPos\Helper\Data');
+$stockWyomind = json_decode($_helperDismacPos->stockWyomind()->getStockByProductIdAndStoreIds($products->getId(), [$products->getStore()->getStoreId()]));
+$selectQty = $stockWyomind->qty;
+if ($selectQty > 5) {
+    $selectQty = 5;
+}
+?>
+<tbody class="cart item">
+<?php if ($isService != 133) :?>
+    <tr class="item-info">
+        <td data-th="<?= $block->escapeHtml(__('Item')) ?>" class="col item">
+            <?php if ($block->hasProductUrl()):?>
+            <a href="<?= /* @escapeNotVerified */ $block->getProductUrl() ?>"
+               title="<?= $block->escapeHtml($block->getProductName()) ?>"
+               tabindex="-1"
+               class="product-item-photo">
+                <?php else:?>
+                <span class="product-item-photo">
+            <?php endif;?>
+                    <span class="product-image-container">
+                    <span class="product-image-wrapper">
+                        <img class="product-image-photo" src="<?= $helperImagen->init($product, 'cart_page_product_thumbnail')->getUrl() ?>" max-width="165" max-height="165" alt="<?= $block->escapeHtml($block->getProductName()) ?>"/>
+                    </span>
+                </span>
+                    <?php if ($block->hasProductUrl()):?>
+            </a>
+        <?php else: ?>
+            </span>
+        <?php endif; ?>
+            <div class="product-item-details">
+                <strong class="product-item-name">
+                    <?php if ($block->hasProductUrl()):?>
+                        <a href="<?= /* @escapeNotVerified */ $block->getProductUrl() ?>"><?= $block->escapeHtml($block->getProductName()) ?></a>
+                    <?php else: ?>
+                        <?= $block->escapeHtml($block->getProductName()) ?>
+                    <?php endif; ?>
+                </strong>
+                <span class="description">
+                    <?= $product->getData('sku'); ?>
+                </span>
+                <?php if ($_options = $block->getOptionList()):?>
+                    <dl class="item-options">
+                        <?php foreach ($_options as $_option) : ?>
+                            <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                            <dt><?= $block->escapeHtml($_option['label']) ?></dt>
+                            <dd>
+                                <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                    <?= /* @escapeNotVerified */ $_formatedOptionValue['full_view'] ?>
+                                <?php else: ?>
+                                    <?= /* @escapeNotVerified */ $_formatedOptionValue['value'] ?>
+                                <?php endif; ?>
+                            </dd>
+                        <?php endforeach; ?>
+                    </dl>
+                <?php endif;?>
+                <?php if ($messages = $block->getMessages()): ?>
+                    <?php foreach ($messages as $message): ?>
+                        <div class="cart item message <?= /* @escapeNotVerified */ $message['type'] ?>"><div><?= $block->escapeHtml($message['text']) ?></div></div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+                <?php if ($addInfoBlock): ?>
+                    <?= $addInfoBlock->setItem($_item)->toHtml() ?>
+                <?php endif;?>
+            </div>
+        </td>
+        <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+            <div class="field qty">
+                <label class="label" for="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty">
+                    <span><?= /* @escapeNotVerified */ __('Qty') ?></span>
+                </label>
+                <div class="control qty custom-cart">
+                    <span class="before before-up" id="up" data-max-qty="<?php echo $selectQty; ?>">
+                    </span>
+                    <span class="after after-down" id="down">
+                    </span>
+                    <?php  $stock = $product->getExtensionAttributes()->getStockItem();?>
+                    <input id="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty"
+                           name="cart[<?= /* @escapeNotVerified */ $_item->getId() ?>][qty]"
+                           data-cart-item-id="<?= $block->escapeHtml($_item->getSku()) ?>"
+                           value="<?= /* @escapeNotVerified */ $block->getQty() ?>"
+                           type="number"
+                           title="<?= $block->escapeHtml(__('Qty')) ?>"
+                           class="input-text qty"
+                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                           data-role="cart-item-qty"
+                           <?php if (strpos($product->getName(), "Motocicleta") !== false): ?>
+                                disabled
+                           <?php endif; ?>
+                           />
+                </div>
+            </div>
+        </td>
+
+        <?php if ($canApplyMsrp): ?>
+            <td class="col msrp" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <span class="pricing msrp">
+                    <span class="msrp notice"><?= /* @escapeNotVerified */ __('See price before order confirmation.') ?></span>
+                    <?php $helpLinkId = 'cart-msrp-help-' . $_item->getId(); ?>
+                    <a href="#" class="action help map" id="<?= /* @escapeNotVerified */ ($helpLinkId) ?>" data-mage-init='{"addToCart":{"helpLinkId": "#<?= /* @escapeNotVerified */ $helpLinkId ?>","productName": "<?= /* @escapeNotVerified */ $product->getName() ?>","showAddToCart": false}}'>
+                        <span><?= /* @escapeNotVerified */ __("What's this?") ?></span>
+                    </a>
+                </span>
+            </td>
+        <?php else: ?>
+            <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <span class="int"><?php echo $block->getCurrentCurrencySymbol() .'.&nbsp;'. $integer?>.</span><span class="decimal"><?php echo $decimal;?></span>
+            </td>
+        <?php endif; ?>
+
+        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+            <?= /* @escapeNotVerified */ $block->getActions($_item) ?>
+        </td>
+        <?php /* if($products->getResource()->getAttribute('servicio_instalacion')->getFrontend()->getValue($products)): ?>
+        <td class="servicios mobile">
+            <div class="servicio-instalacion"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('servicio')->toHtml(); ?></div>
+            <?php $number = number_format($products->getResource()->getAttribute('servicio_instalacion')->getFrontend()->getValue($products), '2', '.', ','); ?>
+            <?php $split = explode (".", $number);
+            $integer = $split[0];
+            $decimal = $split[1];
+            ?>
+            <span class="custom-checkbox" id="checkbox-servicios"></span>
+            <div class="precio"><span class="int"><?php echo $block->getCurrentCurrencySymbol() .'.&nbsp;'. $integer?>.</span><span class="decimal"><?php echo $decimal;?></span></div><span class="pagado-contado"> (Pago de contado únicamente)</span>
+        </td>
+        <td class="acepto mobile">
+            <div class="servicio-instalacion"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('acepto-condiciones')->toHtml(); ?></div>
+            <div id="close-ciudades-mobile" class="close">
+                <img src='<?php echo $this->getViewFileUrl('images/close.png'); ?>' alt="close">
+            </div>
+            <div class="btn-acepto">
+                <a class="go-checkout acepto-btn"><?= $block->escapeHtml(__('Acepto >')) ?></a>
+            </div>
+         </td>
+        <?php endif; */ ?>
+    </tr>
+<?php endif;?>
+<?php if ($isService == 133) :?>
+    <tr class="item-info service" id="service">
+        <td data-th="<?= $block->escapeHtml(__('Item')) ?>" class="col item servicios">
+            <?php if ($_item->getSku() == 'minicuota'): ?>
+                <span class="product-image-container">
+                    <span class="product-image-wrapper">
+                        <img class="product-image-photo" src="<?= $helperImagen->init($product, 'cart_page_product_minicuota')->getUrl()//$block->getImage($block->getProductForThumbnail(), 'cart_page_product_minicuota')->toHtml() ?>" max-width="72" max-height="71" alt="Minicuota"/>
+                    </span>
+                </span>
+            <?php endif; ?>
+            <div<?= $nameProduct = $_item->getSku() == 'minicuota' ? ' class="detail-minicuota"': '' ?>>
+                <span class="product-image-container">
+                    <span class="product-image-wrapper">
+                    <img src='<?php echo $this->getViewFileUrl('images/install.png'); ?>'
+                         alt="Install"
+                         class="install-icon">
+                    </span>
+                </span>
+                <?php $nameProduct = $_item->getSku() == 'minicuota' ? __('Pago de Minicuota') : __('Dismac te puede ayudar con el servicio de instalacion'); ?>
+                <span class="install-info"><?= $nameProduct ?></span>
+                <span class="int"><?php echo $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer?>.<sup><?php echo $decimal;?></sup></span>
+                <span class="pagado">&nbsp;<?=_('(Pago de contado unicamente)'); ?></span>
+            </div>
+        </td>
+        <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+            <div class="field qty">
+                <label class="label" for="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty">
+                    <span><?= /* @escapeNotVerified */ __('Qty') ?></span>
+                </label>
+                <div class="control qty custom-cart">
+                    <span class="before before-up" id="up" data-max-qty="<?php echo $selectQty; ?>">
+                    </span>
+                    <span class="after after-down" id="down">
+                    </span>
+                    <?php  $stock = $product->getExtensionAttributes()->getStockItem();?>
+                    <input id="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty"
+                           name="cart[<?= /* @escapeNotVerified */ $_item->getId() ?>][qty]"
+                           data-cart-item-id="<?= $block->escapeHtml($_item->getSku()) ?>"
+                           value="<?= /* @escapeNotVerified */ $block->getQty() ?>"
+                           type="number"
+                           title="<?= $block->escapeHtml(__('Qty')) ?>"
+                           class="input-text qty"
+                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                           data-role="cart-item-qty"/>
+                </div>
+            </div>
+        </td>
+
+        <?php if ($canApplyMsrp): ?>
+            <td class="col msrp" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <span class="pricing msrp">
+                    <span class="msrp notice"><?= /* @escapeNotVerified */ __('See price before order confirmation.') ?></span>
+                    <?php $helpLinkId = 'cart-msrp-help-' . $_item->getId(); ?>
+                    <a href="#" class="action help map" id="<?= /* @escapeNotVerified */ ($helpLinkId) ?>" data-mage-init='{"addToCart":{"helpLinkId": "#<?= /* @escapeNotVerified */ $helpLinkId ?>","productName": "<?= /* @escapeNotVerified */ $product->getName() ?>","showAddToCart": false}}'>
+                        <span><?= /* @escapeNotVerified */ __("What's this?") ?></span>
+                    </a>
+                </span>
+            </td>
+        <?php else: ?>
+            <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <span class="int"><?php echo $block->getCurrentCurrencySymbol() .'.&nbsp;'. $integer?>.</span><span class="decimal"><?php echo $decimal;?></span>
+            </td>
+        <?php endif; ?>
+
+        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+            <?= /* @escapeNotVerified */ $block->getActions($_item) ?>
+        </td>
+        <?php /* if($products->getResource()->getAttribute('servicio_instalacion')->getFrontend()->getValue($products)): ?>
+        <td class="servicios mobile">
+            <div class="servicio-instalacion"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('servicio')->toHtml(); ?></div>
+            <?php $number = number_format($products->getResource()->getAttribute('servicio_instalacion')->getFrontend()->getValue($products), '2', '.', ','); ?>
+            <?php $split = explode (".", $number);
+            $integer = $split[0];
+            $decimal = $split[1];
+            ?>
+            <span class="custom-checkbox" id="checkbox-servicios"></span>
+            <div class="precio"><span class="int"><?php echo $block->getCurrentCurrencySymbol() .'.&nbsp;'. $integer?>.</span><span class="decimal"><?php echo $decimal;?></span></div><span class="pagado-contado"> (Pago de contado únicamente)</span>
+        </td>
+        <td class="acepto mobile">
+            <div class="servicio-instalacion"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('acepto-condiciones')->toHtml(); ?></div>
+            <div id="close-ciudades-mobile" class="close">
+                <img src='<?php echo $this->getViewFileUrl('images/close.png'); ?>' alt="close">
+            </div>
+            <div class="btn-acepto">
+                <a class="go-checkout acepto-btn"><?= $block->escapeHtml(__('Acepto >')) ?></a>
+            </div>
+         </td>
+        <?php endif; */ ?>
+    </tr>
+<?php endif;?>
+<?php  $installation = $products->getResource()->getAttribute('codigo_instalacion')->getFrontend()->getValue($products);
+$isService = '';
+if (!empty($products->getResource()->getAttribute('clasificacion')->getFrontend()->getValue($products))) {
+    $isService = json_decode($products->getResource()->getAttribute('clasificacion')->getFrontend()->getValue($products))->clasificacion->codigo;
+}
+?>
+<?php if ($installation != null && $isService != 133) :?>
+    <tr class="inst" id="inst">
+        <td colspan="4">
+            <div class="cart-installation">
+                <?php
+                $price = $block->getProductData($installation);
+                $number = number_format(($price), '2', '.', ',');
+                $split = explode(".", $number);
+                $integer = $split[0];
+                $decimal = $split[1];
+                ?>
+                <span class="install-info"><?=_('Dismac te puede ayudar con el servicio de instalacion'); ?></span>
+                <?php $newIsta = $installation ?>
+                <input type="checkbox" name="installation" value="installation" class="installation-<?php echo $installation?>" id="installation"
+                       <?php if ($block->getCartProduct($newIsta)):?>checked<?php endif; ?> />
+                <span class="int"><?php echo $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer?>.<sup><?php echo $decimal;?></sup></span>
+                (<?=_('Pago de contado unicamente'); ?>)
+
+                <div id="install-modal-<?php echo $installation?>" style="display:none;">
+                    <div class="minicuotapin-wrap">
+                        <form id="add-installation">
+                            <input type="hidden" name="installation_id" id='installation_id-<?php echo $installation?>' value="<?php echo $block->getProductId($installation)?>"/>
+                            <?php if ($block->getCartProduct($installation)):?>
+                                <div class="buttons-container">
+                                    <button class="installsubmit-<?php echo $installation?>"><span><?= __('Do you want to remove ?'); ?></span></button>
+                                    <input type="hidden" name="remove_id" id='remove_id-<?php echo $installation?>' value="yes"/>
+                                </div>
+                            <?php else:?>
+                                <div class="buttons-container">
+                                    <span class="install-info"><?= __('Declaro que acepto y cumplo con los requisitos de instalación. Consultar '); ?><a href="<?php echo $this->getUrl('requisitos-de-instalacion') ?>" target="_blank"><?= __('requisitos aquí'); ?></a><br></span>
+                                    <button class="action primary installsubmit-<?php echo $installation?>"><span><?= __('ACEPTO >'); ?></span></button>
+                                    <input type="hidden" name="remove_id" id='remove_id-<?php echo $installation?>' value="no"/>
+                                </div>
+                            <?php endif;?>
+                        </form>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    //<![CDATA[
+                    require([
+                        'jquery',
+                        'Magento_Ui/js/modal/modal'
+                    ], function ($, modal) {
+
+                        var insatllpopup = {
+                            type: 'popup',
+                            responsive: false,
+                            innerScroll: true,
+                            modalClass: 'install-popup',
+                            buttons: []
+                        };
+                        modal(insatllpopup, $('#install-modal-<?php echo $installation?>'));
+
+                        $(".installation-<?php echo $installation?>").click(function () {
+                            $("#install-modal-<?php echo $installation?>").modal(insatllpopup).modal('openModal');
+                        });
+
+                        // var loading = false;
+                        $('.installsubmit-<?php echo $installation?>').click(function(){
+
+                            // if (loading) {
+                            //     return;
+                            // }
+                            // loading = true;
+                            // e.preventDefault(); // avoid to execute the actual submit of the form.
+                            var installationID = $('#installation_id-<?php echo $installation?>').val();
+                            var removeId = $('#remove_id-<?php echo $installation?>').val();
+                            $.ajax({
+                                url: '<?php echo $this->getUrl('installation/index/addInstallation'); ?>',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    installationID : installationID,
+                                    removeId : removeId,
+                                    sku : "<?php echo $installation?>",
+                                    qty : "<?php echo $block->getQty() ?>"
+                                },
+                                showLoader: true,
+                                success: function (response) {
+                                    // loading = false;
+                                    if (response.error == true) {
+                                        alert($.mage.__(response.message));
+                                        console.log(response);
+                                    } else  {
+                                        $("#install-modal-<?php echo $installation?>").modal(insatllpopup).modal('closeModal');
+                                    }
+                                    location.reload(true);
+                                }
+                            });
+                        });
+                    });
+                    //]]>
+                </script>
+            </div>
+        </td>
+    </tr>
+<?php endif;?>
+</tbody>
+<script type="text/javascript">
+    //<![CDATA[
+    require([
+        'jquery'
+    ], function ($) {
+
+        if($("#service").length)
+        {
+            // $("#inst").css({"display": "none"});
+        }
+    });
+    //]]>
+</script>

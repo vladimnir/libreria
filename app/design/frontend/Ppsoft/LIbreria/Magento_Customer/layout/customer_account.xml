@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Customer My Account (All Pages)" design_abstraction="custom">
+    <head>
+        <title>Mi Cuenta</title>
+    </head>
+    <body>
+        <referenceBlock name="root">
+            <action method="setHeaderTitle">
+                <argument translate="true" name="title" xsi:type="string">Dismac Club</argument>
+            </action>
+        </referenceBlock>
+        
+        <referenceContainer name="sidebar.main" remove="false" >
+            <container name="custom.dashboard" htmlTag="div" htmlClass="custom-dashboard" before="-">
+                <block class="Magento\Catalog\Block\Product\View" name="custom-links" template="Magento_Customer::custom-dashboard.phtml"/>
+            </container>
+        </referenceContainer>
+        
+        <referenceContainer name="page.top">
+            <block name="back-cuenta" as="back-cuenta" template="Magento_Customer::back-cuenta.phtml" before="-"/>
+        </referenceContainer>
+        
+        <move element="back-cuenta" destination="content" before="-"/>
+    </body>
+</page>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>My Account</title>
+    </head>
+    <referenceBlock name="root">
+        <action method="setHeaderTitle">
+            <argument translate="true" name="title" xsi:type="string">My Account</argument>
+        </action>
+    </referenceBlock>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My Account</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Inicio</item>
+                    <item name="label" xsi:type="string">Inicio</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Customer</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Mi Cuenta</item>
+                    <item name="label" xsi:type="string">Mi Cuenta</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}customer/account/index</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block name="back-cuenta" as="back-cuenta" template="Magento_Customer::back-cuenta.phtml" before="page.main.title"/>
+            <block class="Magento\Customer\Block\Account\Dashboard\Info" name="customer_account_dashboard_info" as="info" template="Magento_Customer::account/dashboard/info.phtml" cacheable="false"/>
+            <referenceBlock name="customer_account_dashboard_address" remove="true" />
+            <referenceBlock name="customer_account_dashboard_top" remove="true" />
+        </referenceContainer>
+        <move element="customer_account_dashboard_info1" destination="sidebar.main" after="-"/>
+    </body>
+</page>

@@ -1,0 +1,33 @@
+<div id="popup-addtocart" class="popup-add">
+    <img class="full" src="<?php echo $this->getViewFileUrl('images/popupfull.png'); ?>" alt="share icon">
+    <span id="cross-add" class="cross-add">x</span>
+    <a id="seguir-comprando" href="#">
+    </a>
+    <a  class="ircart" href="<?php echo $this->getUrl('checkout/cart') ?>"></a>
+
+    <!--<div class="section1">
+        <img src="<?php /*echo $this->getViewFileUrl('images/iconobien.png'); */?>" alt="share icon">
+        <span class="title">Producto agregado al carrito</span><span id="cross-add" class="cross-add">x</span>
+    </div>
+    <div class="section2">
+        <div class="container2">
+            <div class="seguir">
+                <a id="seguir-comprando" href="#">Seguir comprando
+                    <img class="plus" src="<?php /*echo $this->getViewFileUrl('images/plusicono.png'); */?>" alt="share icon">
+                </a>
+            </div>
+            <div class="ir">
+                <a href="<?php /*echo $this->getUrl('checkout/cart') */?>">Ir al carrito
+                    <img src="<?php /*echo $this->getViewFileUrl('images/cartpopwhite.png'); */?>" alt="share icon">
+                </a>
+            </div>
+        </div>
+    </div>-->
+</div>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Theme/js/mini-cart-action": {}
+    }
+}
+</script>

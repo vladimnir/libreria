@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="level2"/>
+        <referenceContainer name="recomendados" remove="true" />
+        <referenceContainer name="vistos" remove="true" />
+        <referenceContainer name="page.main.title" remove="true" />
+        <referenceContainer name="filter-mobile" remove="true" />
+        <referenceContainer name="category.products" remove="true" />
+        <referenceContainer name="content">
+        <container name="level2" htmlTag="div" htmlClass="level2-category" after="back-mobile">
+            <block class="Ppsoft\Level2\Block\Level2" name="level2block" template="Ppsoft_Level2::level2.phtml"/>
+        </container>
+        <referenceBlock name="catalog.leftnav" remove="true"/>
+        </referenceContainer>
+    </body>
+</page>

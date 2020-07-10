@@ -1,0 +1,123 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php $_helperDismacPos = $this->helper('Ppsoft\DismacPos\Helper\Data'); ?>
+<?php $_product = $block->getProduct(); ?>
+<?php $cuarentena = ''; ?>
+<?php
+    $codigos = false;
+    if($_product->getCustomAttribute('disponibilidad')) {
+        $disponibilidad = $_product->getCustomAttribute('disponibilidad')->getValue();
+        $codigos = $block->availableAlmacenes($disponibilidad);
+    }
+?>
+<?php 
+    switch ($codigos) {
+        case 1: 
+            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/deliver-green-pdp-icon.svg');
+            $homeDelivery = __('<span style="color:#00B41A;">Disponible</span> para envío a domicilio');
+
+            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-green-pdp-icon.svg');
+            $pickUpStore = __('<span style="color:#00B41A;">Disponible</span> para recojo en tienda');
+
+            $classHome = 'disponible';
+            $classPick = 'disponible';
+            break;
+        case 2: 
+            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/deliver-green-pdp-icon.svg');
+            $homeDelivery = __('<span style="color:#00B41A;">Disponible</span> para envío a domicilio');
+            
+            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-grey-pdp-icon.svg');
+            $pickUpStore = __('<span style="color:#ec1f26;">No disponible</span> para recojo en tienda');
+
+            $classHome = 'disponible';
+            $classPick = 'no-disponible';
+            break;
+        case 3: 
+            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/delivery-grey-pdp-icon.svg');
+            $homeDelivery = __('<span style="color:#ec1f26;">No disponible</span> para envío a domicilio');
+            
+            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-green-pdp-icon.svg');
+            $pickUpStore = __('<span style="color:#00B41A;">Disponible</span> para recojo en tienda');
+
+            $classHome = 'no-disponible';
+            $classPick = 'disponible';
+            $cuarentena = __('NO DISPONIBLE POR PERIODO DE CUARENTENA');
+            break;
+        case 0: 
+            $iconHomeDelivery = $this->getViewFileUrl('images/shiping/delivery-grey-pdp-icon.svg');
+            $homeDelivery = __('No Disponible para envío a domicilio');
+            
+            $iconPickUpStore = $this->getViewFileUrl('images/shiping/store-grey-pdp-icon.svg');
+            $pickUpStore = __('<span style="color:#ec1f26;">No disponible</span> para recojo en tienda');
+
+            $classHome = 'no-disponible';
+            $classPick = 'no-disponible';
+            $cuarentena = __('NO DISPONIBLE POR PERIODO DE CUARENTENA');
+            break;
+    }
+?>
+<div class="entrega-gratuita home">
+    <span class="content-img">
+        <img src="<?= $iconHomeDelivery ?>" alt="truck icon"/>
+    </span>
+    <span class="text first <?= $classHome ?>"><?= $homeDelivery; ?></span>
+</div>
+<div class="entrega-gratuita store">
+    <span class="content-img">
+        <img src="<?= $iconPickUpStore ?>" alt="truck icon"/>
+    </span>
+    <span class="text first <?=$classPick ?>"><?= $pickUpStore; ?></span>
+    <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+        <div class="product-social-links mobile">
+            <div class="product-addto-links">
+                <a href="#"
+                   class="action towishlist"
+                   title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                   aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                   data-post='<?php  echo $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product) ?>'
+                   data-action="add-to-wishlist"
+                   role="button">
+                    <span><?php echo $block->escapeHtml(__('Agregar a mi Lista de Deseos')); ?></span>
+                </a>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+<?php if ($cuarentena !== ''): ?>
+<div class="entrega-gratuita cuarentena">
+    <strong><?= $cuarentena ?></strong>
+</div>
+<?php endif; ?>
+<?php  $label =$_product->getData('label_product');
+$class = '';
+switch ($label) {
+    case 'Aun mas bajo':
+        $class = 'bajo';
+        break;
+    case 'Precio Imbatible':
+        $class = 'imbatible';
+        break;
+    case 'Oportunidad Unica':
+        $class = 'oportunidad';
+        break;
+    case 'Combo Ahorro':
+        $class = 'ahorro';
+        break;
+    case 'Producto Nuevo':
+        $class = 'nuevo';
+        break;
+    case 'Nuevo Producto':
+        $class = 'nuevo';
+        break;
+
+}
+?>
+<?php  if ($class): ?>
+    <img class="<?= $class; ?>" src='<?php echo $this->getViewFileUrl('images/' . $class .'.png'); ?>' alt="precios">
+<?php endif; ?>

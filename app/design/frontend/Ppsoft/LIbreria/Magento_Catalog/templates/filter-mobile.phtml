@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<ul class="menu-categories mobile">
+   <li>
+    <a class="wishlist" href="<?php echo $this->getUrl('wishlist') ?>"> <img class="heart" src='<?php echo $this->getViewFileUrl('images/object_1.png'); ?>' alt="heart"></a>
+   </li>
+    <li>
+        <a class="filters-block"> <img class="filters" src='<?php echo $this->getViewFileUrl('images/object_2.png'); ?>' alt="filters"></a>
+        <?php //echo $block->getBlockHtml('catalog.leftnav') ?>
+    </li>
+    <li>
+        <span></span>
+        <a class="sorter-block"> <img class="sorter-image" src='<?php echo $this->getViewFileUrl('images/object_3.png'); ?>' alt="filters"></a>
+    </li>
+    <li>
+        <a class="grid-block"> <img class="list-image" src='<?php echo $this->getViewFileUrl('images/list-view.png'); ?>' alt="filters"><img class="grid-image" src='<?php echo $this->getViewFileUrl('images/grid.png'); ?>' alt="filters"></a>
+    </li>
+</ul>

@@ -1,0 +1,143 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Ppsoft\Home\Block\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$imageBlock =  $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
+?>
+<div class="reciente">
+    <span class="title">
+    <?php /* @escapeNotVerified */ echo __('Recomendados'); ?>
+    </span>
+</div>
+<div class="recent-slider recomendado-slider">
+<?php foreach ($_productCollection as $products): ?>
+<?php if($products->getData('recomendado')): ?>
+                <div class="recent-container">
+                    <a class="img-product" href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>" ><img src="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Image')->init($products, 'category_page_list')->setImageFile($products->getImage())->getUrl(); ?>" /> </a>
+                    <strong class="product-item-name">
+                        <?php if(strlen($products->getName()) > 30): ?>
+                        <a title="<?= $block->escapeHtml($products->getName()) ?>"
+                           href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>"
+                           class="product-item-link" id="item-name">
+                            <?= $block->escapeHtml(substr($products->getName(), 0, 31).'...') ?>
+                        </a>
+                        <?php endif;?>
+                        <?php if(strlen($products->getName()) < 30): ?>
+                            <a title="<?= $block->escapeHtml($products->getName()) ?>"
+                               href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>"
+                               class="product-item-link" id="item-name">
+                                <?= $block->escapeHtml($products->getName()) ?>
+                            </a>
+                        <?php endif;?>
+                    </strong>
+                    <div class="sku-container">
+                        <span class="sku">
+                        <?= $block->escapeHtml($products->getSku()) ?>
+                    </span>
+                    </div>
+                    <?php
+                    $_ratingSummary = $block->getRatingSummary($products);
+                    ?>
+                    <?php if($_ratingSummary){ ?>
+                        <div class="product-reviews-summary short">
+                            <div class="rating-summary">
+                                <div title="<?php echo (int)$_ratingSummary; ?>%" class="rating-result">
+                                    <span class="stars" style="width:<?php echo (int)$_ratingSummary; ?>%"><span><?php echo (int)$_ratingSummary; ?>%</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if(!$_ratingSummary): ?>
+                        <div class="product-reviews-summary short">
+                            <div class="rating-summary">
+                                <div class="rating-result">
+                                    <span class="stars" style="width: 0"><span></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif ?>
+                    <img class="minicuotas" src="<?php echo $this->getViewFileUrl('images/minicuotashigh.png'); ?>" alt="cuotas icon">
+                    <?php
+                    if ($products->getSpecialPrice()):
+                        $number = number_format($products->getSpecialPrice(), '2', '.', ',');
+                        $split = explode (".", $number);
+                        $integer = $split[0];
+                        $decimal = $split[1];
+                    else:
+                        $number = number_format($products->getPrice(), '2', '.', ',');
+                        $split = explode (".", $number);
+                        $integer = $split[0];
+                        $decimal = $split[1];
+                        if ($products->getTypeId() == 'configurable'):
+
+                            $number = number_format($products->getFinalPrice(), '2', '.', ',');
+                            $split = explode (".", $number);
+                            $integer = $split[0];
+                            $decimal = $split[1];
+                        endif;
+                    endif;
+                    ?>
+                    <span class="alcontado">Contado &nbsp;</span><span class="int"><?php echo $block->getCurrentCurrencySymbol() .'.&nbsp;'. $integer?>.</span><span class="decimal"><?php echo $decimal;?></span>
+                    <div class="cart">
+                        <?php $postParams = $block->getAddToCartPostParams($products); ?>
+                        <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+                            <?php echo $block->getBlockHtml('formkey')?>
+                            <button type="submit"
+                                    title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                    class="action tocart primary">
+                                <span><?php /* @escapeNotVerified */ echo __('Agregar Al Carrito >') ?></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+<?php endif; ?>
+<?php endforeach; ?>
+</div>
+<script>
+    require([
+        'jquery',
+        'domReady!',
+        'slick'
+    ], function($){
+        $(document).ready(function(){
+            $('.recomendado-slider').slick({
+                infinite: true,
+                speed: 300,
+                slidesToShow: 4,
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                            dots: false,
+                            prevArrow: false,
+                            nextArrow: false
+                        }
+                    },
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 3
+                        }
+                    }
+                ]
+            });
+        });
+    });
+</script>

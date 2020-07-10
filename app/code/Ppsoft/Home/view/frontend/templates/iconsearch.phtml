@@ -1,0 +1,16 @@
+<div class="search-container">
+    <a id="iconsearch" class="search"><img class="search-image" src='<?php echo $this->getViewFileUrl('images/iconsearch.png'); ?>' alt="search"></a>
+</div>
+<script>
+    require([
+        'jquery',
+        'domReady!'
+
+    ], function($){
+        $(document).ready(function(){
+            $('#iconsearch').click(function() {
+                $('.search-mobile').toggleClass('visible');
+            });
+        });
+    });
+</script>

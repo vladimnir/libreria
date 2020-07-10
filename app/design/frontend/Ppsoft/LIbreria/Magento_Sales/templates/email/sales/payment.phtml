@@ -1,0 +1,13 @@
+<?php
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $om->get('\Magento\Store\Model\StoreManagerInterface');
+$store = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$order = $block->getOrder();
+$paymentMethod =$order->getPayment()->getMethod();
+$encrypted = md5($order->getId());
+
+$label = $block->getLabel() ? $block->getLabel() : __('Descargar Factura');
+if($paymentMethod=="payme" || $paymentMethod == "chcybersource" || $paymentMethod == "free"):?>
+    <a href="<?php echo $store."facturas/"?><?php echo $encrypted.".pdf"?>" target="_blank"><?= $label ?></a>
+<?php endif;?>
+

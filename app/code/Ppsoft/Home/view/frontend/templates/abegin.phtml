@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Ppsoft\Home\Block\Link $block */
+$logged = $block->isLoggedIn();
+?>
+<?php if(!$logged):?>
+<div id="popup-modal" style="display: none">
+    <img class="cuotas-logo" src="<?= $block->getViewFileUrl('images/pago-de-minicuotas.png');?>" alt="Pago-de-Minicuotas"/>
+    <ul>
+        <li>
+            <span>Para pagar tus cuotas en dismac.com.bo debes crear una cuenta dando <a href="<?php echo $block->getUrl('customer/account/create'); ?>">clic aquí</a></span><img src="<?= $block->getViewFileUrl('images/click-aqui.png');?>" alt="Clic Aquí"/>
+        </li>
+        <li>
+            <span>Si ya tienes una cuenta creada solo debes iniciar sesión dando <a href="<?php echo $block->getUrl('customer/account/login'); ?>">clic aquí</a></span><img src="<?= $block->getViewFileUrl('images/click-aqui.png');?>" alt="Clic Aquí"/>
+        </li>
+    </ul>
+    <p class="reminder">* Recuerda que para pagar tu cuota con tarjeta de crédito/débito la debes tener habilitada.</p>
+</div>
+<?php endif; ?>
+<?php if($logged):?>
+<a class="pagar-cuotas" onclick="jQuery('body').trigger('processStart');" href="<?php echo $block->getUrl('minicuotas'); ?>">
+<?php endif;?>

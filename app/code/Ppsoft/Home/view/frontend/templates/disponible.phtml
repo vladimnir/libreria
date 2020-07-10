@@ -1,0 +1,72 @@
+<div id="disponible">
+</div>
+<?php
+/** @var \Magento\Catalog\Model\Product $product */
+$product = $block->getProduct();
+$disponibilidad = "";
+$codigos = "";
+if($product->getCustomAttribute('disponibilidad')) {
+    $disponibilidad = $product->getCustomAttribute('disponibilidad')->getValue();
+    $codigos = $block->getAlmacenes($disponibilidad);
+}
+$ciudades = array();
+if($codigos) {
+    foreach ($codigos as $data) {
+        if ($data->getData('city') == 'La Paz') {
+            $ciudades['La Paz'][] = $data;
+        }
+
+        if ($data->getData('city') == 'Santa Cruz de la Sierra') {
+            $ciudades['Santa Cruz de la Sierra'][] = $data;
+        }
+
+        if ($data->getData('city') == 'Cochabamba') {
+            $ciudades['Cochabamba'][] = $data;
+        }
+    }
+}
+$helper = $this->helper('Ppsoft\ShippingHomeDelivery\Helper\Data');
+?>
+<?php $markers = []; ?>
+<?php foreach ($ciudades as $key => $codigos) : ?>
+   <!-- <div id="disponible">
+        <div class="switcher-language">
+            <div class="switcher-options">
+                <div class="switcher-trigger">
+                    <strong class="view-scz">
+                        <span><?php /*echo $key */?></span>
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <?php $markers = array(); ?>
+    <?php foreach ($codigos as $codigo) : ?>
+        <?php 
+            $markers[] = [
+                            'name' => $codigo->getData('name'), 
+                            'latitude' => $codigo->getData('latitude'), 
+                            'longitude' => $codigo->getData('longitude')
+                        ];
+        ?>
+        <div class="location">
+            <img src='<?php echo $this->getViewFileUrl('images/location.png'); ?>' >
+        </div>
+        <div class="disponible-en">
+            <div id="quickViewContainer<?= /* @noEscape */ $codigo->getData('store_code') ?>"></div>
+            <a target="_blank" href="<?= $block->getUrl().'encuentra-tu-tienda.html';?>" class="button-quickview">
+                <span class="title"><?= $codigo->getData('name') ?></span>
+            </a>
+            <span class="content1"><?= $codigo->getData('address_line_1') ?></span>
+            <?php $arrayDate = json_decode($codigo->getData('hours'), true); ?>
+            <?php $arrayDateHours = $arrayDate['Monday']; ?>
+            <?php $sundatDate = '';
+            if (isset($arrayDate['Sunday'])) {
+                $arrayDateHoursSunday = $arrayDate['Sunday'];
+                $sundatDate = 'Domingo '.$arrayDateHoursSunday['from'].'Hrs. a '.$arrayDateHoursSunday['to'].'Hrs';
+            }
+            ?>
+            <span class="horarios"> Horarios: </span> <span class="dias"><?= __('Lunes a Sábado ') ?><?= $arrayDateHours['from'].'Hrs. a '.$arrayDateHours['to'].'Hrs '.$sundatDate?></span>
+        </div>
+    <?php endforeach; ?>
+<?php endforeach; ?>

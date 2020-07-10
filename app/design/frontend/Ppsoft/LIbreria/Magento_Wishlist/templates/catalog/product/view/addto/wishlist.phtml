@@ -1,0 +1,70 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Ppsoft\Home\Block\Catalog\Product\View\AddTo\Wishlist $block */
+
+$productId = $block->getProduct()->getId() ? $block->getProduct()->getId() : $block->getProductId();
+$customerId = $block->getIdCustomer(); //CUSTOMER_ID
+$wishlistCollection = $block->getWishlistCollection($customerId);
+$inwish = "no";
+if(count($wishlistCollection)) {
+    foreach ($wishlistCollection as $_item) {
+        //echo json_encode($_item->getData());
+        if($_item->getProductId() == $productId) {
+            $inwish = "existe";
+            break;
+        }
+    }
+}
+?>
+<?php if ($block->isWishListAllowed()) : ?>
+   <a href="#"
+       class="desktop action towishlist <?= $inwish == "existe" ? 'red' : 'white' ?>"
+       data-post='<?= /* @noEscape */ $block->getWishlistParams() ?>'
+       data-action="add-to-wishlist">
+       <span><?= $block->escapeHtml(__('Agregar a mi Lista de Deseos')) ?></span>
+   </a>   
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "addToWishlist": <?= /* @noEscape */ $block->getWishlistOptionsJson() ?>
+        }
+    }
+</script>
+<?php if(!$block->getIsUpdateWishlist() && $customerId): ?>
+    <div class="loading-mask" data-role="loader">
+        <div class="loader">
+             <img alt="<?= __('Obteniendo datos de Wishlist') ?>" src="<?= $this->getViewFileUrl('images/loader-2.gif'); ?>"/>
+            <p><?= __('Obteniendo datos de Wishlist') ?></p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        require([
+            'jquery',
+        ], function($){
+            $.ajax({
+                url: '<?= /* @escapeNotVerified */ $this->getUrl('Ppsoft_wishlist/index/update') ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id_customer: <?= $customerId ?>,
+                    product_id: <?= $block->getProduct()->getId() ?>,
+                    wishlist_params: '<?= $block->getWishlistParams() ?>'
+                },
+                showLoader: true,
+                success: function (response) {
+                    if (!response.error) {
+                        $('.product-addto-links').html(response.output);
+                    }
+                }
+            });
+        });
+    </script>
+<?php endif; ?>

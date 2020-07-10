@@ -1,0 +1,36 @@
+<script type="text/javascript"> require(['jquery'], function ($) {
+        $(document).ready(function () {
+            tabControl();
+            var resizeTimer;
+            $(window).on('resize', function (e) {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function () {
+                    tabControl();
+                }, 250);
+            });
+
+            function tabControl() {
+                var tabs = $('.responsive-tab').find('.resp-tab');
+                if (tabs.is(':visible')) {
+                    tabs.find('a').on('click', function (event) {
+                        event.preventDefault();
+                        var target = $(this).attr('href'), tabs = $(this).parents('.resp-tab'),
+                            buttons = tabs.find('a'), item = tabs.parents('.responsive-tab').find('.tab-item');
+                        buttons.removeClass('active');
+                        item.removeClass('active');
+                        $(this).addClass('active');
+                        $(target).addClass('active');
+                    });
+                } else {
+                    $('.tab-item').on('click', function () {
+                        var container = $(this).parents('.responsive-tab'), currId = $(this).attr('id'),
+                            items = container.find('.tab-item');
+                        container.find('.resp-tab a').removeClass('active');
+                        items.removeClass('active');
+                        $(this).addClass('active');
+                        container.find('.resp-tab a[href$="#' + currId + '"]').addClass('active');
+                    });
+                }
+            }
+        });
+    }); </script>

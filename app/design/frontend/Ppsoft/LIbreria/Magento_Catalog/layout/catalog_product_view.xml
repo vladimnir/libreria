@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="sidebar.additional" remove="true"/>
+        
+        <referenceContainer name="product.info.main">
+            <block class="Ppsoft\Home\Block\Product\View" name="name-mobile" template="Magento_Catalog::mobile-name.phtml" after="cart.mobile"/>
+            <block class="Ppsoft\Home\Block\Disponible" name="free-ship" template="Magento_Theme::entrega-gratuita.phtml" after="product.info.price"/>
+            <block class="Ppsoft\Home\Block\Product\View" name="mini.quote" template="Magento_Catalog::product/view/miniquote.phtml" after="product.info.price"/>
+            <block class="Magento\Catalog\Block\Product\View" name="added" template="Magento_Theme::added.phtml" before="product.info.extrahint"/>
+            <block class="Magento\Catalog\Block\Product\View" name="garantia" template="Magento_Catalog::garantia.phtml" after="product.info.stock.sku"/>
+            <block class="Magento\Catalog\Block\Product\View" name="devolucion" template="Magento_Catalog::devolucion.phtml" after="product.info.extrahint"/>
+            <block class="Magento\Catalog\Block\Product\View" name="preciosbajos" template="Magento_Catalog::preciosbajos.phtml" after="-"/>
+            <block class="Magento\Catalog\Block\Product\View" name="garantia-mobile" template="Magento_Catalog::garantia-mobile.phtml" after="name-mobile"/>
+            <container name="cart.mobile" htmlTag="div" htmlClass="cart-mobile mobile" before="product.info.price">
+                <block class="Magento\Catalog\Block\Product\View" name="media.mobile" template="Magento_Theme::media-mobile.phtml"/>
+            </container>
+        </referenceContainer>
+        <referenceBlock name="product.info.details">
+            <block class="Ppsoft\Home\Block\Disponible" name="disponible.tab" template="Ppsoft_Home::disponible.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Disponible En</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="main.content">
+            <container name="after-columns" label="After Column" htmlTag="div" htmlClass="after-column" after="columns">
+                <block class="Magento\Cms\Block\Block" name="recently-viewed" before="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">recently-viewed</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+        <move element="product.info.overview" destination="product.info.main" after="page.main.title"/>
+        <move element="product.info.stock.sku" destination="product.info.main" after="page.main.title"/>
+        <move element="product.info.extrahint" destination="product.info.main" after="free-ship"/>
+        <move element="garantia" destination="product.info.main" after="product.info.stock.sku"/>
+        <move element="devolucion" destination="product.info.main" after="product.info.extrahint"/>
+        <move element="preciosbajos" destination="product.info.main" after="added"/>
+        <referenceBlock name="view.addto.compare" remove="true" />
+        <referenceBlock name="product.info.mailto" remove="true" />
+        <referenceBlock name="product.attributes" remove="true" />
+        <referenceBlock name="reviews.tab" remove="true" />
+    </body>
+</page>

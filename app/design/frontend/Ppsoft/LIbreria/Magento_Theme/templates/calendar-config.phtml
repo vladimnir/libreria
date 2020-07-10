@@ -1,0 +1,64 @@
+<script type="text/javascript">
+    require([
+            "jquery", 
+            "jquery/ui",
+            'mage/translate'
+            ], function($){
+                //date year
+                $.extend(true, $, {
+                    calendarConfig: {
+                        dayNames: [
+                                    $.mage.__("Domingo"),
+                                    $.mage.__("Lunes"),
+                                    $.mage.__("Martes"),
+                                    $.mage.__("Miercoles"),
+                                    $.mage.__("Jueves"),
+                                    $.mage.__("Viernes"),
+                                    $.mage.__("Sabado")
+                                  ],
+                        dayNamesMin: [
+                                        $.mage.__("Dom"),
+                                        $.mage.__("Lun"),
+                                        $.mage.__("Mar"),
+                                        $.mage.__("Mie"),
+                                        $.mage.__("Jue"),
+                                        $.mage.__("Vie"),
+                                        $.mage.__("Sab")
+                                      ],
+                        monthNames: [
+                                        $.mage.__("Enero"),
+                                        $.mage.__("Febrero"),
+                                        $.mage.__("Marzo"),
+                                        $.mage.__("Abril"),
+                                        $.mage.__("Mayo"),
+                                        $.mage.__("Junio"),
+                                        $.mage.__("Julio"),
+                                        $.mage.__("Agosto"),
+                                        $.mage.__("Septiembre"),
+                                        $.mage.__("Octubre"),
+                                        $.mage.__("Noviembre"),
+                                        $.mage.__("Diciembre")
+                                    ],
+                        monthNamesShort: [
+                                            $.mage.__("Ene"),
+                                            $.mage.__("Feb"),
+                                            $.mage.__("Mar"),
+                                            $.mage.__("Abr"),
+                                            $.mage.__("May"),
+                                            $.mage.__("Jun"),
+                                            $.mage.__("Jul"),
+                                            $.mage.__("Ago"),
+                                            $.mage.__("Sep"),
+                                            $.mage.__("Oct"),
+                                            $.mage.__("Nov"),
+                                            $.mage.__("Dic")
+                                         ],
+                        infoTitle: $.mage.__("Sobre el calendario"),
+                        closeText: $.mage.__("Cerrar"),
+                        currentText: $.mage.__("Ir hoy"),
+                        prevText: $.mage.__("Anterior"),
+                        nextText: $.mage.__("Siguiente")
+                    }
+                });
+            });
+</script>

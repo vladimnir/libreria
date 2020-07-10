@@ -1,0 +1,11 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var $block \Magento\Sales\Block\Order\Info */ ?>
+<h1 class="page-title">
+    <span class="base id"><?= /* @escapeNotVerified */ '(' . $block->getOrder()->getId() . ')'?></span>
+</h1>
+<span class="order-status"><?= /* @escapeNotVerified */ __($block->getOrder()->getStatus()) ?></span>

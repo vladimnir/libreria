@@ -1,0 +1,93 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Ppsoft\Level2\Block\Level2 $block */
+
+$catchild = $block->getCategoryChilds();
+$current = $block->getCurrentCategory();
+$description = $block->getCurrentCategory()->getDescription();
+$arrayCat = array();
+foreach ($catchild as $cat)
+{
+    $arrayCat = $cat->getName();
+}
+?>
+<div class="all-categories desktop">
+    <div class="title-main">
+        <span><?php /* @escapeNotVerified */ echo __('Todas las categorías'); ?></span>
+    </div>
+    <ul class="sub-categorias">
+        <?php foreach ($catchild as $cchild): ?>
+            <?php $catloaded = $block->getLoadedCategory($cchild->getId()); ?>
+        <li>
+            <a href="<?= /* @escapeNotVerified */ $cchild->getUrl() ?>" class="child-url"> 
+                <?php if ($catloaded->getImageUrl()) : ?>
+                    <img class="img-cat" src="<?php  echo $catloaded->getImageUrl(); ?>" />
+                <?php endif; ?>
+            </a>
+            <a href="<?= /* @escapeNotVerified */ $cchild->getUrl() ?>" class="child-url">
+                <span class="first-child"><?php /* @escapeNotVerified */ echo __($cchild->getName());?></span>
+            </a>
+            <?php $catgrandchild = $block->getCategoryGrandChilds($cchild->getId()) ?>
+            <?php foreach ($catgrandchild as $grandchild): ?>
+                <a href="<?= /* @escapeNotVerified */ $grandchild->getUrl() ?>" class="grandchild-url">
+                    <span class="grand-child"><?php /* @escapeNotVerified */ echo __($grandchild->getName());?></span>
+                </a>
+            <?php endforeach; ?>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<div class="all-categories mobile">
+    <div class="title-main">
+        <span><?php /* @escapeNotVerified */ echo __('Comprar por categorías'); ?></span>
+    </div>
+    <ul class="sub-categorias">
+        <?php foreach ($catchild as $cchild): ?>
+            <?php $catloaded = $block->getLoadedCategory($cchild->getId()); ?>
+            <li class="<?php /* @escapeNotVerified */ echo __(strtolower($cchild->getName()));?>">
+                <a href="<?= /* @escapeNotVerified */ $cchild->getUrl() ?>" class="child-url">
+                        <?php if ($cchild->getName() == "Línea Blanca") : ?>
+                            <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/Linea-blanca-588x392.jpg'); ?>' alt="linea blanca">
+                        <?php endif; ?>
+                        <?php if ($cchild->getName() == "Electrónica") : ?>
+                            <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/Electronica-588x392.jpg'); ?>' alt="electronica">
+                        <?php endif; ?>
+                        <?php if ($cchild->getName() == "Telefonía") : ?>
+                            <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/Telefonia-588x392.jpg'); ?>' alt="telefonia">
+                        <?php endif; ?>
+                        <?php if ($cchild->getName() == "Tecnología") : ?>
+                            <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/Tecnologia-270x174.jpg'); ?>' alt="telefonia">
+                        <?php endif; ?>
+                        <?php if ($cchild->getName() == "Climatización") : ?>
+                            <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/Climatizacion-270x174.jpg'); ?>' alt="telefonia">
+                        <?php endif; ?>
+                        <?php if ($cchild->getName() == "Electro Menor") : ?>
+                            <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/Electro-menor-270x174.jpg'); ?>' alt="telefonia">
+                        <?php endif; ?>
+                        <?php if ($cchild->getName() == "Hogar") : ?>
+                            <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/Hogar-270x174.jpg'); ?>' alt="telefonia">
+                        <?php endif; ?>
+                </a>
+                <a href="<?= /* @escapeNotVerified */ $cchild->getUrl() ?>" class="child-url">
+                    <span class="first-child"><?php /* @escapeNotVerified */ echo __($cchild->getName());?></span>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php if ($_description = $block->getCurrentCategory()->getDescription()): ?>
+    <div class="description">
+        <span class="title">
+            <?= __('Descripción') ?>
+        </span>
+        <span class="content">
+           <?= /* @escapeNotVerified */ $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($block->getCurrentCategory(), $_description, 'description') ?>
+        </span>
+    </div>
+<?php endif; ?>

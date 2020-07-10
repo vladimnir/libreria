@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php
+$selectQty = $_product->getExtensionAttributes()->getStockItem()->getQty();
+if($block->getQtyConfig()) {
+    $qty = $block->getQtyConfig();
+    $selectQty = reset($qty);
+}
+?>
+<?php if ($_product->isSaleable()): ?>
+    <div class="box-tocart">
+        <div class="fieldset">
+            <?php if ($block->shouldRenderQuantity()): ?>
+                <div class="field qty">
+                    <label class="label" for="qty"><span><?= /* @escapeNotVerified */ __('Cantidad:') ?></span></label>
+                    <div class="control">
+                        <select type="number"
+                                name="qty"
+                                id="qty"
+                                value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                                title="<?= /* @escapeNotVerified */ __('Cantidad') ?>"
+                                class="input-text qty"
+                                data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                        ><option value=""><?= /* @escapeNotVerified */ __('Cantidad') ?></option>
+                            <?php
+                            $i = 1 ?>
+                            <?php do { ?>
+                                <option class="option-qty" value="<?php echo $i?>">
+                <span>
+                    <?php echo $i?>
+                    <?php $i++ ?>
+                </span>
+                                </option>
+                            <?php } while ($i <= $selectQty);
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>

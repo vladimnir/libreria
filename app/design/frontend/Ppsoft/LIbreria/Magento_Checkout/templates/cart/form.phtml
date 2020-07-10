@@ -1,0 +1,518 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**  @var $block \Ppsoft\Home\Block\Cart\Grid */
+?>
+<?php
+$number = number_format($block->getTotal(), '2', '.', ',');
+$split = explode(".", $number);
+$integer = $split[0];
+$decimal = $split[1];
+
+$helperPpsoft = $this->helper('Ppsoft\Minicuotas\Helper\Data');
+?>
+
+<div id="pin-modal" style="display: none;">
+    <div class="minicuotapin-wrap">
+        <form 
+                data-mage-init='{
+                	"validation":{
+                		"rules": {
+                			"minicuotas_pin": {
+                				"required":true,
+                				"minlength":4,
+                                "maxlength":4,
+                                "number": true
+                			}
+                		},
+                        "messages": {
+                            "minicuotas_pin": {
+                                "minlength": "<?= __('Por favor, introduzca 4 caracteres.') ?>",
+                                "maxlength": "<?= __('Por favor, introduzca 4 caracteres.') ?>",
+                                "number": "<?= __('Por favor, introduzca solo números.') ?>"
+                            }
+                        }
+                	}
+                }'
+                onsubmit="minicuotasProrrateo.sendPinMinicuotas();return false;" id="check-pin" method="post" autocomplete="off" action="#">
+            <label><?= /* @escapeNotVerified */ __('Ingresa tu PIN de Minicuotas'); ?></label>
+            <input type="password" id="minicuotas_pin" name="minicuotas_pin" class="input-password"/>
+            <p class="minicuataforget">
+                <a class="forget-pin" href="#">
+                    <?= /* @escapeNotVerified */ __('Olvide mi PIN') ?>
+                </a>
+            </p>
+            <div class="buttons-container">
+                <button class="minicatasubmit">
+                    <span><?= /* @escapeNotVerified */ __('confirmar >'); ?></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--<script type="text/x-magento-init">
+    {
+        "#check-pin": {
+        "validation": {}
+    }
+}
+</script>-->
+
+<?php $mergedCells = ($this->helper('Magento\Tax\Helper\Data')->displayCartBothPrices() ? 2 : 1); ?>
+<?= $block->getChildHtml('form_before') ?>
+<form action="<?= /* @escapeNotVerified */
+$block->getUrl('checkout/cart/updatePost') ?>"
+      method="post"
+      id="form-validate"
+      data-mage-init='{"Magento_Checkout/js/action/update-shopping-cart":
+              {"validationURL" : "/checkout/cart/updateItemQty"}
+          }'
+      class="form form-cart">
+    <?= $block->getBlockHtml('formkey') ?>
+    <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="cart-products-toolbar cart-products-toolbar-top toolbar"
+                 data-attribute="cart-products-toolbar-top"><?= $block->getPagerHtml() ?></div>
+        <?php endif ?>
+        <table id="shopping-cart-table"
+               class="cart items data table"
+               data-mage-init='{"shoppingCart":{"emptyCartButton": "action.clear",
+               "updateCartActionContainer": "#update_cart_action_container"}}'>
+            <caption role="heading" aria-level="2" class="table-caption"><?= /* @escapeNotVerified */
+                __('Shopping Cart Items') ?></caption>
+            <thead>
+            <tr>
+                <th class="col item" scope="col"><span><?= /* @escapeNotVerified */
+                        __('Item') ?></span></th>
+                <th class="col qty" scope="col"><span><?= /* @escapeNotVerified */
+                        __('Qty') ?></span></th>
+                <th class="col price" scope="col"><span><?= /* @escapeNotVerified */
+                        __('Price') ?></span></th>
+                <th class="col subtotal" scope="col"><span><?= /* @escapeNotVerified */
+                        __('Eliminar') ?></span></th>
+            </tr>
+            </thead>
+            <?php foreach ($block->getItems() as $_item): ?>
+                <?= $block->getItemHtml($_item) ?>
+            <?php endforeach ?>
+        </table>
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="cart-products-toolbar cart-products-toolbar-bottom toolbar"
+                 data-attribute="cart-products-toolbar-bottom"><?= $block->getPagerHtml() ?></div>
+        <?php endif ?>
+    </div>
+    <div class="cart main actions">
+        <?php if ($block->getContinueShoppingUrl()): ?>
+            <a class="action continue"
+               href="<?= $block->escapeUrl($block->getContinueShoppingUrl()) ?>"
+               title="<?= $block->escapeHtml(__('Continue Shopping')) ?>">
+                <span><?= /* @escapeNotVerified */
+                    __('Continue Shopping') ?></span>
+            </a>
+        <?php endif; ?>
+        <button type="submit"
+                name="update_cart_action"
+                data-cart-empty=""
+                value="empty_cart"
+                title="<?= $block->escapeHtml(__('Clear Shopping Cart')) ?>"
+                class="action clear" id="empty_cart_button">
+            <span><?= /* @escapeNotVerified */
+                __('Clear Shopping Cart') ?></span>
+        </button>
+        <button type="submit"
+                name="update_cart_action"
+                data-cart-item-update=""
+                value="update_qty"
+                title="<?= $block->escapeHtml(__('Actualizar')) ?>"
+                class="action update">
+            <span class="editar"><?= /* @escapeNotVerified */
+                __('Actualizar') ?></span>
+        </button>
+        <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
+    </div>
+</form>
+<div class="total">
+    <div class="total-container">
+    <table>
+        <tr  class="totals subtotal">
+            <?php 
+                $montoSubTotal = number_format($block->getSubTotal(), '2', '.', ',');
+                $subTotal = explode(".", $montoSubTotal);
+                $subTotalInteger = $subTotal[0];
+                $subTotalDecimal = $subTotal[1];
+            ?>
+            <td>
+                <span class="total-price">
+                 <?php echo __('Sub Total') ?>
+                </span>
+            </td>
+            <td>
+                <div class="price-container">
+                    <span class="alcontado mobile">Contado &nbsp;</span><span
+                            class="int"><?php echo $block->getCurrentCurrencySymbol() . '.&nbsp;' . $subTotalInteger ?>.</span><span
+                            class="decimal"><?php echo $subTotalDecimal; ?></span>
+                </div>
+            </td>
+        </tr>
+        <tr class="totals grand-total">
+            <td>
+                <span class="total-price">
+                    <?php echo __('Total a pagar') ?>
+                </span>
+            </td>
+            <td>
+                <div class="price-container">
+                    <span class="alcontado mobile">Contado &nbsp;</span><span
+                            class="int"><?php echo $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer ?>.</span><span
+                            class="decimal"><?php echo $decimal; ?></span>
+                </div>
+            </td>
+        </tr>
+        <?php $items = $block->getServicios(); ?>
+        <?php $servicios = array();
+        $var = '';
+        foreach ($items as $item) {
+            $var = $block->getLoadProduct($item->getProductId())->getResource()->getAttribute('codigo_instalacion')->getFrontend()->getValue($block->getLoadProduct($item->getProductId()));
+            if ($var){
+                $servicios[] = $block->getLoadProductBySku($var)->getPrice();
+            }
+        }
+
+
+        $serviciossum = array_sum($servicios);
+        $number1 = number_format($serviciossum, '2', '.', ',');
+        $split1 = explode(".", $number1);
+        $integer1 = $split1[0];
+        $decimal1 = $split1[1];
+        ?>
+        <?php if($servicios): ?>
+        <tr class="serv-instalacion">
+            <td>
+                <span class="serv-container">
+                    <?php echo __('Servicio de Instalación')?>
+                </span>
+            </td>
+            <td>
+                <span
+                    class="int"><?php echo $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer1 ?>.</span><span
+                    class="decimal"><?php echo $decimal1; ?></span></div>
+            </td>
+        </tr>
+    <?php endif; ?>
+    </table>
+
+    </div>
+</div>
+
+<?php if ($block->hasMiniCuotas()): ?>
+    <div class="buttons-container">
+        <div class="cart-button">
+            <a id="get-minicuotas" href="javascript:void(0)" class="get-minicuotas go-checkout">
+                <?php echo __('Comprar a Mini-Cuota >') ?>
+            </a>
+        </div>
+        <div id="events_popup" style="display: none;" class="events_popup"></div>
+    </div>
+<?php endif; ?>
+
+
+    <div class="buttons-container">
+        <div class="cart-button">
+            <a class="go-checkout" href="<?php echo $block->getUrl('checkout/index'); ?>">
+                <?php echo __('Comprar Ahora>') ?>
+            </a>
+        </div>
+        <div class="comprando desktop">
+            <a class="go-checkout" href="<?php echo $block->getBaseUrl(); ?>">
+                <?php echo __('Seguir Comprando >') ?>
+            </a>
+        </div>
+    </div>
+
+    <?= $block->getChildHtml('checkout.cart.order.actions') ?>
+    <?= $block->getChildHtml('shopping.cart.table.after') ?>
+
+    <div id="minicuota-modal">
+    </div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        var minicuotasProrrateo = {};
+        var forgetPin;
+        require([
+            'jquery',
+            'Magento_Ui/js/modal/modal',
+            'mage/mage'
+        ], function ($, modal) {
+            var pinValue = false;
+            
+            /*$('#minicuotas_pin').blur(function () {
+                var event = $.Event('keyup');
+                event.which = 13;
+                event.keyCode = 13;
+                $('#minicuotas_pin').trigger(event);
+            });*/            
+            
+            forgetPin = {
+                type: 'popup',
+                responsive: false,
+                innerScroll: true,
+                modalClass: 'getminipin-popup',
+                buttons: []
+            };
+            modal(forgetPin, $('#pin-modal'));
+
+            var options = {
+                type: 'popup',
+                responsive: false,
+                innerScroll: true,
+                title: $.mage.__('Elige tu Plan de pago'),
+                modalClass: 'getminicuotas-popup',
+                buttons:[]
+            };           
+            
+            var optionsResetPin = {
+                type: 'popup',
+                responsive: false,
+                innerScroll: true,
+                title: $.mage.__('Reestablecer PIN minicuotas'),
+                modalClass: 'getminicuotas-popup',
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    class: 'action-close',
+                    click: function () {
+                        if(!confirm($.mage.__("No se completo correctamente el reseteo de su PIN. Por favor sustituya el PIN temporal por uno nuevo"))){
+                            location.reload();
+                        }
+                    }
+                }]
+            };
+            
+            minicuotasProrrateo = {
+                pressEnterMinicuotas: function () {
+                    var event = $.Event('keyup');
+                    event.which = 13;
+                    event.keyCode = 13;
+                    $('#minicuotas_pin').trigger(event);
+                },
+                
+                sendPinMinicuotas: function () {
+                    /*var eventPin = $.Event('keyup');
+                    eventPin.which = 13;
+                    eventPin.keyCode = 13;
+                    $('#minicuotas_pin').trigger(eventPin);*/
+                    if ($('#minicuotas_pin').val().length == 4) {
+                        minicuotasProrrateo.getMinicuotas($('#minicuotas_pin').val());
+                    }
+                                        
+                    return false;
+                },
+                
+                getMinicuotas: function (pin) {
+                    $('#check-pin .message').remove();
+                    var minicuotasPin = $('#minicuotas_pin').val();
+                    
+                    if (pin) {
+                        minicuotasPin = pin;
+                    }
+                    
+                    if (minicuotasPin) {                        
+                        $.ajax({
+                            url: '<?= /* @escapeNotVerified */ $this->getUrl('minicuotas/index/getminicuotas') ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {minicuotas_pin: minicuotasPin},//$('#check-pin').serialize(),
+                            showLoader: true,
+                            success: function (response) {
+                                if (response.error == true) {
+                                    $('#check-pin').prepend('<div class="message-error error message"><span>' + $.mage.__(response.messages) + '</span></div>');
+                                    if (response.redirect) {
+                                        window.location = response.redirect
+                                    }
+                                } else {
+                                    modal(options, $('#minicuota-modal'));
+                                    $("#minicuota-modal").html(response.output).modal(options).modal('openModal');
+                                    $("#pin-modal").modal(forgetPin).modal('closeModal');
+                                }
+                            }
+                        });
+                    } else {
+                        $('#check-pin').prepend('<div class="message-error error message"><span>' + $.mage.__('Ingresa tu PIN de Minicuotas.') + '</span></div>');
+                    } 
+                    
+                    return false; 
+                },
+                
+                prorrateoMinicuotas: function() {
+                    $('.getminicuotas-popup .modal-header .message').remove();
+                    var installments = false;
+                    
+                    var anticipo = false;
+                    var diasVencimiento = false;
+                    var importeCuota = false;
+                    var numeroCuotas = false;
+                    var idFrecuencia = false;
+                    var frecuencia = false;
+                    var idMoneda = false;
+                    var idPlan = false;
+                    
+                    $('#form-customer-minicuotas').children('.minicuota-radio').each(function(){
+                        if ($(this).children('input[name="installments"]').is(':checked')) {
+                            var inputInstallments = $(this).children('input[name="installments"]');
+                            installments = inputInstallments.val();
+                            
+                            anticipo = inputInstallments.attr('anticipo');
+                            diasVencimiento = inputInstallments.attr('diasVencimiento');
+                            importeCuota = inputInstallments.attr('importeCuota');
+                            numeroCuotas = inputInstallments.attr('numeroCuotas');
+                            idFrecuencia = inputInstallments.attr('idFrecuencia');
+                            frecuencia = inputInstallments.attr('frecuencia');
+                            idMoneda = inputInstallments.attr('idMoneda');
+                            idPlan = inputInstallments.attr('idPlan');
+                        }
+                    });
+                    
+                    if (installments) {
+                        $.ajax({
+                            url: '<?= /* @escapeNotVerified */ $this->getUrl('minicuotas/prorrateominicuotas/prorrateo') ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                    installments : installments, 
+                                    anticipo : anticipo, 
+                                    diasVencimiento : diasVencimiento, 
+                                    importeCuota : importeCuota,
+                                    numeroCuotas : numeroCuotas,
+                                    idFrecuencia : idFrecuencia,
+                                    frecuencia : frecuencia,
+                                    idMoneda : idMoneda,
+                                    idPlan : idPlan
+                                },//$('#form-customer-minicuotas').serialize(),
+                            showLoader: true,
+                            success: function (response) {
+                                if (response.error == true) {
+                                    $('.getminicuotas-popup .modal-header').append('<div class="message-error error message"><span>' + $.mage.__(response.messages) + '</span></div>');
+                                } else {
+                                    $('.getminicuotas-popup .modal-header').append('<p class="success message"><span>' + $.mage.__('Se aplicara el re-calculo del carrito.') + '</span></p>')
+                                    //console.log(response);
+                                    location.href = '<?= $block->getCheckoutUrl(); ?>';
+                                }
+                                //minicuotasProrrateo.close();
+                            }
+                        });
+                    } else {
+                        $('.getminicuotas-popup .modal-header').append('<div class="message-error error message"><span>' + $.mage.__('Elige un plan de pago por favor.') + '</span></div>');
+                    }
+                    return false;
+                },
+                
+                close: function() {
+                    $("#minicuota-modal").modal(forgetPin).modal('closeModal');
+                },
+                
+                resetPin: function () {
+                    $('.modal-header .message').remove();
+                    
+                    if (
+                        $('input[name="mobile_pin"]').val().length == 4 && 
+                        $('input[name="new_pin"]').val().length == 4 && 
+                        $('input[name="confirm_new_pin"]').val().length ==4 &&
+                        $('input[name="new_pin"]').val() == $('input[name="confirm_new_pin"]').val()
+                        ) {
+                            $.ajax({
+                                url: '<?= /* @escapeNotVerified */ $this->getUrl('minicuotas/resetpin/submit') ?>',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: $('#resetpin-form').serialize(),//{minicuotas_pin: minicuotasPin},
+                                showLoader: true,
+                                success: function (response) {
+                                    if (response.error == true) {
+                                        $('.getminicuotas-popup .modal-header').append('<div class="message-error error message"><span>' + $.mage.__(response.messages) + '</span></div>');
+                                    } else {
+                                        $('.getminicuotas-popup .modal-header').append('<p class="success message"><span>' + $.mage.__('Se actualizo el pin correctamente.') + '</span></p>');
+                                        modal(forgetPin, $('#pin-modal'));
+                                        $("#pin-modal").modal(forgetPin).modal('closeModal');
+                                        
+                                        modal(optionsResetPin, $('#minicuota-modal'));
+                                        $("#minicuota-modal").modal(optionsResetPin).modal('closeModal');
+                                        location.reload();
+                                    }
+                                }
+                            }); 
+                        } else {
+                            $('.getminicuotas-popup .modal-header').append('<div class="message-error error message"><span>' + $.mage.__('El PIN debe ser un número de 4 dígitos') + '</span></div>');
+                        }
+                    
+                    return false;
+                }
+            }
+            
+            $("#minicuotas_pin").keyup(function(){
+                $(this).valid();
+            }); 
+            
+            $(document).ready(function () {
+                $(".get-minicuotas").click(function () { 
+                    $('#minicuotas_pin').val('').change();
+                    $('#check-pin .message').remove();
+                    $('#minicuotas_pin').removeClass('mage-error');
+                    $('#minicuotas_pin-error').remove();
+                    
+                    $("#pin-modal").modal(forgetPin).modal('openModal');
+                });
+
+                if($("#service").length)
+                {
+                     $(".serv-instalacion").css({"display": "table-row"});
+                }
+                $.fn.pressEnter = function(fn) {  
+    
+                    return this.each(function() {  
+                        $(this).bind('enterPress', fn);
+                        $(this).keyup(function(e){
+                            if(e.keyCode == 13)
+                            {
+                              $(this).trigger("enterPress");
+                            }
+                        })
+                    });  
+                 }; 
+                
+                //use it:
+                /*$('#minicuotas_pin').pressEnter(function(){
+                    $('#check-pin .message').remove();
+                    minicuotasProrrateo.getMinicuotas($(this).val());
+                });*/
+                
+                $('#check-pin .forget-pin').click(function () {
+                    $('#check-pin .message').remove();
+                    $.ajax({
+                        url: '<?= /* @escapeNotVerified */ $this->getUrl('minicuotas/resetpin/sendsms') ?>',
+                        type: 'POST',
+                        dataType: 'json',
+                        //data: {minicuotas_pin: minicuotasPin},//$('#check-pin').serialize(),
+                        showLoader: true,
+                        success: function (response) {
+                            if (response.error == true) {
+                                $('#check-pin').prepend('<div class="message-error error message"><span>' + $.mage.__(response.messages) + '</span></div>');
+                                if (response.redirect) {
+                                    window.location = response.redirect
+                                }
+                            } else {
+                                $("#pin-modal").modal(forgetPin).modal('closeModal');
+                                modal(optionsResetPin, $('#minicuota-modal'));
+                                $("#minicuota-modal").html(response.output).modal(optionsResetPin).modal('openModal');
+                            }
+                        }
+                    }); 
+                });
+            });
+        });
+        //]]>
+    </script>

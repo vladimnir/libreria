@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+    	<referenceBlock name="page.main.title">
+		    <action method="setPageTitle">
+		        <argument translate="true" name="title" xsi:type="string">Estado de la orden</argument>
+		    </action>
+		</referenceBlock>
+        <referenceContainer name="columns">
+            <container name="order-column" htmlClass="order-column" htmlTag="div" after="sidebar.main" />
+        </referenceContainer>
+        
+        <referenceBlock name="sales.order.view">
+            <referenceBlock name="order_items">
+                <referenceBlock name="order_totals">
+                    <arguments>
+                        <argument name="label_properties" xsi:type="string">colspan="3" class="mark" scope="row"</argument>
+                    </arguments>
+                </referenceBlock>
+            </referenceBlock>
+        </referenceBlock>
+        
+        <move element="sales.order.info" destination="order-column" before="-"/>
+        <move element="page.main.title" destination="order-column" after="sales.order.info"/>
+    </body>
+</page>

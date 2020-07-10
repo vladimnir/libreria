@@ -1,0 +1,144 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Shopbybrand
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+$helper          = $block->helper();
+$brandCollection = $block->getCollection();
+
+if (sizeof($brandCollection)): ?>
+    <div class="brand-list-content">
+        <ol class="products list items product-items mpshopbyproducts">
+            <?php foreach ($brandCollection as $brand): ?>
+                <li class="item product product-item mix <?php echo $block->getFilterClass($brand); ?> <?php echo $block->getCatFilterClass($brand->getId()) ?>">
+                    <?php if ($helper->getBrandConfig('display') != \Mageplaza\Shopbybrand\Model\Config\Source\BrandListDisplay::DISPLAY_LABEL): ?>
+                        <div class="product-item-info" data-container="product-grid">
+                            <?php if ($block->showQuickView()) : ?>
+                                <div title="Quick View" class="changelog module-version quicview_popup">
+                                    <a class="fa fa-eye open_model" id="<?php echo $helper->getQuickview($brand); ?>"></a>
+                                </div>
+                            <?php endif; ?>
+                            <a title="<?php echo $brand->getValue(); ?>"
+                               href="<?php echo $helper->getBrandUrl($brand) ?>"
+                               class="product photo product-item-photo"
+                               tabindex="-1">
+
+
+                                        <img class="product-image-photo"
+                                             src="<?php echo $helper->getBrandImageUrl($brand); ?>" width="253"
+                                             height="94" alt="">
+
+                            </a>
+<!--                            <a class="product-item-name" href="--><?php ///* @escapeNotVerified */ echo $helper->getBrandUrl($brand) ?><!--">-->
+<!--                                --><?php //echo ($block->showProductQty()) ? $brand->getValue() . ' (' . $brand->getProductQuantity() . ')' : $brand->getValue(); ?>
+<!--                            </a>-->
+
+                        </div>
+                    <?php else: ?>
+                        <div class="brand-name-type-label-only" data-container="product-grid">
+                            <strong class="product name product-item-name" style="margin: 0;">
+                                <a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $helper->getBrandUrl($brand) ?>" style="float: left; padding-right: 10px;">
+                                    <?php echo ($block->showProductQty()) ? $brand->getValue() . ' (' . $brand->getProductQuantity() . ')' : $brand->getValue(); ?>
+                                </a>
+                                <?php if ($block->showQuickView()) : ?>
+                                    <div title="Quick View" class="changelog module-version quicview_popup">
+                                        <a class="fa fa-eye open_model" id="<?php echo $brand->getId(); ?>"></a>
+                                    </div>
+                                <?php endif; ?>
+                            </strong>
+                        </div>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        <div class="ver-mas-shopbybrand">
+            <span class="blue blue-button">Ver más</span>
+        </div>
+        <div class="regresar-shopbybrand" style="display:none">
+            <span class="blue backbutton">Regresar</span>
+        </div>
+    </div>
+<?php else: ?>
+    <?php echo __('No hay marcas disponibles.') ?>
+<?php endif; ?>
+<script type="text/javascript">
+    //<![CDATA[
+    require([
+        'jquery',
+        'domReady!'
+    ], function ($) {
+        var listItems = $(".mpshopbyproducts").children();
+        var count = listItems.length;
+        var i = 1;
+        var j = 2;
+        var tamano =  $('.mpshopbyproducts li').length;
+        var iteraciones =  tamano/16;
+        var sliceli = (16 * j);
+        var slicestart = (16 * i);
+        var previosli = 16;
+        var previosstart = 0;
+        var group = 1;
+        $('.blue-button').click(function () {
+            group = sliceli / 16;
+            $('.regresar-shopbybrand').show();
+            if(group < 3) {
+                $('.mpshopbyproducts li').slice(slicestart, sliceli).show();
+                i++;
+                j++;
+                $('.mpshopbyproducts li').slice(previosstart, previosli).hide();
+                previosli = sliceli;
+                previosstart = slicestart;
+                sliceli = (16 * j);
+                slicestart = (16 * i);
+            }
+            if(group == 3) {
+                $('.mpshopbyproducts li').slice(slicestart, sliceli).show();
+                i++;
+                j++;
+                $('.mpshopbyproducts li').slice(previosstart, previosli).hide();
+                previosli = sliceli;
+                previosstart = slicestart;
+                sliceli = (16 * j);
+                slicestart = (16 * i);
+                $('.ver-mas-shopbybrand').css('display', 'none');
+            }
+            window.scrollTo(0,210);
+        });
+        $('.backbutton').click(function () {
+            i--;
+            j--;
+            sliceli = (16 * j);
+            slicestart = (16 * i);
+            $('.mpshopbyproducts li').slice(slicestart, sliceli).hide();
+            previosli = sliceli - 16;
+            previosstart = slicestart - 16;
+            $('.mpshopbyproducts li').slice(previosstart, previosli).show();
+            group = slicestart / 16;
+            if(group == 1){
+                $('.regresar-shopbybrand').hide();
+            }
+            if(group < 3){
+                $('.ver-mas-shopbybrand').show();
+            }
+            window.scrollTo(0,210);
+        })
+
+    });
+    //]]>
+</script>

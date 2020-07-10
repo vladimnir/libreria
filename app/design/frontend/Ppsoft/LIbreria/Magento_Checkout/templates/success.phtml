@@ -1,0 +1,215 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Ppsoft\CustomCheckout\Block\Onepage\Success */ ?>
+<?php
+    $minicuota = $block->validateMinicuota($block->getOrderId());
+    $paymentMethod = $block->getPaymentName($block->getOrderId());
+    $payme = 0;
+
+    if($minicuota == 0 && ($paymentMethod == 'payme' || $paymentMethod == 'chcybersource')) $payme = 1;
+
+    $minicuotaItem = $block->getMinicuotaItem($block->getOrderId());
+?>
+<div class="checkout-success">
+    <?php if ($block->getOrderId()): ?>
+        <div class="success-container">
+            <img class="success-img <?php echo $block->getPaymentName($block->getOrderId());?>"
+                src="<?php echo $this->getViewFileUrl('images/vector.png'); ?>"
+                 alt="success icon" width="90px">
+            <div class="text-container">
+                <div class="shop-announce">
+                    <?php if($paymentMethod == 'checkmo' ||
+                        $paymentMethod == 'cashondelivery' ||
+                        $paymentMethod == 'banktransfer' ||
+                        $paymentMethod == 'sintesis' ||
+                        $paymentMethod == 'qr' ||
+                        (($paymentMethod == "payme" || $paymentMethod == "chcybersource") && $minicuota == 0 && !$minicuotaItem)
+                    ): ?>
+                        <span class="title"><?= /* @escapeNotVerified */__('¡ GRACIAS POR TU COMPRA !') ?></span>
+                    <?php elseif($minicuotaItem): ?>
+                        <span class="title"><?= /* @escapeNotVerified */__('¡ GRACIAS POR TU PAGO EN MINICUOTAS !'); ?></span>
+                    <?php elseif(!$payme && !($paymentMethod == 'sintesis')): ?>
+                        <span class="title"><?= /* @escapeNotVerified */__('TU COMPRA CON MINICUOTAS HA SIDO EXITOSA'); ?></span>
+                    <?php elseif($paymentMethod == 'sintesis' && $minicuota > 0) : ?>
+                        <span class="title"><?= /* @escapeNotVerified */__('TU COMPRA CON MINICUOTAS HA SIDO EXITOSA'); ?></span>
+                    <?php endif;?>
+                    <span><?= /* @escapeNotVerified */__('Dismac agradece tu preferencia') ?></span>
+                </div>
+                <div class="information">
+                    <?php if(($paymentMethod == "payme" || $paymentMethod == "chcybersource") && !$minicuota): ?>
+                        <div><span><?= /* @escapeNotVerified */__('Tu transacción ha sido exitosa') ?></span></div>
+                        <div class="payment"><span class="forma-pago"><?= /* @escapeNotVerified */__('Forma de Pago:') ?></span>&nbsp;<span><?php echo $block->getPaymentTitle($block->getOrderId()); ?></span></div>
+                        <?php if(!$minicuotaItem): ?>
+                        <div class="tiempo"><span class="tiempo-entrega"><?= /* @escapeNotVerified */__('Tiempo Estimado de Entrega: ') ?></span></div>
+                        <div class="totals"><span class="total"><?= /* @escapeNotVerified */__('Total: ') ?></span>&nbsp;<span class="currency"><?php echo $block->getCurrentCurrencySymbol(); ?>. </span>&nbsp;<span class="currency"><?php echo $block->getTotal($block->getOrderId()); ?></span></div>
+                        <?php endif;?>
+                        <?php if($minicuotaItem):?>
+                            <div class="totals"><span class="total"><?= /* @escapeNotVerified */__('Total pagado: ') ?></span>&nbsp;<span class="currency"><?php echo $block->getCurrentCurrencySymbol(); ?>. </span>&nbsp;<span class="currency"><?php echo $block->getTotal($block->getOrderId()); ?></span></div>
+                        <?php endif;?>
+                    <?php else: ?>
+                        <div class="order"><span class="order-number"><?= __('Pedido No. <span>%1</span>', $block->escapeHtml($block->getOrderId())) ?></span></div>
+                        <div class="payment"><span class="forma-pago"><?= /* @escapeNotVerified */__('Forma de Pago:') ?></span>&nbsp;
+                            <?php if($block->getPaymentTitle($block->getOrderId()) == 'Qr'): ?>
+                                <span><?= /* @escapeNotVerified */__('Pago con Código QR (Transferencia simple)') ?></span>
+                            <?php endif;?>
+                            <?php if($block->getPaymentTitle($block->getOrderId()) == 'Sintesis'): ?>
+                            <span><?= /* @escapeNotVerified */__(' Pago a través de los comercios afiliados (SÍNTESIS)') ?></span>
+                            <?php endif;?>
+                            <?php if(!($block->getPaymentTitle($block->getOrderId()) == 'Sintesis') && !($block->getPaymentTitle($block->getOrderId()) == 'Qr') ): ?>
+                            <span><?php echo $block->getPaymentTitle($block->getOrderId()); ?></span>
+                            <?php endif;?>
+                        </div>
+                        <div class="tiempo"><span class="tiempo-entrega"><?= /* @escapeNotVerified */__('Tiempo Estimado de Entrega: ') ?></span></div>
+                        <div class="totals"><span class="total"><?= /* @escapeNotVerified */__('Total: ') ?></span>&nbsp;<span class="currency"><?php echo $block->getCurrentCurrencySymbol(); ?>. </span>&nbsp;<span class="currency"><?php echo $block->getTotal($block->getOrderId()); ?></span></div>
+                    <?php endif; ?>
+                </div>
+
+                <?= $block->getPaymentAdditionalHtml() ?>
+
+                <?php if($paymentMethod == 'qr'): ?>
+                    <div class="information" style="display:inline-block;">
+                        <div class="">
+                            <span class="reminder">Desde la aplicación de tu banco <b class="order-big-text">escanea el Código QR que se muestra en la pantalla.</b></span>
+                        </div>
+                    </div>
+                    <div class="information" style="width: 100%; display: inline-block;">
+                        <img class="success-img <?php echo $block->getPaymentName($block->getOrderId());?>"
+                             src="<?php echo $block->getMediaUrl('codigosqr/').$block->getOrderId().'.png'; ?>">
+                        <a style="color: blue; display: block; width: 100%; float: none; clear: both;" href="<?php echo $block->getMediaUrl('codigosqr/').$block->getOrderId().'.png'; ?>" target="_blank" download="">Guardar Código QR</a>
+                    </div>
+                    <div class="information" style="width: 100%; display: inline-block;">
+                        <div>
+                            <span class="reminder">Una vez realizado tu pago recibirás un correo con la factura adjunta</span>
+                        </div>
+                        <div>
+                            <span class="reminder">Recuerda que solo tienes <b class="order-big-text">12 horas</b>&nbsp;para realizar tu pago.</span>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if($paymentMethod == 'checkmo'): ?>
+                    <div class="information">
+                        <span><?= /* @escapeNotVerified */__('Esta es la información de la cuenta de Dismac para que puedas realizar tu pago a través de depósito: ') ?></span>
+                    </div>
+                    <div class="information">
+                        <div class="beneficiary">
+                            <span class="beneficiary-name"><?=  /* @escapeNotVerified */__('Beneficiario: ')  ?></span>
+                            <span><?=  /* @escapeNotVerified */__('Dismatec S.A.')  ?></span>
+                        </div>
+                        <div class="bank">
+                            <span class="bank-name"><?=  /* @escapeNotVerified */__('Banco: ') ?></span>
+                            <span><?=  /* @escapeNotVerified */__('Banco Unión') ?></span>
+                        </div>
+                        <div class="number-account">
+                            <span class="account"><?=  /* @escapeNotVerified */__('No. de Cuenta: ') ?></span><br/>
+                            <span style="font-weight: bold;"><?=  /* @escapeNotVerified */__('10000031739656') ?><span><?=  /* @escapeNotVerified */__(' Moneda Nacional') ?></span></span><br/>
+                        </div>
+                        <div class="account-type">
+                            <span class="type"><?=  /* @escapeNotVerified */__('Tipo de Cuenta: ') ?></span>
+                            <span><?=  /* @escapeNotVerified */__('Cuenta Corriente') ?></span>
+                        </div>
+                        <div class="nit">
+                            <span class="type"><?=  /* @escapeNotVerified */__('NIT: ') ?></span>
+                            <span><?=  /* @escapeNotVerified */__('1027967025') ?></span>
+                        </div>
+                    </div>
+                    <div class="information important">
+                        <div class="important-container">
+                            <span class="reminder"><b>IMPORTANTE: </b> al momento de realizar su transferencia/deposito colocar en el campo de Referencia su número de pedido <b class="order-big-text"><?php echo $block->escapeHtml($block->getOrderId()); ?></b></span>
+                        </div>
+                    </div>
+                    <div class="information">
+                        <span><?= /* @escapeNotVerified */__("En caso de no haber colocado su número de pedido en la referencia de la transferencia por <b>favor enviar</b>&nbsp;su comprobante de pago al correo ecommercepagos@dismac.com.bo") ?></span>
+                        <br/>
+                        <br/>
+                        <span><?= /* @escapeNotVerified */__("Recuerda que solo tienes <b>12 hrs</b> para realizar tu <b>depósito o transferencia</b> y enviar los datos de tu transacción.") ?></span>
+                    </div>
+                <?php endif; ?>
+                <?php if($block->getPaymentName($block->getOrderId()) == 'sintesis'): ?>
+                    <div class="information desktop">
+                        <span class="reminder"><?= /* @escapeNotVerified */__('Puedes pagar en cualquiera de los comercios afiliados, indicando tu número de pedido') ?>
+                        &nbsp;<b><?php echo $block->escapeHtml($block->getOrderId()) ?></b>.<br>Consulta la lista
+                            <a href="<?php echo $this->getUrl('metodo-de-pago.html') ?>" target="_blank">&nbsp;aquí.</a>
+                            <br>Una vez realizado tu pago recibirás un correo con tu factura adjunta.<br>
+                            Recuerda que solo tienes<b>&nbsp;12 hrs</b>&nbsp;para realizar tu pago.
+                        </span>
+                    </div>
+                    <div class="information mobile">
+                        <span class="reminder"><?= /* @escapeNotVerified */__('Puedes pagar en cualquiera de los comercios afiliados, indicando tu número de pedido') ?>
+                            &nbsp;<b><?php echo $block->escapeHtml($block->getOrderId()) ?></b>.&nbsp;Consulta la lista
+                            <a href="<?php echo $this->getUrl('metodo-de-pago.html') ?>" target="_blank">&nbsp;aquí.</a>
+                            <br>Una vez realizado tu pago recibirás un correo con tu factura adjunta.<br>
+                            Recuerda que solo tienes<b>&nbsp;12 hrs</b>&nbsp;para realizar tu pago.
+                        </span>
+                    </div>
+                <?php endif;?>
+                <?php if($paymentMethod == 'cashondelivery'): ?>
+                    <div class="information">
+                        <span class="reminder"><?= /* @escapeNotVerified */__('') ?></span>
+                    </div>
+                <?php endif;?>
+                <?php if($minicuota): ?>
+                    <?php $minicuotaInfo = $block->getMinicuotasData($block->getOrderId()); ?>
+                    <div class="information">
+                        <span class="title"><?= /* @escapeNotVerified */__('Detalle compra minicuota') ?></span>
+                        <div class="order">
+                            <span class="order-number">
+                                <?php
+                                    $numeroCompra = $block->escapeHtml($block->getOrderId());
+                                    if($minicuota){
+                                        $numeroCompra = $block->getNumeroCompra($minicuotaInfo['montoCuota']);
+                                    }
+                                ?>
+                                <?= __('Número de compra: <span>%1</span>', $block->escapeHtml($numeroCompra)) ?>
+                            </span>
+                        </div>
+                        <div class="payment">
+                            <span class="forma-pago"><?= /* @escapeNotVerified */__("A pagar en {$minicuotaInfo['numeroCuotas']} cuotas de Bs. {$minicuotaInfo['montoCuota']}") ?></span>&nbsp;<span><?php ?></span>
+                        </div>
+                        <!--div class="tiempo">
+                            <span class="tiempo-pago"><?= /* @escapeNotVerified */__('Fecha próximo pago: ') ?></span>
+                            <span><?php echo $block->getNextPaymentMinicuota($block->getOrderId());?></span>
+                        </div!-->
+                    </div>
+                <?php endif;?>
+                </div>
+            <?php if ( $paymentMethod == "payme" || $paymentMethod == "chcybersource" || $paymentMethod == "free"): ?>
+                <?php $orderId = $block->getOrderByIncrement($block->getOrderId());?>
+                <div class="download-report">
+                    <a href="<?= /* @escapeNotVerified */ $block->getUrl('posorder/pdf/printer', array('id' => $orderId)) ?>" target="_blank">
+                        <?php $link = 'Descargar Factura';
+                            if($minicuotaItem){
+                                $link = 'Descargar Recibo';
+                            }
+                        ?>
+                        <?= /* @escapeNotVerified */ __($link) ?>
+                    </a>
+                </div>
+            <?php endif; ?>
+            <div class="actions-toolbar">
+                <?php if($minicuotaItem):?>
+                    <div class="estado-cuenta">
+                    <span>
+                        <?= /* @escapeNotVerified */__('Puedes consultar tu información y detalle de pago en tu estado de cuenta:') ?>
+                    </span>
+                    </div>
+                <?php endif; ?>
+                <div class="primary">
+                    <?php if ($minicuota || $minicuotaItem): ?>
+                        <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getUrl('minicuotas/minicuotas') ?>"><span><?= /* @escapeNotVerified */__('Consultar Estado de Cuenta') ?></span></a>
+                    <?php else: ?>
+                        <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getContinueUrl() ?>"><span><?= /* @escapeNotVerified */__('Seguir Comprando >') ?></span></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?= $block->getAdditionalInfoHtml() ?>
+</div>

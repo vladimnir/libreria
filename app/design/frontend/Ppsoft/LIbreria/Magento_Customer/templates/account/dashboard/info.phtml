@@ -1,0 +1,29 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Account\Dashboard\Info $block */
+?>
+<div class="block block-dashboard-info">
+    <span class="text">
+        <?= $block->escapeHtml(__('¡Hola ')) ?>
+    </span>
+    <span class="text bold">
+        <?= $block->escapeHtml($block->getCustomer()->getFirstname())?><p class="text symbol"><?= $block->escapeHtml(__('!')) ?></p>
+    </span>
+    <span class="text">
+        &nbsp;<?= $block->escapeHtml(__('te damos la bienvenida a tu tienda ')) ?>
+    </span>
+    <span class="text bold">
+        <?= $block->escapeHtml('Dismac.com.bo ')?>
+    </span>
+    <br>
+    <br>
+    <span class="text">
+        <?= $block->escapeHtml(__('Aquí puedes acceder a tu información y consultar todo lo relacionado a tus compras.')) ?>
+    </span>
+</div>

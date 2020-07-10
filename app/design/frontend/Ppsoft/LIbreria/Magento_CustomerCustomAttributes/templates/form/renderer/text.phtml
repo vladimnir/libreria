@@ -1,0 +1,73 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Create account form template
+ */
+/* @var $block \Magento\CustomAttributeManagement\Block\Form\Renderer\Text */
+?>
+<?php
+$fieldCssClass = 'field field-' . $block->getHtmlId();
+$fieldCssClass .= $block->isRequired() ? ' required' : '';
+$fieldCssClass .= $block->getFieldName() == 'pos_nrodocumento' || $block->getFieldName() == 'pos_clevercelular' || $block->getFieldName() == 'pos_cleverapellidomaterno' ? ' required' : '';
+$requiredInput = $block->getFieldName() == 'pos_nrodocumento' || $block->getFieldName() == 'pos_clevercelular' || $block->getFieldName() == 'pos_cleverapellidomaterno' ? ' required-entry':'';
+
+$requiredInput .= $block->getFieldName() == 'pos_cleverapellidomaterno' ? ' validate-alpha-with-spaces-es validate-length minimum-length-3' : '';
+$requiredInput .= $block->getFieldName() == 'pos_nrodocumento' ? ' doc-num-type-validator validate-alpha-num-sript-es' : '';
+
+$extraField = '';
+$extraField .= $block->getFieldName() == 'pos_cleverapellidomaterno' ? ' tabindex="3"' : '';
+$extraField .= $block->getFieldName() == 'pos_nrodocumento' ? ' tabindex="4"' : '';
+$extraField .= $block->getFieldName() == 'pos_clevercelular' ? ' tabindex="7"' : '';
+?>
+<?php if ($block->getFieldName() == 'pos_nrodocumento') : ?>
+<div class="<?= /* @escapeNotVerified */ $fieldCssClass ?>">
+    <label class="label" for="<?= $block->getHtmlId() ?>"><span><?= $block->escapeHtml(__('Número de Documento')) ?></span></label>
+    <div class="control">
+        <input type="text" id="<?= $block->getHtmlId() ?>" name="<?= /* @escapeNotVerified */ $block->getFieldName() ?>" value="<?= /* @escapeNotVerified */ $block->getEscapedValue() ?>" class="input-text<?= $block->getHtmlClass() ?> <?= $requiredInput ?>"<?= $extraField ?>/>
+        <?php if ($_message = $block->getAdditionalDescription()) : ?>
+            <div class="note"><?= /* @escapeNotVerified */ $_message ?></div>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($block->getFieldName() == 'lastname') : ?>
+    <div class="<?= /* @escapeNotVerified */ $fieldCssClass ?>">
+        <label class="label" for="<?= $block->getHtmlId() ?>"><span><?= $block->escapeHtml(__('Apellido Paterno')) ?></span></label>
+        <div class="control">
+            <input type="text" id="<?= $block->getHtmlId() ?>" name="<?= /* @escapeNotVerified */ $block->getFieldName() ?>" value="<?= /* @escapeNotVerified */ $block->getEscapedValue() ?>" class="input-text<?= $block->getHtmlClass() ?> <?= $requiredInput ?>"<?= $extraField ?>/>
+            <?php if ($_message = $block->getAdditionalDescription()) : ?>
+                <div class="note"><?= /* @escapeNotVerified */ $_message ?></div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($block->getFieldName() == 'pos_clevercelular') : ?>
+    <div class="<?= /* @escapeNotVerified */ $fieldCssClass ?>">
+        <label class="label" for="<?= $block->getHtmlId() ?>"><span><?= $block->escapeHtml(__('Teléfono Celular')) ?></span></label>
+        <div class="control">
+            <input type="text" id="<?= $block->getHtmlId() ?>" name="<?= /* @escapeNotVerified */ $block->getFieldName() ?>" value="<?= /* @escapeNotVerified */ $block->getEscapedValue() ?>" class="input-text<?= $block->getHtmlClass() ?> <?= $requiredInput ?>"<?= $extraField ?>/>
+            <?php if ($_message = $block->getAdditionalDescription()) : ?>
+                <div class="note"><?= /* @escapeNotVerified */ $_message ?></div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($block->getFieldName() !== 'pos_nrodocumento' && $block->getFieldName() !== 'lastname' && $block->getFieldName() !== 'pos_clevercelular') : ?>
+    <div class="<?= /* @escapeNotVerified */ $fieldCssClass ?>">
+        <label class="label" for="<?= $block->getHtmlId() ?>"><span><?= /* @escapeNotVerified */ $block->getLabel() ?></span></label>
+        <div class="control">
+            <input type="text" id="<?= $block->getHtmlId() ?>" name="<?= /* @escapeNotVerified */ $block->getFieldName() ?>" value="<?= /* @escapeNotVerified */ $block->getEscapedValue() ?>" class="input-text<?= $block->getHtmlClass() ?> <?= $requiredInput ?>"<?= $extraField ?>/>
+            <?php if ($_message = $block->getAdditionalDescription()) : ?>
+                <div class="note"><?= /* @escapeNotVerified */ $_message ?></div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>

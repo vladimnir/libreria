@@ -1,0 +1,78 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Ppsoft\Home\Block\Product\ReviewRenderer $block */
+
+$url = $block->getReviewsUrl() . '#reviews';
+$urlForm = $block->getReviewsUrl() . '#review-form';
+$share = $block->getProduct()->getProductUrl();
+?>
+<?php if ($block->getReviewsCount()): ?>
+<?php $rating = $block->getRatingSummary(); ?>
+<div class="product-reviews-summary<?= !$rating ? ' no-rating' : '' ?>" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+    <?php if ($rating):?>
+    <div class="rating-summary">
+         <span class="label"><span><?= $block->escapeHtml(__('Rating')) ?>:</span></span>
+         <div class="rating-result" title="<?= $block->escapeHtmlAttr($rating); ?>%">
+             <span style="width:<?= $block->escapeHtmlAttr($rating); ?>%">
+                 <span>
+                     <span itemprop="ratingValue"><?= $block->escapeHtml($rating); ?></span>% of <span itemprop="bestRating">100</span>
+                 </span>
+             </span>
+         </div>
+     </div>
+    <?php endif;?>
+    <div class="reviews-actions">
+        <a class="action view"
+           href="<?= $block->escapeUrl($url) ?>">
+            <span itemprop="reviewCount"><?= $block->escapeHtml($block->getReviewsCount()) ?></span>&nbsp;
+            <span><?= ($block->getReviewsCount() == 1) ? $block->escapeHtml(__('Review')) : $block->escapeHtml(__('Reviews')) ?></span>
+        </a>
+        <a class="action add" href="<?= $block->escapeUrl($urlForm) ?>"><?= $block->escapeHtml(__('Add Your Review')) ?></a>
+    </div>
+</div>
+<?php elseif ($block->getDisplayIfEmpty()): ?>
+<!--<div class="product-reviews-summary empty">
+    <div class="reviews-actions">
+        <a class="action add" href="<?/*= $block->escapeUrl($urlForm) */?>">
+            <?/*= $block->escapeHtml(__('Be the first to review this product')) */?>
+        </a>
+    </div>
+</div>-->
+<?php endif; ?>
+<div id="fb-root"></div>
+<script
+        type="text/javascript"
+        async defer
+        src="//assets.pinterest.com/js/pinit.js"
+></script>
+<script type="text/javascript">
+    function showPopup(url) {
+        newwindow=window.open(url,'name','height=400,width=620,top=200,left=300,resizable');
+        if (window.focus) {newwindow.focus()}
+    }
+</script>
+<!--<div class="social-container">
+    <span class="social-text"><?php /*echo __('Compartir Con') */?></span>
+    <div class="facebook social">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php /*echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];  */?>" onClick='showPopup(this.href);return(false);'>
+            <img src="<?php /*echo $this->getViewFileUrl('images/face.png'); */?>" alt="share icon">
+        </a>
+    </div>
+    <div class="pinterest social">
+        <a href="https://www.pinterest.com/pin/create/button/" data-pin-custom="true" data-pin-do="buttonBookmark" target="_blank">
+            <img src="<?php /*echo $this->getViewFileUrl('images/pint.png'); */?>" alt="share icon">
+        </a>
+    </div>
+    <div class="whatsapp social">
+        <a href="https://wa.me/?text=<?php /*echo $share; */?>" target="_blank">
+            <img src="<?php /*echo $this->getViewFileUrl('images/whatsapppdp.png'); */?>" alt="share icon">
+        </a>
+    </div>
+
+</div>-->

@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Newsletter\Block\Subscribe $block */
+
+?>
+<div class="block newsletter">
+    <div class="news-content">
+        <span class="desktop">
+         <?= $block->escapeHtml(__('Suscríbete a nuestro Newsletter y sé el primero 
+         en conocer nuestras promociones')) ?>
+        </span>
+        <span class="mobile">
+         <?= $block->escapeHtml(__('Suscríbete a nuestro newsletter y conoce todas las promociones ')) ?>
+        </span>
+    </div>
+    <div class="title"><strong><?= $block->escapeHtml(__('Newsletter')) ?></strong></div>
+    <div class="content">
+        <form class="form subscribe"
+            novalidate
+            action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
+            method="post"
+            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+            id="newsletter-validate-detail">
+            <div class="field newsletter">
+                <label class="label" for="newsletter"><span><?= $block->escapeHtml(__('Sign Up for Our Newsletter:')) ?></span></label>
+                <div class="control">
+                    <input name="email" type="email" id="newsletter"
+                                data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="action subscribe primary" title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>" type="submit">
+                    <span><?= $block->escapeHtml(__('Suscribir')) ?></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="desktop">
+<?php echo $this->getLayout()
+    ->createBlock('Magento\Cms\Block\Block')
+    ->setBlockId('redes-sociales')
+    ->toHtml();
+?>
+</div>
+<div class="desktop">
+<?php echo $this->getLayout()
+    ->createBlock('Magento\Cms\Block\Block')
+    ->setBlockId('certificados-seguridad')
+    ->toHtml();
+?>
+</div>
+

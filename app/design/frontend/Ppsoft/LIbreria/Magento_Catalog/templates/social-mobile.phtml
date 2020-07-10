@@ -1,0 +1,43 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Ppsoft\Home\Block\Product\ReviewRenderer $block */
+
+$share = $block->getProduct()->getProductUrl();
+?>
+<div id="fb-root"></div>
+<script
+    type="text/javascript"
+    async defer
+    src="//assets.pinterest.com/js/pinit.js"
+></script>
+<script type="text/javascript">
+    function showPopup(url) {
+        newwindow=window.open(url,'name','height=400,width=620,top=200,left=300,resizable');
+        if (window.focus) {newwindow.focus()}
+    }
+</script>
+<div class="social-container mobile social-mobile">
+    <span class="social-text"><?php echo __('Compartir Con') ?></span>
+    <div class="facebook social">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];  ?>" onClick='showPopup(this.href);return(false);'>
+            <img src="<?php echo $this->getViewFileUrl('images/facebook_share.png'); ?>" alt="share icon">
+        </a>
+    </div>
+    <div class="pinterest social">
+        <a href="https://www.pinterest.com/pin/create/button/" data-pin-custom="true" data-pin-do="buttonBookmark" target="_blank">
+            <img src="<?php echo $this->getViewFileUrl('images/pinterest_share.png'); ?>" alt="share icon">
+        </a>
+    </div>
+    <div class="whatsapp social">
+        <a href="https://wa.me/?text=<?php echo $share; ?>" target="_blank">
+            <img src="<?php echo $this->getViewFileUrl('images/whatsiconmobile.png'); ?>" alt="share icon">
+        </a>
+    </div>
+
+</div>

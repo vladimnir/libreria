@@ -1,0 +1,197 @@
+.recent-container {
+    .promo {
+        display: none;
+    }
+}
+
+body.page-products {
+    .page-wrapper {
+        .recomendados-container {
+            .reciente {
+                padding-left: 0;
+            }
+        }
+    }
+}
+
+body,
+.cms-home,
+.cms-home-2 {
+    .page-wrapper {
+        .page-main {
+            .columns {
+                .column {
+                    .recent-slider {
+                        .recent-container {
+                            .cuotos-price {
+                                .price-now {
+                                    .int,
+                                    .decimal {
+                                        color: #ec1f26;
+                                    }
+                                }
+                            }
+                            
+                            .price-before {
+                                text-align: left;
+                                font-size: 14px;
+                                text-decoration: line-through;
+                                color: #a6a6a4;
+                                font-weight: bold;
+                                height: 15px;
+                                display: inline-block;
+                                width: 100%;
+                                
+                                .decimal {
+                                    float: none;
+                                    font-size: 1.1rem;
+                                    vertical-align: text-top;
+                                }
+                            }
+                        }
+                    }
+                    
+                    .second-section {
+                        .product-slider-container {
+                            .recent-slider {
+                                .recent-container {
+                                    .price-before {
+                                        .decimal {
+                                            float: none;
+                                            font-size: 1.1rem;    
+                                        }                                    
+                                    }
+                                    
+                                    .price-now {
+                                        .int,
+                                        .decimal {
+                                            color: #ec1f26;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        .recomendados-container {
+            .recent-slider {
+                .recent-container {
+                    .price-now {
+                        .int,
+                        .decimal {
+                            color: #ec1f26;
+                        }
+                    }
+
+                    .price-before {
+                        text-align: left;
+                        font-size: 12px;
+                        text-decoration: line-through;
+                        color: #a6a6a4;
+                        font-weight: bold;
+                        display: inline-block;
+                        width: 100%;
+                        padding-left: 30px;
+                    .price-currency {
+                        display: inline-block;
+                        width: 100%;
+                        .antes {
+                            display: inline-block;
+                        }
+                    }
+                        .decimal {
+                            float: none;
+                            font-size: 1.1rem;
+                            vertical-align: text-top;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    body,
+    .cms-home,
+    .cms-home-2 {
+        .page-wrapper {
+            .page-main {
+                .columns {
+                    .column {
+                        .recent-slider {
+                            .recent-container {
+                                .price-before {
+                                    padding-left: 30px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .cms-home,
+    .cms-home-2 {
+        .page-wrapper {
+            .page-main {
+                .columns {
+                    .column {
+                        .second-section {
+                            .product-slider-container {
+                                .recent-slider {
+                                    .recent-container {
+                                        .price-now {
+                                            .alcontado {
+                                                font-size: 18.5px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    body.page-products {
+        .page-wrapper {
+            .recomendados-container {
+                .reciente {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .cms-home,
+    .cms-home-2 {
+        .page-wrapper {
+            .page-main {
+                .columns {
+                    .column {
+                        .second-section {
+                            .product-slider-container {
+                                .recent-slider {
+                                    .recent-container {
+                                        .price-before {
+                                            font-size: 12px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

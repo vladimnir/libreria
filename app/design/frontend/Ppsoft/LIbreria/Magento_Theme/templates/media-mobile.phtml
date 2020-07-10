@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+?>
+<?php
+$galleryImages = $block->getProduct()->getMediaGalleryImages();
+?>
+<div class="media-slider">
+    <?php foreach ($galleryImages as $galleryImage): ?>
+        <div class="media-container">
+        <?php if ( $galleryImage->getUrl()): ?>
+        <img src="<?php echo $galleryImage->getUrl(); ?>" >
+        <?php endif; ?>
+            <?php if (!$galleryImage->getUrl()): ?>
+                <img src='<?php echo $this->getViewFileUrl('images/D-240x300.jpg'); ?>' >
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
+<script>
+    require([
+        'jquery',
+        'domReady!',
+        'slick'
+    ], function($){
+        $(document).ready(function(){
+            $('.media-slider').slick({
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1
+            });
+        });
+    });
+</script>
