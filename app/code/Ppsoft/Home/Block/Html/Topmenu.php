@@ -21,7 +21,11 @@ class Topmenu extends \Magento\Theme\Block\Html\Topmenu {
      */
     protected $categoryFactory;
 
-    public function __construct(Template\Context $context, NodeFactory $nodeFactory, TreeFactory $treeFactory, \Magento\Catalog\Model\CategoryFactory $categoryFactory, array $data = [])
+    public function __construct(Template\Context $context,
+                                NodeFactory $nodeFactory,
+                                TreeFactory $treeFactory,
+                                \Magento\Catalog\Model\CategoryFactory $categoryFactory,
+                                array $data = [])
     {
         parent::__construct($context, $nodeFactory, $treeFactory, $data);
         $this->exist = '';
@@ -92,7 +96,7 @@ class Topmenu extends \Magento\Theme\Block\Html\Topmenu {
             }
             $html .= '<li ' . $this->_getRenderedMenuItemAttributes($child) . 'id="li-' . preg_replace('/\s+/', '', strtolower($listring)) . '">';
             if($child->getName() == "Categorías" || $childLevel== 1 ){
-                $html .= '<a href="javascript:void(0)" id="' . preg_replace('/\s+/', '', strtolower($child->getName())) . '" ' . $outermostClassCode . '><span>' . $this->escapeHtml(
+                $html .= '<a href="' . $child->getUrl() . '" id="' . preg_replace('/\s+/', '', strtolower($child->getName())) . '" ' . $outermostClassCode . '><span>' . $this->escapeHtml(
                         $child->getName()
                     ) . '</span></a>' . $this->_addSubMenu(
                         $child,
@@ -177,7 +181,7 @@ class Topmenu extends \Magento\Theme\Block\Html\Topmenu {
             }
             $html .= '<li ' . $this->_getRenderedMenuItemAttributes($child) . 'id="li-' . preg_replace('/\s+/', '', strtolower($listring)) . '">';
             if($child->getName() == "Categorías" || $childLevel== 1 ){
-                $html .= '<a href="javascript:void(0)" id="' . preg_replace('/\s+/', '', strtolower($child->getName())) . '" ' . $outermostClassCode . '><span>' . $this->escapeHtml(
+                $html .= '<a href="' . $child->getUrl() . '" id="' . preg_replace('/\s+/', '', strtolower($child->getName())) . '" ' . $outermostClassCode . '><span>' . $this->escapeHtml(
                         $child->getName()
                     ) . '</span></a>' . $this->_addSubMenu(
                         $child,

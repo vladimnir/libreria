@@ -8,99 +8,68 @@
 
 /** @var \Ppsoft\Level2\Block\Level2 $block */
 
-$categories = $block->getCategoryCollection(true, 2 , false, false, true);
-$_outputhelper    = $this->helper('Magento\Catalog\Helper\Output');
+$categories = $block->getCategoryCollection(true, 2, false, false, true); ?>
+<?php
+$_blogHelper = $this->helper('Mageplaza\Blog\Helper\Data');
+$blockCatId = $_blogHelper->getBlogConfig('general/blog_cat_id');
 ?>
 <div class="custom-nav-sections">
     <ul class="level0 menu-top">
-<?php foreach ($categories as $category) :
-   $catloaded = $block->getLoadedCategory($category->getId());
-    $catchilds = $block->getCategoryGrandChilds($category->getId());
-    ?>
-        <li class="first-li">
-            <a href="<?= /* @escapeNotVerified */ $category->getUrl() ?>" class="top-cat-url">
-              <span class="first-level-child"><?= /* @escapeNotVerified */ __($category->getName());?></span>
-            </a>
-    <?php if ($catchilds->count() > 0) : ?>
-            <ul class="level1 menu-child-1">
-                <?php foreach ($catchilds as $child) :
-                    $catgrandchilds = $block->getCategoryGrandChilds($child->getId());
-                    ?>
-                 <?php if ($catgrandchilds->count() == 0) : ?>
-                   <li class="li-no-child">
-                        <a href="<?= /* @escapeNotVerified */ $child->getUrl() ?>" class="cat-url">
-                            <span class="child-name"><?= /* @escapeNotVerified */ __($child->getName());?></span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                    <?php if ($catgrandchilds->count() > 0) : ?>
-                    <li class="li-first-child">
-                        <a href="<?= /* @escapeNotVerified */ $child->getUrl() ?>" class="cat-url">
-                            <span class="child-name"><?= /* @escapeNotVerified */ __($child->getName()) ?></span>
-                        </a>
-                        <?php $count = $countAux = 0; ?>
-                        <?php if ($catgrandchilds->count() > 0) :
-                            $categoryloaded = $block->getLoadedCategory($child->getId());
-                            $bkg = $categoryloaded->getImageUrl();
+        <?php foreach ($categories as $category) :
+            $catloaded = $block->getLoadedCategory($category->getId());
+            $catchilds = $block->getCategoryGrandChilds($category->getId());
+            ?>
+            <li class="first-li child-<?= (is_array($catchilds) ? count($catchilds) : $catchilds->count()) ?>">
+                <?php $catUrl = ($category->getId() == $blockCatId) ? $_blogHelper->getBlogUrl('') : $category->getUrl(); ?>
+                <a href="<?= /* @escapeNotVerified */
+                $catUrl ?>" class="top-cat-url">
+                    <span class="first-level-child"><?php /* @escapeNotVerified */
+                        echo __($category->getName()); ?></span>
+                </a>
+                <?php if ($catchilds) : ?>
+                    <ul class="level1 menu-child-1">
+                        <?php foreach ($catchilds as $child) :
+                            $catgrandchilds = $block->getCategoryGrandChilds($child->getId());
+                            $count = (is_array($catgrandchilds) ? count($catgrandchilds) : $catgrandchilds->count());
                             ?>
-                            <ul class="level2 menu-child-2" style="background-image:url('<?php echo $bkg ?>'); background-repeat: no-repeat; background-position-x: 100%; background-size: auto 100%; background-position-y: 100%;">
-                                <li class="cat-title"><?= /* @escapeNotVerified */ __($child->getName());?></li>
-                                <li class="menu-div">
-                                    <?php foreach ($catgrandchilds as $grandchild) : ?>   
-                                        <ul>
-                                            <?php $lastchilds = $block->getCategoryGrandChilds($grandchild->getId()); ?>
-                                            <?php 
-                                                    $count = $count + $lastchilds->count();
-                                                    if ($count >= 7 && $countAux > 0) {                                                        
-                                                        echo '</ul></li><li class="menu-div '.$count.'"><ul>';
-                                                        $count = $lastchilds->count() + 1;
-                                                    }
-                                                ?>      
-                                            <li class="li-second-child count-<?= $count ?>">
-                                                <a href="<?= /* @escapeNotVerified */ $grandchild->getUrl() ?>" class="cat-url">
-                                                    <span class="child-name"><?= /* @escapeNotVerified */ __($grandchild->getName());?></span>
-                                                </a>
-                                               
-                                            </li>
-                                            <?php if ($lastchilds->count() > 0) : ?>
-                                                <?php foreach ($lastchilds as $lastchild) : ?>
-                                                    <li class="li-third-child" data-count="<?= $countAux++ ?>">
-                                                        <a href="<?= /* @escapeNotVerified */ $lastchild->getUrl() ?>" class="cat-url">
-                                                            <span class="last-child-name"><?= /* @escapeNotVerified */ __($lastchild->getName());?></span>
-                                                        </a>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            <?php endif; ?>                                            
-                                        </ul>                                        
-                                    <?php endforeach; ?>
-                                </li>
-                                <?php
-
-                                if($categoryloaded->getImageUrl()):
-                                ?>
-                                    <script>
-                                        require([
-                                            'jquery',
-                                            'domReady!'
-                                        ], function($){
-                                            $(document).ready(function(){
-                                                var bkg = "<?php echo $categoryloaded->getImageUrl() ?>"
-                                                    $('.menu-child-2').css('background', bkg);
-                                            });
-                                        });
-                                    </script>
-                              <!--  <li class="cat-image"><img src="<?php /* echo $categoryloaded->getImageUrl(); */?>" /></li>-->
-                                <?php endif; ?>
-                            </ul>
+                            <?php if ($count == 0) : ?>
+                            <li class="li-no-child">
+                                <a href="<?= /* @escapeNotVerified */
+                                $child->getUrl() ?>" class="cat-url">
+                                    <span class="child-name"><?php /* @escapeNotVerified */
+                                        echo __($child->getName()); ?></span>
+                                </a>
+                            </li>
                         <?php endif; ?>
-                    </li>
+                            <?php if ($count > 0) : ?>
+                            <li class="li-first-child">
+                                <a href="<?= /* @escapeNotVerified */
+                                $child->getUrl() ?>" class="cat-url">
+                                    <span class="child-name"><?php /* @escapeNotVerified */
+                                        echo __($child->getName()); ?></span>
+                                </a>
+                                <?php if ($count > 0) : ?>
+                                    <ul class="level2 menu-child-2">
+                                        <?php foreach ($catgrandchilds as $grandchild) :
+                                            ?>
+                                            <li class="li-second-child">
+                                                <a href="<?= /* @escapeNotVerified */
+                                                $grandchild->getUrl() ?>" class="cat-url">
+                                                    <span class="child-name"><?php /* @escapeNotVerified */
+                                                        echo __($grandchild->getName()); ?></span>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </li>
+                        <?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
                 <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
-    <?php endif; ?>
-        </li>
+            </li>
 
-<?php endforeach; ?>
+        <?php endforeach; ?>
     </ul>
 </div>
 <script>
@@ -108,20 +77,11 @@ $_outputhelper    = $this->helper('Magento\Catalog\Helper\Output');
         'jquery',
         'domReady!',
         'slick'
-    ], function($){
-        $(document).ready(function(){
-            $('.first-li').hover( function () {
+    ], function ($) {
+        $(document).ready(function () {
+            $('.first-li').hover(function () {
                 $(this).find('.menu-child-1').toggle();
                 $(this).toggleClass('active-li');
-            });
-            $('.li-first-child').hover( function () {
-                $(this).find('.menu-child-2').toggle();
-                $(this).toggleClass('active-li');
-                $(this).closest('ul').toggleClass('active-ul');
-
-            });
-            $('.li-third-child').hover( function () {
-                $(this).find('.cat-url').toggleClass('active-span');
             });
         });
     });

@@ -14,7 +14,7 @@
         </referenceContainer>
         <referenceBlock name="logo">
             <arguments>
-                <argument name="logo_file" xsi:type="string">images/logo-disma.png</argument>
+                <argument name="logo_file" xsi:type="string">images/logo-cristorey.png</argument>
                 <argument name="logo_img_width" xsi:type="string">auto</argument>
                 <argument name="logo_img_height" xsi:type="string">auto</argument>
             </arguments>
@@ -42,9 +42,6 @@
         <container name="search-mobile" htmlClass="search-mobile" htmlTag="div">
         <block name="myfooter.search" as="myfooter.search" template="Magento_Search::form.mini.mobile.phtml" />
         </container>
-        <container name="pagar-cuotas-mobile" htmlClass="pagar-cuota" htmlTag="div" after="-">
-            <block class="Ppsoft\Home\Block\Link" name="cuotas-mobile" template="Magento_Theme::pagar-cuotas.phtml"/>
-        </container>
         <referenceContainer name="header.container">
             <block class="Magento\Cms\Block\Block" name="upper-cms" before="-">
                 <arguments>
@@ -56,11 +53,6 @@
             <block class="Magento\Cms\Block\Block" name="atencion-cms" after="store_language">
                 <arguments>
                     <argument name="block_id" xsi:type="string">atencion-cliente</argument>
-                </arguments>
-            </block>
-            <block class="Magento\Cms\Block\Block" name="cuotas" after="atencion-cms">
-                <arguments>
-                    <argument name="block_id" xsi:type="string">pagar-cuotas</argument>
                 </arguments>
             </block>
         </referenceContainer>
@@ -97,7 +89,6 @@
         <move element="customsearch" destination="header-wrapper" after="header.links"/>
         <move element="header.links" destination="header-wrapper" after="help"/>
         <move element="search-mobile" destination="header-wrapper" after="-"/>
-        <move element="pagar-cuotas-mobile" destination="header-wrapper" after="logo"/>
         <move element="mobile-container" destination="header-wrapper" before="search-mobile"/>
         <referenceBlock name="register-link" remove="true" />
         <referenceBlock name="report.bugs" remove="true" />
