@@ -12,7 +12,7 @@
 <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()) : ?>
     <?= ($block->getChildHtml('wishlist.rss.link')) ?>
     <div class="wishlist-title">
-        <div class="title-img"><img class="minicuotas" src="<?php echo $this->getViewFileUrl('images/wish.png'); ?>" alt="wishlist icon"></div>
+        <div class="title-img"></div>
         <div class="title-text"><span><?= $block->escapeHtml(__('Mi Lista de Deseos')) ?></span></div>
     </div>
     <div class="wishlist-number"><span><?= $block->escapeHtml(__($block->getWishlistItems()->count())) ?></span><span><?= $block->escapeHtml(__(' Artículos encontrados')) ?></span></div>

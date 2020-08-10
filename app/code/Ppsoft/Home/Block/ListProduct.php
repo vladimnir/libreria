@@ -51,11 +51,7 @@ class ListProduct extends \Magento\Catalog\Block\Product\ListProduct
      * @var \Ppsoft\Compare\Model\Data
      */
     protected $model;
-    
-    /**
-     * @var \Wyomind\PointOfSale\Model\PointOfSaleFactory
-     */
-    private $posModelFactory;
+
     /**
      * @var \Magento\Framework\Registry
      */
@@ -82,8 +78,7 @@ class ListProduct extends \Magento\Catalog\Block\Product\ListProduct
                                 \Magento\Framework\App\ResourceConnection $resourceConnection,
                                 \Magento\Framework\Session\SessionManagerInterface $session,
                                 \Magento\Catalog\Block\Product\Compare\ListCompare $compareProducts,
-                                \Magento\Directory\Model\Currency $currency,
-                                \Wyomind\PointOfSale\Model\PointOfSaleFactory $posModelFactory
+                                \Magento\Directory\Model\Currency $currency
                                 )
     {
         parent::__construct($context, $postDataHelper, $layerResolver,$categoryRepository, $urlHelper);
@@ -95,7 +90,6 @@ class ListProduct extends \Magento\Catalog\Block\Product\ListProduct
         $this->session = $session;
         $this->model = $model;
         $this->resourceConnection = $resourceConnection;
-        $this->posModelFactory = $posModelFactory;
         $this->registry = $registry;
     }
 
@@ -139,46 +133,6 @@ class ListProduct extends \Magento\Catalog\Block\Product\ListProduct
         }
         else {
             return '';
-        }
-    }
-
-    /**
-     * @param $data
-     * @return array
-     */
-    public function availableAlmacenes($data) {
-        $stores = json_decode($data, true);
-        $model  = $this->posModelFactory->create();
-        $collection = $model->getCollection();
-        $values = array();
-        
-        foreach ($stores as $store) {
-            $values[] = $store['almacen'];
-        }
-        
-        $stockW = $collection->addFieldToFilter('store_code', ['in' => $values]);
-        $almacenCentral = false;
-        $countStores = 0;
-        foreach ($stockW as $stock) {
-            if (!$stock->getStatus()) {
-                $almacenCentral = true;
-            } else {
-                $countStores++;
-            }
-        }
-        
-        if ( $almacenCentral && $countStores > 0) {
-            return 1; //stock in sotes and alacen central
-        } else {
-            if ($almacenCentral) {
-                return 2; // stock in almacen central
-            } else {
-                if ($countStores > 0) {
-                    return 3; // stock in stores
-                } else {
-                    return 0; // no available
-                }
-            }
         }
     }
 }

@@ -1,0 +1,104 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Ppsoft\Level2\Block\Level2 $block */
+
+$categories = $block->getCategoryCollection(true, 2 , false, false, true);
+$_outputhelper    = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<span class="title">Categorías de Productos</span>
+<div class="custom-nav-sections-mobile">
+    <ul class="level0-mobile menu-top-mobile">
+<?php foreach ($categories as $category) :
+   $catloaded = $block->getLoadedCategory($category->getId());
+    $catchilds = $block->getCategoryGrandChilds($category->getId());
+    ?>
+        <li class="first-li">
+    <?php if ($catchilds->count() > 0) : ?>
+            <ul class="level1-mobile menu-child-1-mobile accordion">
+                <?php foreach ($catchilds as $child) :
+                    $catgrandchilds = $block->getCategoryGrandChilds($child->getId());
+                    ?>
+                 <?php if ($catgrandchilds->count() == 0) : ?>
+                   <li class="li-no-child">
+                        <a href="<?= /* @escapeNotVerified */ $child->getUrl() ?>" class="cat-url">
+                            <span class="child-name"><?= /* @escapeNotVerified */ __($child->getName());?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                    <?php if ($catgrandchilds->count() > 0) : ?>
+                    <li class="li-first-child-mobile heading" id="li-menu">
+                        <a href="<?= /* @escapeNotVerified */ $child->getUrl() ?>" class="cat-url <?= strtr(utf8_decode(strtolower($child->getName())), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûü'), 'aaaaaceeeeiiiinooooouuuu'); ?>">
+                            <span class="child-name"><?= /* @escapeNotVerified */ __($child->getName()) ?></span>
+                        </a>
+                        <?php $count = $countAux = 0; ?>
+                        <?php if ($catgrandchilds->count() > 0) :
+                            $categoryloaded = $block->getLoadedCategory($child->getId());
+                            $bkg = $categoryloaded->getImageUrl();
+                            ?>
+                            <ul class="level2-mobile menu-child-2-mobile content">
+                                <li class="menu-div">
+                                    <?php foreach ($catgrandchilds as $grandchild) : ?>   
+                                        <ul>
+                                            <?php $lastchilds = $block->getCategoryGrandChilds($grandchild->getId()); ?>
+                                            <?php 
+                                                    $count = $count + $lastchilds->count();
+                                                    if ($count >= 7 && $countAux > 0) {                                                        
+                                                        echo '</ul></li><li class="menu-div '.$count.'"><ul>';
+                                                        $count = $lastchilds->count() + 1;
+                                                    }
+                                                ?>      
+                                            <li class="li-second-child count-<?= $count ?>">
+                                                <a href="<?= /* @escapeNotVerified */ $grandchild->getUrl() ?>" class="cat-url">
+                                                    <span class="child-name"><?= /* @escapeNotVerified */ __($grandchild->getName());?></span>
+                                                </a>
+                                               
+                                            </li>
+                                            <?php if ($lastchilds->count() > 0) : ?>
+                                                <?php foreach ($lastchilds as $lastchild) : ?>
+                                                    <li class="li-third-child" data-count="<?= $countAux++ ?>">
+                                                        <a href="<?= /* @escapeNotVerified */ $lastchild->getUrl() ?>" class="cat-url">
+                                                            <span class="last-child-name"><?= /* @escapeNotVerified */ __($lastchild->getName());?></span>
+                                                        </a>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>                                            
+                                        </ul>                                        
+                                    <?php endforeach; ?>
+                                </li>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php endif; ?>
+                <?php endforeach; ?>
+            </ul>
+    <?php endif; ?>
+        </li>
+
+<?php endforeach; ?>
+    </ul>
+</div>
+<script>
+    require([
+        'jquery',
+        'collapsible',
+        'matchMedia',
+        'domReady!'
+    ], function($){
+        'use strict';
+        $(document).ready(function(){
+            $(document).on("click", "#li-menu", function () {
+                $(this).siblings().find('.menu-child-2-mobile').hide();
+                $(this).find('.menu-child-2-mobile').toggle();
+                $(this).toggleClass('active-li');
+                $(this).siblings().removeClass('active-li');
+
+            });
+        });
+    });
+</script>

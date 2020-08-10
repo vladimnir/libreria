@@ -4,18 +4,6 @@ require([
 ], function($){
 
     $(document).ready(function() {
-        $(document).mouseup(function (e) {
-            if ($(e.target).closest("#popup-addtocart").length === 0) {
-                $("#popup-addtocart").hide();
-            }
-        });
-        $(document).on("click", "#cross-add",function(){
-            $('#popup-addtocart').hide();
-        });
-        $(document).on("click", "#seguir-comprando",function(e){
-            e.preventDefault();
-            $('#popup-addtocart').hide();
-        });
         var width = $(window).width();
 
         //mobile

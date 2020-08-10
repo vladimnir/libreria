@@ -9,8 +9,5 @@ define([
                     $('#popup-addtocart').show();
             });
         });*/
-        $(document).on('ajax:addToCart', function () {
-            $('#popup-addtocart').show();
-        });
     }
 });

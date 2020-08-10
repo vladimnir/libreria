@@ -1,0 +1,628 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    body {
+        .page-wrapper {
+          .nav-sections {
+            display: none;
+          }
+            .custom-menu {
+                box-sizing: border-box;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 1280px;
+                width: 100%;
+                .custom-nav-sections {
+                        & > .menu-top {
+                            display: block;
+                            width: auto;
+                            padding: 0 8px;
+                            margin: 0;
+                            font-size: 0;
+                            .first-li {
+                                width: 16.5%;
+                                display: inline-block;
+                                font-size: 16px;
+                                margin: 0;
+                                height: 47px;
+                                &:hover {
+                                  a {
+                                    text-decoration: none;
+                                  }
+                                }
+                                &:first-child {
+                                    .top-cat-url {
+                                        &::after {
+                                            -webkit-font-smoothing: antialiased;
+                                            -moz-osx-font-smoothing: grayscale;
+                                            font-size: 12px;
+                                            line-height: 20px;
+                                            content: '\e622';
+                                            font-family: 'luma-icons';
+                                            vertical-align: middle;
+                                            display: inline-block;
+                                            font-weight: normal;
+                                            overflow: hidden;
+                                            padding-left: 6px;
+                                            speak: none;
+                                            text-align: center;
+                                            color: @color-black;
+                                        }
+                                    }
+                                }
+                                ul.active-ul {
+                                  background-color: #f9f9f9;
+                                }
+                                .menu-child-1 {
+                                    position: absolute;
+                                    z-index: 9;
+                                    display: none;
+                                    background: @color-white;
+                                    list-style: none;
+                                    padding: 10px 0 10px 0;
+                                    border: 1px solid #cccccc;
+                                    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19);
+                                    font-weight: 400;
+                                    width: 300px;
+                                    &::before {
+                                      border: 6px solid;
+                                      border-color: transparent transparent #fff;
+                                      z-index: 99;
+                                      border-bottom-style: solid;
+                                      content: '';
+                                      height: 0;
+                                      position: absolute;
+                                      width: 0;
+                                      display: block;
+                                      left: 95px;;
+                                      top: -12px;
+                                    }
+                                    &::after {
+                                      border: 7px solid;
+                                      border-color: transparent transparent #bbb;
+                                      z-index: 98;
+                                      border-bottom-style: solid;
+                                      content: '';
+                                      display: block;
+                                      height: 0;
+                                      position: absolute;
+                                      width: 0;
+                                      left: 94px;;
+                                      top: -14px;
+                                    }
+                                  & > li.active-li {
+                                    border-left: 15px solid #e2e2e2;
+                                    & > .cat-url {
+                                      .child-name {
+                                        color: #777777;
+                                      }
+                                    }
+                                  }
+                                    .li-first-child {
+                                        padding-top: 10px;
+                                        padding-bottom: 10px;
+                                        margin-bottom: 0;
+                                        &:hover {
+                                          .cat-url {
+                                            text-decoration: none;
+                                          }
+                                        }
+                                        & > .cat-url {
+                                            padding: 8px 20px;
+                                            .child-name {
+                                                font-size: 16px;
+                                                font-family: 'Open sans';
+                                                font-weight: 600;
+                                                font-style: normal;
+                                                font-stretch: normal;
+                                                letter-spacing: -0.6px;
+                                                text-align: left;
+                                                color: @color-black;
+                                                &::after {
+                                                    -webkit-font-smoothing: antialiased;
+                                                    -moz-osx-font-smoothing: grayscale;
+                                                    font-weight: 600;
+                                                    font-size: 16px;
+                                                    line-height: 16px;
+                                                    color: inherit;
+                                                    content: '\e608';
+                                                    font-family: 'luma-icons';
+                                                    vertical-align: middle;
+                                                    display: inline-block;
+                                                    overflow: hidden;
+                                                    speak: none;
+                                                    text-align: center;
+                                                    position: absolute;
+                                                    right: 15px;
+                                                }
+                                            }
+                                        }
+                                        .menu-child-2 {
+                                            position: absolute;
+                                            left: calc(~"100% + 1px");
+                                            top: -1px;
+                                            height: calc(~"100% - 60px");
+                                            background: @color-white;
+                                            display: none;
+                                            margin: 0;
+                                            /*column-fill: auto;
+                                            column-count: 3;
+                                            -moz-column-fill: auto;
+                                            -moz-column-count: 3;*/
+                                            padding: 0;
+                                            list-style: none;
+                                            border: 1px solid #cccccc;
+                                            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19);
+                                            font-weight: 400;
+                                            padding-left: 20px;
+                                            padding-top: 35px;
+                                            padding-bottom: 25px;
+                                            width: calc(~"100% + 520px");
+                                            box-sizing: unset;
+                                            
+                                              .cat-title {
+                                                font-size: 18px;
+                                                font-family: 'Open sans';
+                                                font-weight: 600;
+                                                font-style: normal;
+                                                font-stretch: normal;
+                                                letter-spacing: -0.6px;
+                                                text-align: left;
+                                                color: #000000;
+                                                border-bottom: 1px solid #ccc;
+                                                position: absolute;
+                                                top: 0;
+                                                padding-top: 10px;
+                                                margin-bottom: 10px;
+                                                margin-left: 20px;
+                                          }
+                                          
+                                          .menu-div {
+                                            display: inline-block;
+                                            float: left;
+                                            
+                                            > ul {
+                                                list-style: none;
+                                                padding-left: 20px;
+                                            }
+                                          }
+                                          
+                                          .li-second-child {
+                                            margin-top: 10px;
+                                            margin-bottom: 5px;
+                                            .cat-url {
+                                              .last-child-name {
+                                                display: block;
+                                              }
+                                              .last-child-name:first-letter,
+                                              .child-name:first-letter {
+                                                text-transform: uppercase !important;
+                                              }
+                                              .child-name {
+                                                display: block;
+                                                font-size: 16px;
+                                                font-family: 'Open sans';
+                                                font-weight: 700;
+                                                font-style: normal;
+                                                font-stretch: normal;
+                                                letter-spacing: -0.6px;
+                                                text-align: left;
+                                                color: #000000;
+                                                white-space: nowrap;
+                                                text-transform: lowercase !important;
+                                                &::first-letter {
+                                                  text-transform: capitalize !important;
+                                                }
+
+                                              }
+                                            }
+                                          }
+                                          .li-third-child {
+                                            margin-bottom: 0;
+                                            .cat-url {
+                                              .last-child-name:first-letter {
+                                                text-transform: uppercase !important;
+                                              }
+                                              .last-child-name {
+                                                display: block;
+                                                font-size: 12px;
+                                                font-family: 'Open sans';
+                                                font-weight: normal;
+                                                font-style: normal;
+                                                font-stretch: normal;
+                                                letter-spacing: normal;
+                                                text-align: left;
+                                                color: #000000;
+                                                text-transform: lowercase !important;
+                                              }
+                                            }
+                                            .active-span {
+                                              .last-child-name {
+                                                color: #777777;
+                                              }
+                                            }
+                                          }
+                                        }
+                                    }
+                                }
+                                .top-cat-url {
+                                    line-height: 47px;
+                                    height: 47px;
+                                    padding: 0 12px;
+                                    .first-level-child {
+                                        font-size: 16px;
+                                        font-family: 'Open sans';
+                                        font-weight: 600;
+                                        font-style: normal;
+                                        font-stretch: normal;
+                                        letter-spacing: -0.6px;
+                                        text-align: left;
+                                        color: #000000;
+                                        cursor: pointer;
+                                        line-height: 47px;
+                                        height: 47px;
+                                    }
+                                }
+                            }
+                        }
+                }
+            }
+        }
+    }
+}
+//
+//Tablet
+//
+//
+//
+//Tablet
+//
+@media (max-width: 1100px) {
+  body {
+    .page-wrapper {
+      .custom-menu {
+        .custom-nav-sections {
+          & > .menu-top {
+            .first-li {
+              .menu-child-1 {
+                .li-first-child {
+                  .menu-child-2 {
+                    .li-second-child {
+                      .cat-url {
+                        span.child-name {
+                          white-space: normal;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+body {
+  .page-wrapper {
+    div.desktop {
+      display: none;
+    }
+    .categories-mobile-section {
+      .title {
+        font-size: 22px;
+        text-transform: uppercase;
+        font-weight: 800;
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+        padding-bottom: 20px;
+      }
+      .custom-nav-sections-mobile {
+       .menu-top-mobile {
+         padding-left: 0;
+         list-style: none;
+         text-decoration: none;
+         ul {
+           list-style: none;
+           text-decoration: none;
+         }
+         .first-li {
+           .level1-mobile {
+             padding-left: 10px;
+             .li-first-child-mobile {
+               &::before {
+                 font-family: 'luma-icons';
+                 content: ' \e619';
+                 font-size: 26px;
+                 vertical-align: middle;
+                 color: #ec1f26;
+               }
+                 .child-name {
+                   font-size: 16px;
+                   font-family: 'Open sans';
+                   font-weight: 600;
+                   font-style: normal;
+                   font-stretch: normal;
+                   letter-spacing: -.6px;
+                   text-align: left;
+                   color: #000;
+                 }
+               .blanca {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/lineablancaicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   background-repeat: no-repeat;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .electronica {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/electronicaicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                   background-repeat: no-repeat;
+                 }
+               }
+               .telefonia {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/telefoniaicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-repeat: no-repeat;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .bioseguridad {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/bioseguridad.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-repeat: no-repeat;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .deporte {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/deportes.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-repeat: no-repeat;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .bicicletas {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/bicicletas.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-repeat: no-repeat;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .tecnologia {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/tecnologiaicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   background-repeat: no-repeat;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .climatizacion {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/climatizacionicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                   background-repeat: no-repeat;
+                 }
+               }
+               .menor {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/electroicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                   background-repeat: no-repeat;
+                 }
+               }
+               .hogar {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/hogaricon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   background-repeat: no-repeat;
+                   padding-right: 5px;
+                 }
+               }
+               .home {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/homeicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                   background-repeat: no-repeat;
+                 }
+               }
+               .motos {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/motosicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   background-repeat: no-repeat;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .herramientas {
+                 vertical-align: middle;
+                 display: inline-block;
+                 &::before {
+                   background: url("../images/herramientasicon.png");
+                   content: '';
+                   width: 47px;
+                   height: 47px;
+                   background-size: 47px;
+                   display: inline-block;
+                   background-repeat: no-repeat;
+                   vertical-align: middle;
+                   padding-right: 5px;
+                 }
+               }
+               .menu-child-2-mobile {
+                 display: none;
+                 .menu-div {
+                   ul {
+                     padding-left: 45px;
+                   }
+                 }
+                 .li-second-child {
+                   .child-name {
+                     display: block;
+                     font-size: 16px;
+                     font-family: 'Open sans';
+                     font-weight: 700;
+                     font-style: normal;
+                     font-stretch: normal;
+                     letter-spacing: -.6px;
+                     text-align: left;
+                     color: #000;
+                     white-space: nowrap;
+                     text-transform: lowercase !important;
+                     &::first-letter {
+                       text-transform: capitalize !important;
+                     }
+                   }
+                 }
+                 .li-third-child {
+                   .last-child-name {
+                     display: block;
+                     font-size: 12px;
+                     font-family: 'Open sans';
+                     font-weight: 400;
+                     font-style: normal;
+                     font-stretch: normal;
+                     letter-spacing: normal;
+                     text-align: left;
+                     color: #000;
+                     text-transform: lowercase !important;
+                     &::first-letter {
+                       text-transform: capitalize !important;
+                     }
+                   }
+                 }
+               }
+             }
+             .active-li {
+               &::before {
+                 font-family: 'luma-icons';
+                 content: ' \e607';
+                 font-size: 26px;
+                 vertical-align: middle;
+                 color: #ec1f26;
+               }
+             }
+           }
+         }
+       }
+      }
+    }
+  }
+ }
+}

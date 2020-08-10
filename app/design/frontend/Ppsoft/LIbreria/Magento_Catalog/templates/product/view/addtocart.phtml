@@ -18,13 +18,7 @@ $selectQty = reset($qty);
 ?>
 <?php $buttonTitle = __('Agregar a mi Carrito'); ?>
 <?php if ($_product->isSaleable()): ?>
-    <?php $_helperDismacPos = $this->helper('Ppsoft\DismacPos\Helper\Data'); ?>
-    <?php $stockWyomind = json_decode($_helperDismacPos->stockWyomind()->getStockByProductIdAndStoreIds($_product->getId(), array($_product->getStore()->getStoreId()))); ?>
     <?php
-    $selectQty = $stockWyomind->qty;
-    if ($selectQty > 5) {
-        $selectQty = 5;
-    }
     ?>
     
     <div class="box-tocart">
