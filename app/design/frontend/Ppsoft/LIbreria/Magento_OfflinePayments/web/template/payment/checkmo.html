@@ -10,35 +10,25 @@
                name="payment[method]"
                class="radio"
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
-        <label data-bind="attr: {'for': getCode(), 'id': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
     </div>
     <div class="payment-method-content">
-        <div class="text-container">
-            <span class="text-nobold" data-bind="i18n: 'Realiza tu pago a través de un depósito bancario utilizando la siguiente información:'"></span><br>
-            <span class="text-nobold" data-bind="i18n: 'Beneficiario: '"></span>
-            <span class="text-bold" data-bind="i18n: 'Dismatec S.A.'"></span><br>
-            <span class="text-nobold" data-bind="i18n: 'Banco: '"></span>
-            <span class="text-bold" data-bind="i18n: 'Banco Unión'"></span><br>
-            <span class="text-nobold" data-bind="i18n: 'No. de cuenta: '"></span><br/>
-            <span class="text-bold" data-bind="i18n: '10000031739656 Moneda Nacional'"></span><br>
-            <span class="text-nobold" data-bind="i18n: 'Tipo de Cuenta:'"></span>
-            <span class="text-bold" data-bind="i18n: 'Cuenta corriente'"></span><br>
-            <span class="text-nobold" data-bind="i18n: 'NIT:'"></span>
-            <span class="text-bold" data-bind="i18n: '1027967025'"></span><br>
-            <span class="text-nobold" data-bind="i18n: 'Al momento de realizar tu transferencia/depósito coloca en el campo de Referencia tu'"></span>&nbsp;
-            <span class="text-bold" data-bind="i18n: 'número de pedido.'"></span><br>
-            <span class="text-nobold" data-bind="i18n: 'Recuerda que tienes'"></span>&nbsp;
-            <span class="text-bold" data-bind="i18n: '12 horas'"></span>&nbsp;
-            <span class="text-nobold" data-bind="i18n: 'para realizar tu'"></span>&nbsp;
-            <span class="text-bold" data-bind="i18n: 'depósito o transferencia'"></span>&nbsp;
-            <span class="text-nobold" data-bind="i18n: 'y enviar los datos de tu transacción al correo'"></span>&nbsp;
-            <a class="email" href="mailto:ecommercepagos@dismac.com.bo  ">ecommercepagos@dismac.com.bo</a>&nbsp;
-            <span class="text-nobold" data-bind="i18n: 'o desde tu cuenta en Dismac.com.bo'"></span>&nbsp;
-            <span class="text-bold" data-bind="i18n: '(Mis Pedidos/Enviar datos de pago)'"></span><br>
-        </div>
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
+        <div class="text-container">
+            <span class="text-nobold" data-bind="i18n: 'Realiza tu pago a través de Tigo Money:'"></span><br>
+            <span class="text-nobold" data-bind="i18n: 'Beneficiario: '"></span>
+            <span class="text-bold" data-bind="i18n: 'Germán Luis Martínez.'"></span><br>
+            <span class="text-nobold" data-bind="i18n: 'CI:'"></span>
+            <span class="text-bold" data-bind="i18n: '5042748 TJ'"></span><br>
+            <span class="text-nobold" data-bind="i18n: 'Recuerda que tienes'"></span>&nbsp;
+            <span class="text-bold" data-bind="i18n: '24 horas'"></span>&nbsp;
+            <span class="text-nobold" data-bind="i18n: 'para realizar tu'"></span>&nbsp;
+            <span class="text-bold" data-bind="i18n: ' compra con Tigo Money'"></span>&nbsp;
+            <span class="text-nobold" data-bind="i18n: 'al teléfono'"></span>&nbsp;
+            <a class="email" href="https://api.whatsapp.com/send?phone=72975228">72975228</a>&nbsp;
+        </div>
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
             <!-- ko template: getTemplate() --><!-- /ko -->
@@ -60,7 +50,7 @@
         <!-- /ko -->
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
-            <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
         <div class="actions-toolbar">
@@ -74,10 +64,10 @@
                         enable: (getCode() == isChecked())
                         "
                         disabled>
-                    <span data-bind="i18n: 'Pagar'"></span>
+                    <span data-bind="i18n: 'Place Order'"></span>
                 </button>
             </div>
         </div>
     </div>
 </div>
-
+        

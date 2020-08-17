@@ -25,7 +25,7 @@
             <block class="Magento\Framework\View\Element\Html\Link" name="help_link">
                 <arguments>
                     <argument name="label" xsi:type="string" translate="true">Ayuda</argument>
-                    <argument name="path" xsi:type="string">ayuda.html</argument>
+                    <argument name="path" xsi:type="string">ayuda</argument>
                     <argument name="class" xsi:type="string">help-link</argument>
                 </arguments>
             </block>
@@ -77,6 +77,9 @@
                     </arguments>
                 </block>
             </container>
+            </container>
+            <container name="whatsapp-chat" htmlClass="whatsapp-chat" htmlTag="div">
+                <block name="whatsapp-new" template="Magento_Theme::whatsappnew.phtml" />
             </container>
         </referenceContainer>
         <referenceBlock name="store.menu">

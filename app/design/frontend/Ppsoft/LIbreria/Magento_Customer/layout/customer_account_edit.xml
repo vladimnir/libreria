@@ -34,12 +34,5 @@
                 </argument>
             </action>
         </referenceBlock>
-        <referenceContainer name="content">
-            <block name="back-cuenta" as="back-cuenta" template="Magento_Customer::back-cuenta.phtml" before="page.main.title"/>
-            <block class="Magento\Customer\Block\Form\Edit" name="customer_edit" template="Magento_Customer::form/edit.phtml" cacheable="false">
-                <container name="form.additional.info" as="form_additional_info"/>
-            </block>
-        </referenceContainer>
-        <move element="page.main.title" destination="content" after="back-cuenta"/>
     </body>
 </page>

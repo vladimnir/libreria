@@ -43,7 +43,7 @@ $_outputhelper    = $this->helper('Magento\Catalog\Helper\Output');
                             $categoryloaded = $block->getLoadedCategory($child->getId());
                             $bkg = $categoryloaded->getImageUrl();
                             ?>
-                            <ul class="level2 menu-child-2" style="background-image:url('<?php echo $bkg ?>'); background-repeat: no-repeat; background-position-x: 100%; background-size: auto 100%; background-position-y: 100%;">
+                            <ul class="level2 menu-child-2" >
                                 <li class="cat-title"><?= /* @escapeNotVerified */ __($child->getName());?></li>
                                 <li class="menu-div">
                                     <?php foreach ($catgrandchilds as $grandchild) : ?>   

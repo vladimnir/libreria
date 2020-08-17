@@ -14,12 +14,14 @@
             display: none;
           }
             .custom-menu {
-                box-sizing: border-box;
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 1280px;
                 width: 100%;
+              background: #f0f0f0;
                 .custom-nav-sections {
+                  box-sizing: border-box;
+                  margin-left: auto;
+                  margin-right: auto;
+                  max-width: 1280px;
+                  width: 100%;
                         & > .menu-top {
                             display: block;
                             width: auto;
@@ -27,6 +29,16 @@
                             margin: 0;
                             font-size: 0;
                             .first-li {
+                              &:first-child {
+                                background: #e0e0e0;
+                                a.top-cat-url {
+                                  span.first-level-child {
+                                    color: #814bc6;
+                                  }
+                                }
+
+                              }
+                              text-align: center;
                                 width: 16.5%;
                                 display: inline-block;
                                 font-size: 16px;
@@ -53,7 +65,7 @@
                                             padding-left: 6px;
                                             speak: none;
                                             text-align: center;
-                                            color: @color-black;
+                                          color: #814bc6;
                                         }
                                     }
                                 }
@@ -106,9 +118,10 @@
                                     }
                                   }
                                     .li-first-child {
-                                        padding-top: 10px;
-                                        padding-bottom: 10px;
+                                        padding-top: 30px;
+                                        padding-bottom: 30px;
                                         margin-bottom: 0;
+                                      text-align: left;
                                         &:hover {
                                           .cat-url {
                                             text-decoration: none;
@@ -264,7 +277,7 @@
                                         font-stretch: normal;
                                         letter-spacing: -0.6px;
                                         text-align: left;
-                                        color: #000000;
+                                      color: #57595d;
                                         cursor: pointer;
                                         line-height: 47px;
                                         height: 47px;

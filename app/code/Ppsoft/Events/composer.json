@@ -1,0 +1,14 @@
+{
+    "name": "ppsoft/events",
+    "description": "ppsoft cms block",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "ppsoft\\Events\\": ""
+        }
+    }
+}

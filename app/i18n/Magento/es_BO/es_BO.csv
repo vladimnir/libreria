@@ -4045,3 +4045,7 @@ A"lready posted the same request in the last minute.","Realizaste un pago simila
 """%1"" contains non-numeric characters.","""%1"" contiene caracteres no numéricos.", module, Magento_Checkout
 """%1"" contains non-numeric characters.","""%1"" contiene caracteres no numéricos.", module, Wagento_CustomCheckout
 "The most you may purchase is %1.","Solo puedes adquirir %1 unidades de este mismo producto en tu compra."
+"Order Summary","Resumen de compra"
+"Ship To:","Envío a:"
+"We'll email you an order confirmation with details and tracking info.","Enviaremos un correo electrónico con la información de su compra."
+"You can track your order status by creating an account.","Puedes revisar el estado de tu orden creando una cuenta"

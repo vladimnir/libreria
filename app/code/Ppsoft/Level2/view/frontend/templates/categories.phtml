@@ -29,6 +29,9 @@ foreach ($catchild as $cat)
                 <?php if ($catloaded->getImageUrl()) : ?>
                     <img class="img-cat" src="<?php  echo $catloaded->getImageUrl(); ?>" />
                 <?php endif; ?>
+                <?php if (!$catloaded->getImageUrl()) : ?>
+                    <img class="img-cat" src='<?php echo $this->getViewFileUrl('images/library.jpg'); ?>' alt="libreria">
+                <?php endif; ?>
             </a>
             <a href="<?= /* @escapeNotVerified */ $cchild->getUrl() ?>" class="child-url">
                 <span class="first-child"><?php /* @escapeNotVerified */ echo __($cchild->getName());?></span>

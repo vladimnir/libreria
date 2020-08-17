@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Magento/Widget/etc/widget.xsd">
+    <widget id="bss_bestsellerwidget" class="Bss\Bestsellerwidget\Block\Widget\Bestsellerdproduct">
+        <label translate="true">Bestseller Product Widget</label>
+        <description>Bss Bestseller Product Widget</description>
+        <parameters>
+            <parameter name="productcount" xsi:type="text"  visible="true" sort_order="1" >
+                <label translate="true">Product Count</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
