@@ -258,6 +258,76 @@
     .custom-menu {
       display: none;
     }
+    #checkout-step-payment {
+      .img-qr {
+        background-image: url("@{baseDir}images/qr.jpg");
+        width: 100%;
+        background-size: 300px;
+        height: 300px;
+        background-repeat: no-repeat;
+      }
+    }
+    #shipping-new-address-form {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: stretch;
+      margin-bottom: 0;
+      .field[name='shippingAddress.firstname'] {
+        order: 1;
+        width: 48%;
+        padding-right: 4%;
+    }
+      .field[name='shippingAddress.lastname'] {
+        order: 2;
+        width: 48%;
+      }
+      .field[name='shippingAddress.country_id'] {
+        order: 3;
+        width: 100%;
+      }
+      .field[name='shippingAddress.region'] {
+        order: 4;
+        width: 48%;
+        padding-right: 4%;
+      }
+      .field[name='shippingAddress.region_id'] {
+        order: 4;
+        width: 48%;
+        padding-right: 4%;
+      }
+      .field[name='shippingAddress.city'] {
+        order: 5;
+        width: 48%;
+      }
+      .field[name='shippingAddress.street'] {
+        order: 6;
+        width: 48%;
+        padding-right: 4%;
+      }
+      .street{
+        order: 6;
+        width: 48%;
+        padding-right: 4%;
+      }
+      .field[name='shippingAddress.telephone'] {
+        order: 7;
+        width: 48%;
+      }
+      .field[name='shippingAddress.postcode'] {
+        order: 8;
+        width: 100%;
+      }
+      .field[name='shippingAddress.nit'] {
+        order: 9;
+        width: 100%;
+      }
+    }
   }
   .paymentdata-success {
     max-width: 540px;
@@ -2902,8 +2972,8 @@
                     form {
                       display: inline-block;
                       .tocart {
-                        background-color: #000;
-                        border: #000;
+                        background-color: red;
+                        border: red;
                         width: 100%;
                         padding: 17px 10px;
                         span {
@@ -3284,7 +3354,7 @@
                       font-style: normal;
                       font-stretch: normal;
                       color: #ffffff;
-                      background-color: black;
+                      background-color: red;
                       text-transform: uppercase;
                       height: 46px;
                       text-align: center;
@@ -3548,7 +3618,7 @@
               line-height: 43px;
               letter-spacing: normal;
               color: #ffffff;
-              background-color: black;
+              background-color: red;
               text-transform: uppercase;
               height: 43px;
               width: 226px;
@@ -6474,7 +6544,6 @@
             .slick-active {
               button {
                 box-shadow: none;
-                background: yellow;
                 &::before {
                   opacity: 1;
                   color: yellow;
@@ -6938,8 +7007,8 @@
                   border-radius: 0px;
                   float: left;
                   text-align: center;
-                  background-color: black;
-                  border: #5acd98;
+                  background-color: red;
+                  border: red;
                   display: inline-block;
                   padding-top: 17px;
                   padding-bottom: 17px;
@@ -7190,8 +7259,8 @@
                 .comparar-ahora {
                   display: block;
                   text-align: center;
-                  background-color: black;
-                  border: black;
+                  background-color: red;
+                  border: red;
                   padding-top: 10px;
                   padding-bottom: 10px;
                   width: 67%;
@@ -7410,8 +7479,8 @@
                     .comparar-ahora {
                       display: block;
                       text-align: center;
-                      background-color: black;
-                      border: black;
+                      background-color: red;
+                      border: red;
                       padding-top: 10px;
                       padding-bottom: 10px;
                       width: 67%;
@@ -7523,7 +7592,7 @@
                       border-radius: 0px;
                       float: left;
                       text-align: center;
-                      background-color: black;
+                      background-color: red;
                       border: #000;
                       display: inline-block;
                       padding-top: 17px;
@@ -7885,7 +7954,7 @@
                       padding: 0;
                       width: 279px;
                       height: 48px;
-                      background-color: black;
+                      background-color: red;
                       span {
                         font-size: 18px;
                         font-weight: 800;
@@ -8268,7 +8337,7 @@
                         width: 145px;
                         height: 33px;
                         display: inline-block;
-                        background-color: black;
+                        background-color: red;
                         font-family: 'Open sans';
                         font-size: 13px;
                         font-weight: 800;
@@ -8353,7 +8422,7 @@
                         width: 145px;
                         height: 33px;
                         display: inline-block;
-                        background-color: black;
+                        background-color: red;
                         font-family: 'Open sans';
                         font-size: 13px;
                         font-weight: 800;
@@ -8650,8 +8719,8 @@
                           border-radius: 0px;
                           float: left;
                           text-align: center;
-                          background-color: #000;
-                          border: #000;
+                          background-color: red;
+                          border: red;
                           display: inline-block;
                           padding-top: 17px;
                           padding-bottom: 17px;
@@ -8803,7 +8872,7 @@
                     width: 201px;
                     height: 40px;
                     display: inline-block;
-                    background-color: black;
+                    background-color: red;
                     font-family: 'Open sans';
                     font-size: 15px;
                     font-weight: 800;
@@ -9042,8 +9111,8 @@
                   border-radius: 0;
                   float: left;
                   text-align: center;
-                  background-color: #000;
-                  border: black;
+                  background-color: red;
+                  border: red;
                   display: inline-block;
                   padding-top: 17px;
                   padding-bottom: 17px;
@@ -9179,8 +9248,8 @@
             .comparar-ahora {
               display: block;
               text-align: center;
-              background-color: black;
-              border: black;
+              background-color: red;
+              border: red;
               padding-top: 10px;
               padding-bottom: 10px;
               width: 67%;
@@ -9292,8 +9361,8 @@
               border-radius: 0px;
               float: left;
               text-align: center;
-              background-color: #000;
-              border: #000;
+              background-color: red;
+              border: red;
               display: inline-block;
               padding-top: 17px;
               padding-bottom: 17px;
@@ -9492,7 +9561,7 @@
                     border: none;
                     padding: 0;
                     height: 50px;
-                    background-color: black;
+                    background-color: red;
                     span {
                       font-size: 18px;
                       font-weight: 800;
@@ -9739,8 +9808,8 @@
       .primary {
         width: 100%;
         button.primary {
-          background-color: black;
-          border: 1px solid black;
+          background-color: red;
+          border: 1px solid red;
           height: 43px;
           margin-right: 0;
           border-radius: 0;
@@ -10077,7 +10146,7 @@
                         .action.view {
                           display: block;
                           text-align: center;
-                          background-color: black;
+                          background-color: red;
                           white-space: normal;
                           font-size: 13.5px;
                           font-weight: bold;
@@ -10105,12 +10174,12 @@
                           .invoice-info {
                             font-size: 14px;
                             font-weight: 700;
-                            border: 3px solid black;
+                            border: 3px solid red;
                             text-transform: uppercase;
                             padding: 12px 10px;
                             display: block;
                             text-align: center;
-                            color: black;
+                            color: red;
                           }
                         }
                       }

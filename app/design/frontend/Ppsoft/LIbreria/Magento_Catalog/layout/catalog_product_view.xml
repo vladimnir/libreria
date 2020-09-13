@@ -17,6 +17,15 @@
                 <block class="Magento\Catalog\Block\Product\View" name="media.mobile" template="Magento_Theme::media-mobile.phtml"/>
             </container>
         </referenceContainer>
+        <referenceContainer name="main.content">
+            <container name="after-columns" label="After Column" htmlTag="div" htmlClass="after-column" after="columns">
+                <block class="Magento\Cms\Block\Block" name="recently-viewed" before="-">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">recently-viewed</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
         <move element="product.info.overview" destination="product.info.main" after="page.main.title"/>
         <move element="product.info.stock.sku" destination="product.info.main" after="page.main.title"/>
         <move element="product.info.extrahint" destination="product.info.main" after="free-ship"/>

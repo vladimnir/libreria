@@ -1,0 +1,58 @@
+<?php
+
+
+namespace Ppsoft\Qr\Setup;
+
+use Magento\Framework\Setup\InstallDataInterface;
+use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Setup\SalesSetupFactory;
+use Magento\Cms\Model\PageFactory;
+
+
+class InstallData implements InstallDataInterface
+{
+
+    /**
+     * @var PageFactory
+     */
+    private $pageFactory;
+    /**
+     * @var SalesSetupFactory
+     */
+    private $salesSetupFactory;
+
+    public function __construct(PageFactory $pageFactory, SalesSetupFactory $salesSetupFactory)
+    {
+        $this->pageFactory = $pageFactory;
+        $this->salesSetupFactory = $salesSetupFactory;
+    }
+
+
+    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $installer = $setup;
+
+        $installer->startSetup();
+
+        /** @var \Magento\Sales\Setup\SalesSetup $salesSetup */
+        $salesSetup = $this->salesSetupFactory->create(['setup' => $setup]);
+
+
+        /**
+         * Remove previous attributes
+         */
+        $attributes =       ['pos_response'];
+        foreach ($attributes as $attr_to_remove){
+            $salesSetup->removeAttribute(\Magento\Sales\Model\Order::ENTITY,$attr_to_remove);
+
+        }
+
+        /**
+         * Add 'NEW_ATTRIBUTE' attributes for order
+         */
+        $options = ['type' => 'varchar', 'visible' => false, 'required' => false];
+        $salesSetup->addAttribute('order', 'qr_code', $options);
+        $installer->endSetup();    }
+}

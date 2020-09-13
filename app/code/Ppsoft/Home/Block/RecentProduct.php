@@ -59,8 +59,7 @@ class RecentProduct extends \Magento\Framework\View\Element\Template
                                     \Magento\Catalog\Block\Product\ListProductFactory $listProductBlock,
                                     \Magento\Review\Model\ReviewFactory $reviewFactory,
                                     \Magento\Framework\Stdlib\DateTime\DateTime $date,
-                                    \Magento\Directory\Model\Currency $currency,
-                                    \Wyomind\PointOfSale\Model\PointOfSaleFactory $posModelFactory
+                                    \Magento\Directory\Model\Currency $currency
                                 )
     {
         $this->modelFactory = $modelFactory;
@@ -72,7 +71,6 @@ class RecentProduct extends \Magento\Framework\View\Element\Template
         $this->date = $date;
         $this->categoryFactory = $categoryFactory;
         $this->mageplaza = $mageplaza;
-        $this->posModelFactory = $posModelFactory;
         
         parent::__construct($context);
     }
@@ -128,49 +126,6 @@ class RecentProduct extends \Magento\Framework\View\Element\Template
     public function getMarca() {
        return $this->mageplaza->getBrand();
     }
-    
-    /**
-     * @param $data
-     * @return array
-     */
-    public function availableAlmacenes($data) {
-        $stores = json_decode($data, true);
-        $model  = $this->posModelFactory->create();
-        $collection = $model->getCollection();
-        $values = array();
-        
-        foreach ($stores as $store) {
-            $values[] = $store['almacen'];
-        }
-        
-        $stockW = $collection->addFieldToFilter('store_code', ['in' => $values]);
-        $almacenCentral = false;
-        $countStores = 0;
-        foreach ($stockW as $stock) {
-            if (!$stock->getStatus()) {
-                $almacenCentral = true;
-            } else {
-                $countStores++;
-            }
-        }
-        
-        if ( $almacenCentral && $countStores > 0) {
-            return 1; //stock in sotes and alacen central
-        } else {
-            if ($almacenCentral) {
-                return 2; // stock in almacen central
-            } else {
-                if ($countStores > 0) {
-                    return 3; // stock in stores
-                } else {
-                    return 0; // no available
-                }
-            }
-        }
-    }
-    
-    public function getCurrentStore()
-    {
-        return $this->_storeManager->getStore();
-    }
+
+
 }

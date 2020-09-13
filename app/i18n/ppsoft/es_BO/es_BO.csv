@@ -3468,7 +3468,7 @@ Street Address Line,"Calle, No. Exterior, No. Interior"
 Street Address Line 2,"Colonia, Delegación"
 City,"Ciudad"
 Country,"País"
-State/Province,"Estado / Provincia"
+State/Province,"Provincia"
 Zip/Postal Code,"Código Postal"
 Phone Number,"Número telefónico"
 Name Prefix,"Nombre"
@@ -4045,3 +4045,6 @@ A"lready posted the same request in the last minute.","Realizaste un pago simila
 """%1"" contains non-numeric characters.","""%1"" contiene caracteres no numéricos.", module, Magento_Checkout
 """%1"" contains non-numeric characters.","""%1"" contiene caracteres no numéricos.", module, Wagento_CustomCheckout
 "The most you may purchase is %1.","Solo puedes adquirir %1 unidades de este mismo producto en tu compra."
+"You can create an account after checkout.","Puedes crear tu cuenta despues de completar la orden."
+"You already have an account with us. Sign in or continue as guest.","Ya tienes una cuenta. Puedes iniciar sesión o continuar como invitado."
+"Please select a region, state or province.","Por favor elige ciudad."

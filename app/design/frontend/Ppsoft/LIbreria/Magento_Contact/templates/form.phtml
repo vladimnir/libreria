@@ -26,14 +26,6 @@
                 <input name="email" id="email" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
             </div>
         </div>
-        <div class="field motivo required">
-            <label class="label" for="motivo"><span><?php /* @escapeNotVerified */ echo __('Motivo de Contacto') ?></span></label>
-            <div class="control">
-                <?php
-                echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('motivo')->toHtml();
-                ?>
-            </div>
-        </div>
         <div class="field comment required">
             <label class="label" for="comment"><span><?= $block->escapeHtml(__('Deja tu mensaje')) ?></span></label>
             <div class="control">
