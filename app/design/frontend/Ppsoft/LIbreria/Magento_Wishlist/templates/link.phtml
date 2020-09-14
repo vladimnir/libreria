@@ -22,9 +22,6 @@
     ?>
     <li class="link wishlist" data-bind="scope: 'wishlist'">
         <a href="<?php echo $this->getUrl('sales/order/history') ?>" class="orders"><?php /* @escapeNotVerified */ echo __('Mi lista de compras') ?>
-
-            <span class="order counter qty"><?php echo $block->getCOrders(); ?><?php /* @escapeNotVerified */ echo __(' Ordenes') ?></span>
-
         </a>
     </li>
 <?php endif; ?>

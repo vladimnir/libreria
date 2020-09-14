@@ -4,10 +4,10 @@
 //  */
 
 //
-//  Common
+//  desktop
 //  _____________________________________________
 
-& when (@media-common = true) {
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
     body {
         .page-wrapper {
           .nav-sections {
@@ -51,18 +51,18 @@
                                 }
                                 &:first-child {
                                     .top-cat-url {
-                                        &::after {
+                                        &::before {
                                             -webkit-font-smoothing: antialiased;
                                             -moz-osx-font-smoothing: grayscale;
                                             font-size: 12px;
                                             line-height: 20px;
-                                            content: '\e622';
+                                            content: '\e60b';
                                             font-family: 'luma-icons';
                                             vertical-align: middle;
                                             display: inline-block;
                                             font-weight: normal;
                                             overflow: hidden;
-                                            padding-left: 6px;
+                                            padding-right: 6px;
                                             speak: none;
                                             text-align: center;
                                           color: #814bc6;
@@ -110,7 +110,6 @@
                                       top: -14px;
                                     }
                                   & > li.active-li {
-                                    border-left: 15px solid #e2e2e2;
                                     & > .cat-url {
                                       .child-name {
                                         color: #777777;
@@ -131,7 +130,7 @@
                                             padding: 8px 20px;
                                             .child-name {
                                                 font-size: 16px;
-                                                font-family: 'Open sans';
+                                                font-family: 'Verdana';
                                                 font-weight: 600;
                                                 font-style: normal;
                                                 font-stretch: normal;
@@ -182,7 +181,7 @@
                                             
                                               .cat-title {
                                                 font-size: 18px;
-                                                font-family: 'Open sans';
+                                                font-family: 'Verdana';
                                                 font-weight: 600;
                                                 font-style: normal;
                                                 font-stretch: normal;
@@ -221,7 +220,7 @@
                                               .child-name {
                                                 display: block;
                                                 font-size: 16px;
-                                                font-family: 'Open sans';
+                                                font-family: 'Verdana';
                                                 font-weight: 700;
                                                 font-style: normal;
                                                 font-stretch: normal;
@@ -246,7 +245,7 @@
                                               .last-child-name {
                                                 display: block;
                                                 font-size: 12px;
-                                                font-family: 'Open sans';
+                                                font-family: 'Verdana';
                                                 font-weight: normal;
                                                 font-style: normal;
                                                 font-stretch: normal;
@@ -271,7 +270,7 @@
                                     padding: 0 12px;
                                     .first-level-child {
                                         font-size: 16px;
-                                        font-family: 'Open sans';
+                                        font-family: 'Verdana';
                                         font-weight: 600;
                                         font-style: normal;
                                         font-stretch: normal;
@@ -337,7 +336,33 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-
+  body {
+    .page-wrapper {
+      .nav-sections {
+        .nav-sections-items {
+          .nav-sections-item-content {
+            .navigation {
+              .ui-menu {
+                .ui-menu-item {
+                  width: 100% !important;
+                  ul {
+                    width: 100% !important;
+                  }
+                }
+                li.all-category {
+                  display: none !important;
+                }
+              }
+            }
+          }
+        }
+      }
+      .custom-menu {
+        display: none;
+      }
+    }
+  }
+/*
 body {
   .page-wrapper {
     div.desktop {
@@ -637,5 +662,5 @@ body {
       }
     }
   }
- }
+ }*/
 }
