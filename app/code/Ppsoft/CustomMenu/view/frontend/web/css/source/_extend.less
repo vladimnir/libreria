@@ -174,7 +174,7 @@
                                             box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19);
                                             font-weight: 400;
                                             padding-left: 20px;
-                                            padding-top: 35px;
+                                            padding-top: 10px;
                                             padding-bottom: 25px;
                                             width: calc(~"100% + 520px");
                                             box-sizing: unset;
@@ -347,6 +347,22 @@
                   width: 100% !important;
                   ul {
                     width: 100% !important;
+                  }
+                  ul.level0 {
+                    li {
+                      ul.level1 {
+                        min-width: 100% !important;
+                        max-width: 100% !important;
+                        .cat-container {
+                          padding-left: 0 !important;
+                          padding-right: 0 !important;
+                          span {
+                            margin-left: 0 !important;
+                            padding-right: 0 !important;
+                          }
+                        }
+                      }
+                    }
                   }
                 }
                 li.all-category {

@@ -5,41 +5,34 @@
  */
 use Magento\Framework\App\Action\Action;
 
-// @codingStandardsIgnoreFile
 ?>
 <?php
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
 /**
  * Product list template
  *
- * @var $block \Ppsoft\Home\Block\ListProduct
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
  */
 ?>
 <?php
 $_productCollection = $block->getLoadedProductCollection();
-$_helper = $this->helper('Magento\Catalog\Helper\Output');
-$imageBlock =  $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
-
-$compareList = $this->helper('Magento\Catalog\Helper\Product\Compare');
-$compareRemove = $this->helper('Ppsoft\Compare\Helper\Product\Compare');
-$compareArray = [];
-foreach ($compareList->getItemCollection() as $item) {
-    $compareArray[$item->getSku()] = $item;
-}
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
 ?>
-<?php if (!$_productCollection->count()): ?>
-    <div class="message info empty"><div><?= /* @escapeNotVerified */ __('We can\'t find products matching the selection.') ?></div></div>
-<?php else: ?>
+<?php if (!$_productCollection->count()) :?>
+    <div class="message info empty"><div><?= $block->escapeHtml(__('We can\'t find products matching the selection.')) ?></div></div>
+<?php else :?>
     <?= $block->getToolbarHtml() ?>
     <?= $block->getAdditionalHtml() ?>
     <?php
     if ($block->getMode() == 'grid') {
         $viewMode = 'grid';
-        $image = 'category_page_grid';
+        $imageDisplayArea = 'category_page_grid';
         $showDescription = false;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     } else {
         $viewMode = 'list';
-        $image = 'category_page_list';
+        $imageDisplayArea = 'category_page_list';
         $showDescription = true;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
     }
@@ -48,297 +41,102 @@ foreach ($compareList->getItemCollection() as $item) {
      */
     $pos = $block->getPositioned();
     ?>
-    <?php $category ='';
-    if (!empty($block->getCurrentCategory())):
-        $category = $block->getCurrentCategory()->getName();
-    endif; ?>
-    <div class="mobile cat-name"> <span><?= $category ?></span></div>
-    <div class="mobile toolbar-mobile"> <?= $block->getToolbarHtml() ?></div>
-    <div class="recent-slider products-category">
-        <?php foreach ($_productCollection as $products): ?>
-
-            <?php  $productid =$products->getProductId(); ?>
-            <?php  $label =$products->getData('label_product');
-            $class = '';
-            switch ($label) {
-                case 'Aun mas bajo':
-                    $class = 'bajo';
-                    break;
-                case 'Precio Imbatible':
-                    $class = 'imbatible';
-                    break;
-                case 'Oportunidad Unica':
-                    $class = 'oportunidad';
-                    break;
-                case 'Combo Ahorro':
-                    $class = 'imbatible';
-                    break;
-                case 'Producto Nuevo':
-                    $class = 'nuevo';
-                    break;
-                case 'Nuevo Producto':
-                    $class = 'nuevo';
-                    break;
-
-            }
-
-            ?>
-            <div class="recent-container">
-                <?php  if ($products->getSpecialPrice()): ?>
-                    <div class="promo">
-                            <span>
-                                <?php /* @escapeNotVerified */ echo __('OFERTA ESPECIAL'); ?>
-                            </span>
-                        <img src='<?php echo $this->getViewFileUrl('images/oferta-especial.png'); ?>' alt="promo">
-                    </div>
-                <?php endif; ?>
-                <?php  if ($class): ?>
-                    <img class="<?= $class; ?>" src='<?php echo $this->getViewFileUrl('images/' . $class .'.png'); ?>' alt="precios">
-                <?php endif; ?>
-                <a class="img-product" href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>" ><img src="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Image')->init($products, 'category_page_list')->setImageFile($products->getImage())->getUrl(); ?>" /> </a>
-                <strong class="product-item-name desktop">
-                    <a title="<?= $block->escapeHtml($products->getName()) ?>"
-                       href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>"
-                       class="product-item-link" id="item-name">
-                        <?= $block->escapeHtml($products->getName())?>
-                    </a>
-                </strong>
-                <strong class="product-item-name mobile">
-                    <a title="<?= $block->escapeHtml($products->getName()) ?>"
-                       href="<?= /* @escapeNotVerified */ $products->getProductUrl() ?>"
-                       class="product-item-link" id="item-name">
-                        <?= $block->escapeHtml($products->getName()) ?>
-                    </a>
-                </strong>
-                <div class="sku-container sku">
-                        <span class="sku value">
-                        <?= $block->escapeHtml($products->getSku()) ?>
-                    </span>
-                </div>
-                <div class="cuotos-price">
-                    <?php
-                    $number = number_format($products->getPrice(), '2', '.', ',');
-                    $split = explode (".", $number);
-                    $integer = $split[0];
-                    $decimal = $split[1];
-
-                    if ($products->getSpecialPrice()) {
-                        $numberSpecial = number_format($products->getSpecialPrice(), '2', '.', ',');
-                        $splitSpecial = explode (".", $numberSpecial);
-                        $integerSpecial = $splitSpecial[0];
-                        $decimalSpecial = $splitSpecial[1];
-                    }
-                    ?>
-
-                    <div class="price-before">
-                        <?php if($products->getSpecialPrice()):?>
-                            <span class="price-currency"><p class="antes">Antes:</p>&nbsp;<?= __('%1. %2.<span class="decimal">%3</span>',$block->getCurrentCurrencySymbol(), $integer, $decimal) ?></span>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="price-now">
-                            <span class="alcontado">
-                                <?= __('Ahora:&nbsp;') ?>
-                            </span>
-                        <span class="int"><?php echo __('Bs.'); ?><?php echo ($products->getSpecialPrice() ? $integerSpecial : $integer) ?>.</span>
-                        </span>
-                        <span class="decimal">
-                                <?php echo ($products->getSpecialPrice() ? $decimalSpecial : $decimal) ?>
-                            </span>
-                    </div>
-                    <?php
-                    $cuota_uno =   $products->getData('minicuota_cuota_uno');
-                    $monto_uno =   $products->getData('minicuota_monto_uno');
-                    $cuota_dos =   $products->getData('minicuota_cuota_dos');
-                    $monto_dos =   $products->getData('minicuota_monto_dos');
-                    $cuota_tres =   $products->getData('minicuota_cuota_tres');
-                    $monto_tres =   $products->getData('minicuota_monto_tres');
-                    $cuota_inicial =   $products->getData('cuota_inicial');
-                    ?>
-                    <?php if ($cuota_inicial): ?>
-                    <img class="minicuotas" src="<?php echo $this->getViewFileUrl('images/minicuotashigh.png'); ?>" alt="cuotas icon">
-                </div>
-                <div class="cuote-wrap">
-                    <?php endif; ?>
-                    <?php  /* if ($cuota_uno && $monto_uno): ?>
-                            <div class="cuote-price">
-                                <?php
-                                $number = number_format($monto_uno, '2', '.', ',');
-                                $split = explode(".", $number);
-                                $integer = $split[0];
-                                $decimal = $split[1]; ?>
-                                <span style="visibility: hidden; position: absolute;" class="pixel-price"><?php echo $integer;?></span>
-                                <span class="price-currency int"><span class="bs"><?php echo __('Bs'); ?></span><?= $integer ?>.</span>
-                                <span class="price-currency int"><?= $integer ?>.</span>
-                                <span class="decimal"><?php echo $decimal; ?></span>
-                                <span class="cuote-month"><?= $cuota_uno ?> <span class="cuote-mulitply"><?php echo __('x '); ?></span></span>
-                                <span class="cuote-permonth"><?php echo __('por mes'); ?></span>
-                            </div>
-                        <?php endif; */  ?>
-                    <?php /* if ($cuota_dos && $monto_dos): ?>
-                            <div class="cuote-price">
-                                <?php
-                                $number = number_format($monto_dos, '2', '.', ',');
-                                $split = explode(".", $number);
-                                $integer = $split[0];
-                                $decimal = $split[1]; ?>
-                                <span class="cuote-month"><?= $cuota_dos ?> <span class="cuote-mulitply"><?php echo __('x '); ?></span></span>
-                                <span class="price-currency int"><?= $block->getCurrentCurrencySymbol() . '.&nbsp;' . $integer ?>.</span>
-                                <span class="decimal"><?php echo $decimal; ?></span>
-                                <span class="cuote-permonth"><?php echo __('por mes'); ?></span>
-                            </div>
-                        <?php endif; */ ?>
-
-                    <?php if ($cuota_tres && $monto_tres): ?>
-                        <div class="cuote-price list">
+    <div class="products wrapper <?= /* @noEscape */ $viewMode ?> products-<?= /* @noEscape */ $viewMode ?>">
+        <ol class="products list items product-items">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product) :?>
+                <li class="item product product-item">
+                    <div class="product-item-info" data-container="product-<?= /* @noEscape */ $viewMode ?>">
+                        <?php
+                        $productImage = $block->getImage($_product, $imageDisplayArea);
+                        if ($pos != null) {
+                            $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                                . 'top:' . $productImage->getHeight() . 'px;"';
+                        }
+                        ?>
+                        <?php // Product Image ?>
+                        <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>"
+                           class="product photo product-item-photo"
+                           tabindex="-1">
+                            <?= $productImage->toHtml() ?>
+                        </a>
+                        <div class="product details product-item-details">
                             <?php
-                            $number = number_format($monto_tres, '2', '.', ',');
-                            $split = explode(".", $number);
-                            $integer = $split[0];
-                            $decimal = $split[1]; ?>
-                            <span style="visibility: hidden; position: absolute;" class="pixel-price"><?php echo $integer;?></span>
-                            <span class="price-currency int"><span class="bs"><?php echo __('Bs.'); ?></span>&nbsp;<?= $integer ?>.</span>
-                            <sup class="decimal"><?php echo $decimal; ?></sup>&nbsp;
-                            <span class="cuote-month"><span class="cuote-mulitply">&nbsp;<?php echo __('x'); ?>&nbsp;</span><?= $cuota_tres ?><span class="months">&nbsp;<?php echo __('meses'); ?></span></span>
+                            $_productNameStripped = $block->stripTags($_product->getName(), null, true);
+                            ?>
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?= $block->escapeUrl($_product->getProductUrl()) ?>">
+                                    <?= /* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
+                                </a>
+                            </strong>
+
+                            <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                            <?php if ($_product->isAvailable()) :?>
+                                <?= $block->getProductDetailsHtml($_product) ?>
+                            <?php endif; ?>
+
+                            <div class="product-item-inner">
+                                <div class="product actions product-item-actions"<?= strpos($pos, $viewMode . '-actions') ? $block->escapeHtmlAttr($position) : '' ?>>
+                                    <div class="actions-primary"<?= strpos($pos, $viewMode . '-primary') ? $block->escapeHtmlAttr($position) : '' ?>>
+                                        <?php if ($_product->isSaleable()) :?>
+                                            <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                            <form data-role="tocart-form"
+                                                  data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>"
+                                                  action="<?= $block->escapeUrl($postParams['action']) ?>"
+                                                  method="post">
+                                                <input type="hidden"
+                                                       name="product"
+                                                       value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+                                                <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                                       value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                                <?= $block->getBlockHtml('formkey') ?>
+                                                <button type="submit"
+                                                        title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                                        class="action tocart primary">
+                                                    <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                </button>
+                                            </form>
+                                        <?php else :?>
+                                            <?php if ($_product->isAvailable()) :?>
+                                                <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                            <?php else :?>
+                                                <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div data-role="add-to-links" class="actions-secondary"<?= strpos($pos, $viewMode . '-secondary') ? $block->escapeHtmlAttr($position) : '' ?>>
+                                        <?php if ($addToBlock = $block->getChildBlock('addto')) :?>
+                                            <?= $addToBlock->setProduct($_product)->getChildHtml() ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <?php if ($showDescription) :?>
+                                    <div class="product description product-item-description">
+                                        <?= /* @noEscape */ $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                        <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>"
+                                           title="<?= /* @noEscape */ $_productNameStripped ?>"
+                                           class="action more"><?= $block->escapeHtml(__('Learn More')) ?></a>
+                                    </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    <?php endif; ?>
-                    <?php if ($cuota_inicial): ?>
-                        <div class="cuote-price inicial list">
-                            <?php
-                            $number = number_format($cuota_inicial, '2', '.', ',');
-                            $split = explode(".", $number);
-                            $integer = $split[0];
-                            $decimal = $split[1]; ?>
-                            <span class="cuota-inicial"><?php echo __('Inicial:'); ?></span>
-                            <span class="price-currency"><?= __('Bs.')?><?= $integer ?>.</span>
-                            <sup class="decimal"><?php echo $decimal; ?></sup>
-                        </div>
-                    <?php endif; ?>
-
-                </div>
-
-
-                <!--show icon shipping-->
-
-                <!--end show icon shipping-->
-
-                <div class="add-to-compare">
-                    <?php
-                    $classCompareClick = '';
-                    if (array_key_exists($products->getSku(), $compareArray)) {
-                        $classCompareClick =  ' class="clicked"';
-                    }
-                    ?>
-                    <a href="#" data-post='<?= /* @escapeNotVerified */ $block->getCompare($products) ?>'
-                       id="compare-link-<?= $products->getId() ?>"
-                       role="button"
-                       class="action tocompare"><span> <?= /* @escapeNotVerified */ __('Comparar') ?></span>
-                    </a>
-                    <a style="display: none" href="#" data-post='<?= /* @escapeNotVerified */ $compareRemove->getPostDataRemove($products) ?>'
-                       id="compare-remove-link-<?= $products->getId() ?>"
-                       role="button"
-                       class="action tocompare">
-                        <span class="clicked" ><?= /* @escapeNotVerified */ __('Comparar') ?></span>
-                    </a>
-                    <script type="text/javascript">// <![CDATA[
-                        require([
-                            'jquery',
-                        ], function ($) {
-                            'use strict';
-
-                            $(document).ready(function () {
-                                var productId =  <?= $products->getId() ?>;
-                                var comparisonId = "#compare-link-"+productId;
-                                var comparisonRemoveId = "#compare-remove-link-"+productId;
-                                $( comparisonRemoveId ).click(function() {
-                                    $(comparisonId).show();
-                                    $(comparisonRemoveId).css("display","none");
-                                });
-                                $( comparisonId ).click(function() {
-                                    $(comparisonId).hide();
-                                    $(comparisonRemoveId).css("display","block");
-
-                                });
-                            });
-                        });
-                        // ]]>
-                    </script>
-                </div>
-                    
-                <?php /*echo $block->getBlockHtml('catalog.compare.link') */?>
-                    <div class="cart">
-                        <?php $postParams = $block->getAddToCartPostParams($products); ?>
-                        <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
-                            <input type="hidden" namef="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
-                            <input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
-                            <?php echo $block->getBlockHtml('formkey')?>
-                            <button type="submit"
-                                    title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
-                                    class="action tocart primary">
-                                <span><?php /* @escapeNotVerified */ echo __('Agregar Al Carrito >') ?></span>
-                            </button>
-                        </form>
                     </div>
-
-            </div>
-        <?php endforeach; ?>
+                </li>
+            <?php endforeach; ?>
+        </ol>
     </div>
-    <div class="toolbar-botoom">
-        <?= $block->getToolbarHtml() ?>
-    </div>
-<?php endif; ?>
-<script type="text/x-magento-init">
+    <?= $block->getToolbarHtml() ?>
+    <?php if (!$block->isRedirectToCartEnabled()) :?>
+        <script type="text/x-magento-init">
         {
             "[data-role=tocart-form], .form.map.checkout": {
                 "catalogAddToCart": {
-                   "bindSubmit": true
-                 }
-            }
-        }
- </script>
-<script type="text/javascript">
-    //<![CDATA[
-    require([
-        'jquery'
-    ], function ($) {
-        $(".product-item-link").mouseover(function () {
-            $(this).text($(this)[0].title);
-            $(this).css('overflow','visible');
-            $(this).css('-webkit-box-orient','inherit');
-
-        });
-        $(".product-item-link").mouseout(function () {
-            var item = $(this);
-            overrideProductName(item);
-        });
-        $(".img-product").mouseover(function () {
-            var item = $(this).siblings().find(".product-item-link");
-            item.text(item[0].title);
-            item.css('overflow','visible');
-            item.css('-webkit-box-orient','inherit');
-        });
-        $(".img-product").mouseout(function(){
-            var item = $(this).siblings().find(".product-item-link");
-            overrideProductName(item);
-
-        });
-        function overrideProductName(item) {
-            item.text(item[0].title);
-            item.css('overflow','hidden');
-            item.css('-webkit-box-orient','vertical');
-        }
-    });
-    //]]>
-</script>
-<?php
-$ajaxUrl = $block->getUrl("compare/index/productids");
-?>
-<script type="text/x-magento-init">
-        {
-            "*": {
-                "Magento_Catalog/js/compare-list": {
-                    "AjaxUrl": "<?php echo $ajaxUrl;?>"
+                    "product_sku": "<?= $block->escapeJs($_product->getSku()) ?>"
                 }
             }
         }
-</script>
+        </script>
+    <?php endif; ?>
+<?php endif; ?>
